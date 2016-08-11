@@ -1,0 +1,8 @@
+/Library
+/.vs/DarkIslandsGener/v14/*.suo
+/Assets/*.meta
+/Assets/Island/*.meta
+/Assets/Island/IslandView/*.meta
+/*.sln
+/Temp
+/*.csproj
