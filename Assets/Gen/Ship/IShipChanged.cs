@@ -2,7 +2,7 @@ public interface IShipChanged
 {
 void PositionChanged();
 void SpeedChanged();
-void IntendedDirectionChanged();
+void intendedGoalPositionChanged();
 void InitializedChanged();
 void AliveChanged();
 void LifePointsChanged();

@@ -7,7 +7,7 @@ namespace DarkIslands{
     }
     public virtual void PositionChanged(){}
     public virtual void SpeedChanged(){}
-    public virtual void IntendedDirectionChanged(){}
+    public virtual void intendedGoalPositionChanged(){}
     public virtual void InitializedChanged(){}
     public virtual void AliveChanged(){}
     public virtual void LifePointsChanged(){}

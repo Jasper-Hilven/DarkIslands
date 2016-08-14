@@ -18,5 +18,18 @@ namespace DarkIslands
       }
     }
       private Vector3 _Position{get;set;}
+    public float Size
+    {
+      get{
+        return _Size;
+      }
+      set
+      {
+        this._Size= value;
+        foreach( var vIslandChanged in ChangeListeners)
+          vIslandChanged.SizeChanged();
+      }
+    }
+      private float _Size{get;set;}
   }
 }

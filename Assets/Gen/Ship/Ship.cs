@@ -31,19 +31,19 @@ namespace DarkIslands
       }
     }
       private Vector3 _Speed{get;set;}
-    public Vector3 IntendedDirection
+    public Vector3 intendedGoalPosition
     {
       get{
-        return _IntendedDirection;
+        return _intendedGoalPosition;
       }
       set
       {
-        this._IntendedDirection= value;
+        this._intendedGoalPosition= value;
         foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.IntendedDirectionChanged();
+          vShipChanged.intendedGoalPositionChanged();
       }
     }
-      private Vector3 _IntendedDirection{get;set;}
+      private Vector3 _intendedGoalPosition{get;set;}
     public bool Initialized
     {
       get{
@@ -109,7 +109,7 @@ namespace DarkIslands
       }
     }
       private int _Team{get;set;}
-    public int ElementType
+    public IElementType ElementType
     {
       get{
         return _ElementType;
@@ -121,7 +121,7 @@ namespace DarkIslands
           vShipChanged.ElementTypeChanged();
       }
     }
-      private int _ElementType{get;set;}
+      private IElementType _ElementType{get;set;}
     public string CurrentAction
     {
       get{
