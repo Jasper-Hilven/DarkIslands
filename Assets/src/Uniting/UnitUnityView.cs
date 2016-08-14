@@ -19,6 +19,11 @@ namespace DarkIslands
             var eType = Unit.ElementType;
             this.UIUnit.GetComponent<SpriteRenderer>().color = eType.GetColor();
         }
+        public override void PositionChanged()
+        {
+            var eType = Unit.ElementType;
+            this.UIUnit.transform.position = this.Unit.Position;
+        }
 
         public override void Destroy()
         {

@@ -8,6 +8,7 @@ namespace DarkIslands{
     public virtual void PositionChanged(){}
     public virtual void ElementTypeChanged(){}
     public virtual void intendedGoalPositionChanged(){}
+    public virtual void intendedToMoveChanged(){}
     public virtual void MaxSpeedChanged(){}
   }
 }

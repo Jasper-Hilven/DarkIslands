@@ -44,6 +44,19 @@ namespace DarkIslands
       }
     }
       private Vector3 _intendedGoalPosition{get;set;}
+    public bool intendedToMove
+    {
+      get{
+        return _intendedToMove;
+      }
+      set
+      {
+        this._intendedToMove= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.intendedToMoveChanged();
+      }
+    }
+      private bool _intendedToMove{get;set;}
     public float MaxSpeed
     {
       get{
