@@ -5,19 +5,6 @@ namespace DarkIslands
   public partial class Unit
   {
   public List<IUnitChanged> ChangeListeners= new List<IUnitChanged>();
-    public Vector3 Position
-    {
-      get{
-        return _Position;
-      }
-      set
-      {
-        this._Position= value;
-        foreach( var vUnitChanged in ChangeListeners)
-          vUnitChanged.PositionChanged();
-      }
-    }
-      private Vector3 _Position{get;set;}
     public IElementType ElementType
     {
       get{
@@ -31,32 +18,32 @@ namespace DarkIslands
       }
     }
       private IElementType _ElementType{get;set;}
-    public Vector3 intendedGoalPosition
+    public Vector3 RelativeGoalPosition
     {
       get{
-        return _intendedGoalPosition;
+        return _RelativeGoalPosition;
       }
       set
       {
-        this._intendedGoalPosition= value;
+        this._RelativeGoalPosition= value;
         foreach( var vUnitChanged in ChangeListeners)
-          vUnitChanged.intendedGoalPositionChanged();
+          vUnitChanged.RelativeGoalPositionChanged();
       }
     }
-      private Vector3 _intendedGoalPosition{get;set;}
-    public bool intendedToMove
+      private Vector3 _RelativeGoalPosition{get;set;}
+    public bool HasRelativeGoalPosition
     {
       get{
-        return _intendedToMove;
+        return _HasRelativeGoalPosition;
       }
       set
       {
-        this._intendedToMove= value;
+        this._HasRelativeGoalPosition= value;
         foreach( var vUnitChanged in ChangeListeners)
-          vUnitChanged.intendedToMoveChanged();
+          vUnitChanged.HasRelativeGoalPositionChanged();
       }
     }
-      private bool _intendedToMove{get;set;}
+      private bool _HasRelativeGoalPosition{get;set;}
     public float MaxSpeed
     {
       get{
@@ -70,18 +57,96 @@ namespace DarkIslands
       }
     }
       private float _MaxSpeed{get;set;}
-    public Island VisitingIsland
+    public Vector3 Position
     {
       get{
-        return _VisitingIsland;
+        return _Position;
       }
       set
       {
-        this._VisitingIsland= value;
+        this._Position= value;
         foreach( var vUnitChanged in ChangeListeners)
-          vUnitChanged.VisitingIslandChanged();
+          vUnitChanged.PositionChanged();
       }
     }
-      private Island _VisitingIsland{get;set;}
+      private Vector3 _Position{get;set;}
+    public Vector3 ContainerPosition
+    {
+      get{
+        return _ContainerPosition;
+      }
+      set
+      {
+        this._ContainerPosition= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.ContainerPositionChanged();
+      }
+    }
+      private Vector3 _ContainerPosition{get;set;}
+    public Vector3 RelativeToContainerPosition
+    {
+      get{
+        return _RelativeToContainerPosition;
+      }
+      set
+      {
+        this._RelativeToContainerPosition= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.RelativeToContainerPositionChanged();
+      }
+    }
+      private Vector3 _RelativeToContainerPosition{get;set;}
+    public IUnitContainer Container
+    {
+      get{
+        return _Container;
+      }
+      set
+      {
+        this._Container= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.ContainerChanged();
+      }
+    }
+      private IUnitContainer _Container{get;set;}
+    public IUnitContainer ContainerToEnter
+    {
+      get{
+        return _ContainerToEnter;
+      }
+      set
+      {
+        this._ContainerToEnter= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.ContainerToEnterChanged();
+      }
+    }
+      private IUnitContainer _ContainerToEnter{get;set;}
+    public IUnitAction CurrentAction
+    {
+      get{
+        return _CurrentAction;
+      }
+      set
+      {
+        this._CurrentAction= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.CurrentActionChanged();
+      }
+    }
+      private IUnitAction _CurrentAction{get;set;}
+    public IUnitCommand CurrentCommand
+    {
+      get{
+        return _CurrentCommand;
+      }
+      set
+      {
+        this._CurrentCommand= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.CurrentCommandChanged();
+      }
+    }
+      private IUnitCommand _CurrentCommand{get;set;}
   }
 }

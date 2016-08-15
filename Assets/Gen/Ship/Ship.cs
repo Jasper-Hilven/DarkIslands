@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections.Generic;
 namespace DarkIslands
 {
   public partial class Ship
@@ -31,19 +32,6 @@ namespace DarkIslands
       }
     }
       private Vector3 _Speed{get;set;}
-    public Vector3 intendedGoalPosition
-    {
-      get{
-        return _intendedGoalPosition;
-      }
-      set
-      {
-        this._intendedGoalPosition= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.intendedGoalPositionChanged();
-      }
-    }
-      private Vector3 _intendedGoalPosition{get;set;}
     public bool Initialized
     {
       get{
@@ -148,5 +136,18 @@ namespace DarkIslands
       }
     }
       private string _NextActions{get;set;}
+    public List<Unit> ContainingUnits
+    {
+      get{
+        return _ContainingUnits;
+      }
+      set
+      {
+        this._ContainingUnits= value;
+        foreach( var vShipChanged in ChangeListeners)
+          vShipChanged.ContainingUnitsChanged();
+      }
+    }
+      private List<Unit> _ContainingUnits{get;set;}
   }
 }

@@ -1,9 +1,9 @@
 namespace DarkIslands{
-  public class ShipMovementControllerDefault: IShipChanged
+  public class ContainingUnitsControllerDefault: IShipChanged
   {
     public virtual void Destroy(){
     }
-    public virtual void Init(Ship Ship, ShipMovementControllerFactory ShipMovementControllerFactory){
+    public virtual void Init(Ship Ship, ContainingUnitsControllerFactory ContainingUnitsControllerFactory){
     }
     public virtual void PositionChanged(){}
     public virtual void SpeedChanged(){}

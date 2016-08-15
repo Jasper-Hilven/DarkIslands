@@ -1,9 +1,9 @@
 namespace DarkIslands{
-  public class UnitUnityViewDefault: IUnitChanged
+  public class UnitActionHandlerDefault: IUnitChanged
   {
     public virtual void Destroy(){
     }
-    public virtual void Init(Unit Unit, UnitUnityViewFactory UnitUnityViewFactory){
+    public virtual void Init(Unit Unit, UnitActionHandlerFactory UnitActionHandlerFactory){
     }
     public virtual void ElementTypeChanged(){}
     public virtual void RelativeGoalPositionChanged(){}

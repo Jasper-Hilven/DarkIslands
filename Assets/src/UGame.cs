@@ -25,16 +25,19 @@ public class UGame : MonoBehaviour
             ship = fP.ShipFactory.Create();
             ship.Position = new Vector3();
             for (int i = 0; i < 2; i++)
-                islands.Add(fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 1)));
+            {
+                var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 1));
+                islands.Add(simpleIsland);
+            }
 
-            foreach (var eType in new List<IElementType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() })
+            var elementTypes = new List<IElementType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
+            foreach (var eType in elementTypes)
                 units.Add(GetUnit(fP.UnitFactory, eType, islands[0]));
             FocusOnUnit(units[0]);
         }
         catch (Exception e)
         {
             Console.WriteLine();
-            throw;
         }
     }
 
@@ -42,7 +45,7 @@ public class UGame : MonoBehaviour
     {
         var u = fac.Create();
         u.ElementType = eType;
-        u.VisitingIsland = visIsland;
+        u.Container = visIsland;
         u.MaxSpeed = 1f;
         return u;
     }

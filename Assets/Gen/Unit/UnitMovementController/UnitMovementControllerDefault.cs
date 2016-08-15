@@ -5,11 +5,16 @@ namespace DarkIslands{
     }
     public virtual void Init(Unit Unit, UnitMovementControllerFactory UnitMovementControllerFactory){
     }
-    public virtual void PositionChanged(){}
     public virtual void ElementTypeChanged(){}
-    public virtual void intendedGoalPositionChanged(){}
-    public virtual void intendedToMoveChanged(){}
+    public virtual void RelativeGoalPositionChanged(){}
+    public virtual void HasRelativeGoalPositionChanged(){}
     public virtual void MaxSpeedChanged(){}
-    public virtual void VisitingIslandChanged(){}
+    public virtual void PositionChanged(){}
+    public virtual void ContainerPositionChanged(){}
+    public virtual void RelativeToContainerPositionChanged(){}
+    public virtual void ContainerChanged(){}
+    public virtual void ContainerToEnterChanged(){}
+    public virtual void CurrentActionChanged(){}
+    public virtual void CurrentCommandChanged(){}
   }
 }

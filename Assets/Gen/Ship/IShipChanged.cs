@@ -2,7 +2,6 @@ public interface IShipChanged
 {
 void PositionChanged();
 void SpeedChanged();
-void intendedGoalPositionChanged();
 void InitializedChanged();
 void AliveChanged();
 void LifePointsChanged();
@@ -11,4 +10,5 @@ void TeamChanged();
 void ElementTypeChanged();
 void CurrentActionChanged();
 void NextActionsChanged();
+void ContainingUnitsChanged();
 }

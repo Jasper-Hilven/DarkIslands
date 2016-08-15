@@ -1,9 +1,14 @@
 public interface IUnitChanged
 {
-void PositionChanged();
 void ElementTypeChanged();
-void intendedGoalPositionChanged();
-void intendedToMoveChanged();
+void RelativeGoalPositionChanged();
+void HasRelativeGoalPositionChanged();
 void MaxSpeedChanged();
-void VisitingIslandChanged();
+void PositionChanged();
+void ContainerPositionChanged();
+void RelativeToContainerPositionChanged();
+void ContainerChanged();
+void ContainerToEnterChanged();
+void CurrentActionChanged();
+void CurrentCommandChanged();
 }
