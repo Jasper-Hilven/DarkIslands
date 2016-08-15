@@ -5,4 +5,5 @@ void ElementTypeChanged();
 void intendedGoalPositionChanged();
 void intendedToMoveChanged();
 void MaxSpeedChanged();
+void VisitingIslandChanged();
 }

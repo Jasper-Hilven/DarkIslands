@@ -70,5 +70,18 @@ namespace DarkIslands
       }
     }
       private float _MaxSpeed{get;set;}
+    public Island VisitingIsland
+    {
+      get{
+        return _VisitingIsland;
+      }
+      set
+      {
+        this._VisitingIsland= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.VisitingIslandChanged();
+      }
+    }
+      private Island _VisitingIsland{get;set;}
   }
 }

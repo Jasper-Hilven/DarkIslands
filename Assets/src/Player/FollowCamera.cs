@@ -6,17 +6,17 @@ namespace DarkIslands.Player
     public class FollowCamera
     {
         private Camera camera;
-        public Ship ship;
-        public FollowCamera(Ship ship)
+        public Unit toFollow;
+        public FollowCamera(Unit unit)
         {
-            this.ship = ship;
+            this.toFollow = unit;
         }
 
         public void update()
         {
             if(camera == null)
                 camera = Camera.allCameras.First();
-            camera.transform.position = this.ship.Position + new Vector3(0, 0, -10);
+            camera.transform.position = this.toFollow.Position + new Vector3(0, 4, 0);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace DarkIslands{
     public virtual void intendedGoalPositionChanged(){}
     public virtual void intendedToMoveChanged(){}
     public virtual void MaxSpeedChanged(){}
+    public virtual void VisitingIslandChanged(){}
   }
 }

@@ -11,6 +11,7 @@ namespace DarkIslands
         {
             this.Ship = Ship;
             this.UIShip= ShipUnityViewFactory.GetShipVisualization();
+            this.UIShip.GetComponent<Renderer>().material.color=Color.Lerp(Color.red,Color.cyan,0.2f);
             this.ShipUnityViewFactory = ShipUnityViewFactory;
         }
 

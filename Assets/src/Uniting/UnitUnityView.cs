@@ -17,7 +17,7 @@ namespace DarkIslands
         public override void ElementTypeChanged()
         {
             var eType = Unit.ElementType;
-            this.UIUnit.GetComponent<SpriteRenderer>().color = eType.GetColor();
+            this.UIUnit.GetComponent<Renderer>().material.color = eType.GetColor();
         }
         public override void PositionChanged()
         {

@@ -12,6 +12,7 @@ namespace DarkIslands
             this.Island = island;
             this.UIIsland= fac.GetIslandVisualization();
             this.IslandUnityViewFactory = fac;
+            this.UIIsland.GetComponent<Renderer>().material.color = Color.yellow;
         }
 
         public override void PositionChanged()
@@ -21,7 +22,7 @@ namespace DarkIslands
 
         public override void SizeChanged()
         {
-            this.UIIsland.transform.localScale= new Vector3(Island.Size, Island.Size, Island.Size);
+            this.UIIsland.transform.localScale= new Vector3(Island.Size*2, 0.1f, Island.Size * 2);
         }
 
         public override void Destroy()
