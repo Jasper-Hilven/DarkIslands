@@ -31,5 +31,18 @@ namespace DarkIslands
       }
     }
       private float _Size{get;set;}
+    public UnitContainerController UnitContainerController
+    {
+      get{
+        return _UnitContainerController;
+      }
+      set
+      {
+        this._UnitContainerController= value;
+        foreach( var vIslandChanged in ChangeListeners)
+          vIslandChanged.UnitContainerControllerChanged();
+      }
+    }
+      private UnitContainerController _UnitContainerController{get;set;}
   }
 }

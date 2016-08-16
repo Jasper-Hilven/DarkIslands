@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections.Generic;
 namespace DarkIslands
 {
   public partial class Ship
@@ -32,32 +31,6 @@ namespace DarkIslands
       }
     }
       private Vector3 _Speed{get;set;}
-    public bool Initialized
-    {
-      get{
-        return _Initialized;
-      }
-      set
-      {
-        this._Initialized= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.InitializedChanged();
-      }
-    }
-      private bool _Initialized{get;set;}
-    public bool Alive
-    {
-      get{
-        return _Alive;
-      }
-      set
-      {
-        this._Alive= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.AliveChanged();
-      }
-    }
-      private bool _Alive{get;set;}
     public int LifePoints
     {
       get{
@@ -84,70 +57,18 @@ namespace DarkIslands
       }
     }
       private List<Item> _Items{get;set;}
-    public int Team
+    public UnitContainerController UnitContainerController
     {
       get{
-        return _Team;
+        return _UnitContainerController;
       }
       set
       {
-        this._Team= value;
+        this._UnitContainerController= value;
         foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.TeamChanged();
+          vShipChanged.UnitContainerControllerChanged();
       }
     }
-      private int _Team{get;set;}
-    public IElementType ElementType
-    {
-      get{
-        return _ElementType;
-      }
-      set
-      {
-        this._ElementType= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.ElementTypeChanged();
-      }
-    }
-      private IElementType _ElementType{get;set;}
-    public string CurrentAction
-    {
-      get{
-        return _CurrentAction;
-      }
-      set
-      {
-        this._CurrentAction= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.CurrentActionChanged();
-      }
-    }
-      private string _CurrentAction{get;set;}
-    public string NextActions
-    {
-      get{
-        return _NextActions;
-      }
-      set
-      {
-        this._NextActions= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.NextActionsChanged();
-      }
-    }
-      private string _NextActions{get;set;}
-    public List<Unit> ContainingUnits
-    {
-      get{
-        return _ContainingUnits;
-      }
-      set
-      {
-        this._ContainingUnits= value;
-        foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.ContainingUnitsChanged();
-      }
-    }
-      private List<Unit> _ContainingUnits{get;set;}
+      private UnitContainerController _UnitContainerController{get;set;}
   }
 }

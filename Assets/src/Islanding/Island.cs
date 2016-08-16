@@ -9,6 +9,10 @@ namespace DarkIslands
             return false;
         }
 
+        public void AddUnit(Unit unit)
+        {
+            
+        }
         public void SetDestination(Vector3 pos)
         {
             throw new System.NotImplementedException();

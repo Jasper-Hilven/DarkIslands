@@ -1,9 +1,9 @@
 namespace DarkIslands{
-  public class ShipUnityViewDefault: IShipChanged
+  public class ContainerControllerShipDefault: IShipChanged
   {
     public virtual void Destroy(){
     }
-    public virtual void Init(Ship Ship, ShipUnityViewFactory ShipUnityViewFactory){
+    public virtual void Init(Ship Ship, ContainerControllerShipFactory ContainerControllerShipFactory){
     }
     public virtual void PositionChanged(){}
     public virtual void SpeedChanged(){}

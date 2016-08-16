@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections.Generic;
 namespace DarkIslands
 {
   public partial class ShipFactory

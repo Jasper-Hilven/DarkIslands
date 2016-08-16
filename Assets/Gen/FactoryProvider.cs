@@ -4,42 +4,39 @@ namespace DarkIslands
   {
     public IslandFactory IslandFactory;
     public IslandUnityViewFactory IslandUnityViewFactory;
+    public ContainerControllerIslandFactory ContainerControllerIslandFactory;
     public ShipFactory ShipFactory;
     public ShipUnityViewFactory ShipUnityViewFactory;
     public ShipPlayerControllerFactory ShipPlayerControllerFactory;
     public ShipSelectedViewFactory ShipSelectedViewFactory;
-    public ShipMovementControllerFactory ShipMovementControllerFactory;
-    public ContainingUnitsControllerFactory ContainingUnitsControllerFactory;
+    public ContainerControllerShipFactory ContainerControllerShipFactory;
     public UnitFactory UnitFactory;
     public UnitUnityViewFactory UnitUnityViewFactory;
     public UnitMovementControllerFactory UnitMovementControllerFactory;
     public UnitActionHandlerFactory UnitActionHandlerFactory;
-    public UnitContainerControllerFactory UnitContainerControllerFactory;
     public void Initialize(){
       var CollisionProvider= new CollisionProvider();
       this.IslandFactory= new IslandFactory();
       this.IslandUnityViewFactory= new IslandUnityViewFactory();
+      this.ContainerControllerIslandFactory= new ContainerControllerIslandFactory();
       this.ShipFactory= new ShipFactory();
       this.ShipUnityViewFactory= new ShipUnityViewFactory();
       this.ShipPlayerControllerFactory= new ShipPlayerControllerFactory();
       this.ShipSelectedViewFactory= new ShipSelectedViewFactory();
-      this.ShipMovementControllerFactory= new ShipMovementControllerFactory();
-      this.ContainingUnitsControllerFactory= new ContainingUnitsControllerFactory();
+      this.ContainerControllerShipFactory= new ContainerControllerShipFactory();
       this.UnitFactory= new UnitFactory();
       this.UnitUnityViewFactory= new UnitUnityViewFactory();
       this.UnitMovementControllerFactory= new UnitMovementControllerFactory();
       this.UnitActionHandlerFactory= new UnitActionHandlerFactory();
-      this.UnitContainerControllerFactory= new UnitContainerControllerFactory();
       IslandFactory.SubFactories.Add(IslandUnityViewFactory);
+      IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
       ShipFactory.SubFactories.Add(ShipUnityViewFactory);
       ShipFactory.SubFactories.Add(ShipPlayerControllerFactory);
       ShipFactory.SubFactories.Add(ShipSelectedViewFactory);
-      ShipFactory.SubFactories.Add(ShipMovementControllerFactory);
-      ShipFactory.SubFactories.Add(ContainingUnitsControllerFactory);
+      ShipFactory.SubFactories.Add(ContainerControllerShipFactory);
       UnitFactory.SubFactories.Add(UnitUnityViewFactory);
       UnitFactory.SubFactories.Add(UnitMovementControllerFactory);
       UnitFactory.SubFactories.Add(UnitActionHandlerFactory);
-      UnitFactory.SubFactories.Add(UnitContainerControllerFactory);
     }
   }
 }

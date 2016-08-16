@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 namespace DarkIslands
 {
-  public partial class ContainingUnitsControllerFactory: IShipElementFactory
+  public partial class ContainerControllerShipFactory: IShipElementFactory
   {
-public Dictionary<Ship,ContainingUnitsController> Elements= new Dictionary<Ship,ContainingUnitsController>();
+public Dictionary<Ship,ContainerControllerShip> Elements= new Dictionary<Ship,ContainerControllerShip>();
 
     public void RemoveExtension(Ship Ship){
       var element = Elements[Ship];
@@ -12,7 +12,7 @@ public Dictionary<Ship,ContainingUnitsController> Elements= new Dictionary<Ship,
     }
 
     public void ExtendShip(Ship Ship){
-      var element =new ContainingUnitsController(Ship, this);
+      var element =new ContainerControllerShip(Ship, this);
       Elements.Add(Ship,element);
       Ship.ChangeListeners.Add(element);
     }
