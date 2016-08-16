@@ -26,7 +26,7 @@ public class UGame : MonoBehaviour
             ship.Position = new Vector3();
             for (int i = 0; i < 2; i++)
             {
-                var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 1));
+                var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 2));
                 islands.Add(simpleIsland);
             }
 

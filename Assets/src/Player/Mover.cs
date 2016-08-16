@@ -14,7 +14,8 @@ namespace DarkIslands.Player
 
         public void Update()
         {
-            MoveUnitToMouseHit();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                MoveUnitToMouseHit();
 
 
 
@@ -28,8 +29,8 @@ namespace DarkIslands.Player
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                var hitPoint= hit.point;
-                unit.RelativeGoalPosition = new Vector3(hitPoint.x,0,hitPoint.z)- unit.Container.Position;
+                var hitPoint = hit.point;
+                unit.RelativeGoalPosition = new Vector3(hitPoint.x, hitPoint.y, hitPoint.z) - unit.Container.Position;
                 unit.HasRelativeGoalPosition = true;
             }
         }

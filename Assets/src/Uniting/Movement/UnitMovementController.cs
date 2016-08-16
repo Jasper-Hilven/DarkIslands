@@ -19,6 +19,7 @@ namespace DarkIslands
         public override void RelativeToContainerPositionChanged()
         {
             CheckIfArrivedInContainer();
+            FixPosition();
         }
 
         private void CheckIfArrivedInContainer()
@@ -45,9 +46,13 @@ namespace DarkIslands
 
         public override void ContainerChanged()
         {
-            var visitingIsland = Unit.Container as Island;
-            if (visitingIsland != null)
-                this.Unit.RelativeToContainerPosition = ProjectRelativePositionToIsland(this.Unit.Position);
+            var visitingContainer = Unit.Container as IUnitContainer;
+            if (visitingContainer != null)
+            {
+                this.Unit.ContainerPosition = visitingContainer.Position;
+                var relativePosition = Unit.Position - visitingContainer.Position;
+                this.Unit.RelativeToContainerPosition = ProjectRelativePositionToIsland(relativePosition);
+            }
         }
 
         public override void ContainerPositionChanged()
