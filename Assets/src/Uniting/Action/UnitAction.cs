@@ -2,6 +2,6 @@
 {
     public interface IUnitAction
     {
-        
+        void Update(Unit unit);
     }
 }

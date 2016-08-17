@@ -10,11 +10,13 @@ namespace DarkIslands
         public override void Init(Island Island, ContainerControllerIslandFactory ContainerControllerIslandFactory)
         {
             Island.UnitContainerController = this;
+            this.Island = Island;
             base.Init(Island, ContainerControllerIslandFactory);
+
         }
 
 
-        public Ship Ship { get; set; }
+        public IUnitContainer Island { get; set; }
 
         public bool CanAddUnit(Unit unit)
         {
@@ -26,12 +28,12 @@ namespace DarkIslands
             if (unit.Container != null)
                 return;
             units.Add(unit);
-            unit.Container = this.Ship;
+            unit.Container = this.Island;
         }
 
         public void RemoveUnit(Unit unit)
         {
-            if (unit.Container != Ship)
+            if (unit.Container != Island)
                 return;
             unit.Container = null;
             units.Remove(unit);
@@ -40,6 +42,13 @@ namespace DarkIslands
         public bool CanMoveForUnit(Unit unit)
         {
             return units.Contains(unit);
+        }
+        public override void PositionChanged()
+        {
+            foreach (var unit in units)
+            {
+                unit.ContainerPosition = Island.Position;
+            }
         }
 
         public void SetDestination(Vector3 pos)

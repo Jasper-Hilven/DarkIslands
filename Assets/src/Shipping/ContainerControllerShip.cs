@@ -42,6 +42,14 @@ namespace DarkIslands
             return units.Contains(unit);
         }
 
+        public override void PositionChanged()
+        {
+            foreach (var unit in units)
+            {
+                unit.ContainerPosition = Ship.Position;
+            }
+        }
+
         public void SetDestination(Vector3 pos)
         {
             throw new NotImplementedException();

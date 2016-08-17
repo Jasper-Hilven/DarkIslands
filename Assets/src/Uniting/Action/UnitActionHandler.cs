@@ -25,17 +25,10 @@
 
         public void Update()
         {
-            var shipAction = Unit.CurrentAction as EnterShipAction;
-            if (shipAction != null)
-            {
-                if (Unit.RelativeGoalPosition != shipAction.Ship.Position)
-                    Unit.RelativeGoalPosition = shipAction.Ship.Position;
-                if (Unit.Position == shipAction.Ship.Position)
-                {
-                    Unit.ContainerToEnter = shipAction.Ship;
-                    Unit.CurrentAction = null;
-                }
-            }
+
+            if (this.Unit.CurrentAction == null)
+                return;
+            this.Unit.CurrentAction.Update(this.Unit);
 
         }
         public override void CurrentActionChanged()

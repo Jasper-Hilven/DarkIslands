@@ -46,11 +46,13 @@ namespace DarkIslands
 
         public override void ContainerChanged()
         {
+            Unit.HasRelativeGoalPosition = false;//If we enter or exit a container, stop going somewhere
             var visitingContainer = Unit.Container as IUnitContainer;
             if (visitingContainer != null)
             {
-                this.Unit.ContainerPosition = visitingContainer.Position;
+
                 var relativePosition = Unit.Position - visitingContainer.Position;
+                this.Unit.ContainerPosition = visitingContainer.Position;
                 this.Unit.RelativeToContainerPosition = ProjectRelativePositionToIsland(relativePosition);
             }
         }

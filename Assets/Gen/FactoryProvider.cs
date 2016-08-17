@@ -14,6 +14,7 @@ namespace DarkIslands
     public UnitUnityViewFactory UnitUnityViewFactory;
     public UnitMovementControllerFactory UnitMovementControllerFactory;
     public UnitActionHandlerFactory UnitActionHandlerFactory;
+    public UnitContainerManagerFactory UnitContainerManagerFactory;
     public void Initialize(){
       var CollisionProvider= new CollisionProvider();
       this.IslandFactory= new IslandFactory();
@@ -28,6 +29,7 @@ namespace DarkIslands
       this.UnitUnityViewFactory= new UnitUnityViewFactory();
       this.UnitMovementControllerFactory= new UnitMovementControllerFactory();
       this.UnitActionHandlerFactory= new UnitActionHandlerFactory();
+      this.UnitContainerManagerFactory= new UnitContainerManagerFactory();
       IslandFactory.SubFactories.Add(IslandUnityViewFactory);
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
       ShipFactory.SubFactories.Add(ShipUnityViewFactory);
@@ -37,6 +39,7 @@ namespace DarkIslands
       UnitFactory.SubFactories.Add(UnitUnityViewFactory);
       UnitFactory.SubFactories.Add(UnitMovementControllerFactory);
       UnitFactory.SubFactories.Add(UnitActionHandlerFactory);
+      UnitFactory.SubFactories.Add(UnitContainerManagerFactory);
     }
   }
 }

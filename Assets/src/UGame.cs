@@ -23,7 +23,7 @@ public class UGame : MonoBehaviour
             fP = new FactoryProvider();
             fP.Initialize();
             ship = fP.ShipFactory.Create();
-            ship.Position = new Vector3();
+            ship.Position = new Vector3(4,0,4);
             for (int i = 0; i < 2; i++)
             {
                 var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 2));
@@ -34,6 +34,7 @@ public class UGame : MonoBehaviour
             foreach (var eType in elementTypes)
                 units.Add(GetUnit(fP.UnitFactory, eType, islands[0]));
             FocusOnUnit(units[0]);
+            units[0].CurrentAction=new EnterShipAction(ship);
         }
         catch (Exception e)
         {
@@ -61,8 +62,8 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
-        ship.Position = new Vector3(0, 1, 0);
         fP.UnitMovementControllerFactory.Update(Time.deltaTime);
+        fP.UnitActionHandlerFactory.Update();
         cam.update();
         m.Update();
     }
