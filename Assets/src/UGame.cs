@@ -23,7 +23,7 @@ public class UGame : MonoBehaviour
             fP = new FactoryProvider();
             fP.Initialize();
             ship = fP.ShipFactory.Create();
-            ship.Position = new Vector3(4,0,4);
+            ship.Position = new Vector3(4,0.2f,4);
             for (int i = 0; i < 2; i++)
             {
                 var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 2));
@@ -62,6 +62,7 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
+        ship.Position += new Vector3(0.8f*-Time.deltaTime,0,0);
         fP.UnitMovementControllerFactory.Update(Time.deltaTime);
         fP.UnitActionHandlerFactory.Update();
         cam.update();

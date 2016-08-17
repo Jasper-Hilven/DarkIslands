@@ -53,7 +53,7 @@ namespace DarkIslands
 
                 var relativePosition = Unit.Position - visitingContainer.Position;
                 this.Unit.ContainerPosition = visitingContainer.Position;
-                this.Unit.RelativeToContainerPosition = ProjectRelativePositionToIsland(relativePosition);
+                this.Unit.RelativeToContainerPosition = ProjectRelativePositionToContainer(relativePosition);
             }
         }
 
@@ -69,14 +69,42 @@ namespace DarkIslands
             this.Unit.Position = Unit.ContainerPosition + Unit.RelativeToContainerPosition;
         }
 
+        private Vector3 ProjectRelativePositionToContainer(Vector3 relativePosition)
+        {
+            if (Unit.Container == null)
+                return relativePosition;
+            var containerAsIsland = Unit.Container as Island;
+            if (containerAsIsland != null)
+                return ProjectRelativePositionToIsland(relativePosition);
+            var containerAsShip = Unit.Container as Ship;
+            if (containerAsShip != null)
+                return ProjectRelativePositionToShip(relativePosition);
+            throw new Exception("Container type not known");
+        }
+
+        private Vector3 ProjectRelativePositionToShip(Vector3 relativePosition)
+        {
+            var maxDistanceFromShip = 0.5f;
+            var maxDistanceFromShipSq = maxDistanceFromShip * maxDistanceFromShip;
+            var visitingIsland = Unit.Container as Ship;
+            var y = 0;
+            var xDist = relativePosition.x;
+            var zDist = relativePosition.z;
+            var awayFromCenterSq = xDist * xDist + zDist * zDist;
+            if (awayFromCenterSq <= maxDistanceFromShipSq)
+                return new Vector3(relativePosition.x, y, relativePosition.z);
+            var reductionFactor = maxDistanceFromShip / ((float)Math.Sqrt(awayFromCenterSq));
+            var x = xDist * reductionFactor;
+            var z = zDist * reductionFactor;
+            return new Vector3(x, y, z);
+        }
+
         private Vector3 ProjectRelativePositionToIsland(Vector3 relativePosition)
         {
             var visitingIsland = Unit.Container as Island;
-            if (visitingIsland == null)
-                return relativePosition;
             var y = 0;
-            var xDist = relativePosition.x ;
-            var zDist = relativePosition.z ;
+            var xDist = relativePosition.x;
+            var zDist = relativePosition.z;
             var awayFromCenter = xDist * xDist + zDist * zDist;
             if (awayFromCenter <= visitingIsland.Size * visitingIsland.Size)
                 return new Vector3(relativePosition.x, y, relativePosition.z);
@@ -96,13 +124,13 @@ namespace DarkIslands
             var maxMovement = this.Unit.MaxSpeed * deltaTime;
             if (goalDistance.sqrMagnitude < maxMovement * maxMovement)
             {
-                this.Unit.RelativeGoalPosition= this.Unit.RelativeGoalPosition;
+                this.Unit.RelativeGoalPosition = this.Unit.RelativeGoalPosition;
                 return;
             }
             goalDistance.Normalize();
             var movement = maxMovement * goalDistance.normalized;
             var newPosition = this.Unit.RelativeToContainerPosition + movement;
-            this.Unit.RelativeToContainerPosition = ProjectRelativePositionToIsland(newPosition);
+            this.Unit.RelativeToContainerPosition = ProjectRelativePositionToContainer(newPosition);
         }
 
         public override void Destroy()
