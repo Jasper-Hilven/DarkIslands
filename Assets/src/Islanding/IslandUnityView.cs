@@ -10,9 +10,10 @@ namespace DarkIslands
         public override void Init(Island island, IslandUnityViewFactory fac)
         {
             this.Island = island;
-            this.UIIsland= fac.GetIslandVisualization();
+            this.UIIsland= fac.GetIslandVisualization(island);
             this.IslandUnityViewFactory = fac;
-            this.UIIsland.GetComponent<Renderer>().material.color = Color.yellow;
+            this.UIIsland.GetComponent<Renderer>().material.color = Color.Lerp(Color.yellow,Color.gray,0.5f);
+           
         }
 
         public override void PositionChanged()

@@ -6,20 +6,23 @@ namespace DarkIslands
 {
     public partial class ShipUnityViewFactory
     {
-        private GameObjectManager gB= new GameObjectManager();
-        public GameObject GetShipVisualization()
+        private GameObjectManager gB = new GameObjectManager();
+        public GameObject GetShipVisualization(Ship ship)
         {
-            return gB.LoadViaResources("Ship");
+            var gO = gB.LoadViaResources("Ship");
+            this.ModelToEntity.modelToEntity.Add(gO, ship);
+            return gO;
         }
         public void Destroy(GameObject gObject)
         {
+            this.ModelToEntity.modelToEntity.Remove(gObject);
             gB.DestroyObj(gObject);
         }
     }
 
     public class GameObjectManager : MonoBehaviour
     {
-        private Dictionary<string, GameObject> resources =new Dictionary<string, GameObject>();
+        private Dictionary<string, GameObject> resources = new Dictionary<string, GameObject>();
         public void DestroyObj(GameObject gO)
         {
             Destroy(gO);
@@ -27,7 +30,7 @@ namespace DarkIslands
 
         public GameObject LoadViaResources(string path)
         {
-            if(!resources.ContainsKey(path))
+            if (!resources.ContainsKey(path))
                 resources.Add(path, (Resources.Load(path) as GameObject));
             return Instantiate(resources[path]);
         }

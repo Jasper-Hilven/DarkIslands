@@ -15,12 +15,8 @@
         {
             if (this.Unit.CurrentCommand == null)
                 return;
-            var shipCommand = this.Unit.CurrentCommand as EnterShipCommand;
-            if (shipCommand != null)
-            {
-                Unit.CurrentAction = new EnterShipAction(shipCommand.Ship);
-                this.Unit.CurrentCommand = null;//Command handled by actionHandler
-            }
+            Unit.CurrentAction = this.Unit.CurrentCommand.GetAction();
+            Unit.CurrentCommand = null;
         }
 
         public void Update()

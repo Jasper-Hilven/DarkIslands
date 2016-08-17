@@ -15,13 +15,14 @@ namespace DarkIslands
     public UnitMovementControllerFactory UnitMovementControllerFactory;
     public UnitActionHandlerFactory UnitActionHandlerFactory;
     public UnitContainerManagerFactory UnitContainerManagerFactory;
+public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
-      var CollisionProvider= new CollisionProvider();
+var CollisionProvider= new CollisionProvider();
       this.IslandFactory= new IslandFactory();
-      this.IslandUnityViewFactory= new IslandUnityViewFactory();
+      this.IslandUnityViewFactory= new IslandUnityViewFactory(ModelToEntity);
       this.ContainerControllerIslandFactory= new ContainerControllerIslandFactory();
       this.ShipFactory= new ShipFactory();
-      this.ShipUnityViewFactory= new ShipUnityViewFactory();
+      this.ShipUnityViewFactory= new ShipUnityViewFactory(ModelToEntity);
       this.ShipPlayerControllerFactory= new ShipPlayerControllerFactory();
       this.ShipSelectedViewFactory= new ShipSelectedViewFactory();
       this.ContainerControllerShipFactory= new ContainerControllerShipFactory();

@@ -10,7 +10,7 @@ namespace DarkIslands
         public override void Init(Ship Ship, ShipUnityViewFactory ShipUnityViewFactory)
         {
             this.Ship = Ship;
-            this.UIShip= ShipUnityViewFactory.GetShipVisualization();
+            this.UIShip= ShipUnityViewFactory.GetShipVisualization(Ship);
             this.UIShip.GetComponent<Renderer>().material.color=Color.Lerp(Color.red,Color.cyan,0.2f);
             this.ShipUnityViewFactory = ShipUnityViewFactory;
         }

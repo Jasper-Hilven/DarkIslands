@@ -32,9 +32,10 @@ public class UGame : MonoBehaviour
 
             var elementTypes = new List<IElementType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
             foreach (var eType in elementTypes)
-                units.Add(GetUnit(fP.UnitFactory, eType, islands[0]));
+                units.Add(GetUnit(fP.UnitFactory, eType, islands[0], new Vector3(eType.GetName().Length-6,0,eType.DamageMultiplierAgainst(new Magma())-2)));
             FocusOnUnit(units[0]);
             units[0].CurrentAction=new EnterShipAction(ship);
+            units[2].CurrentAction = new EnterShipAction(ship);
         }
         catch (Exception e)
         {
@@ -42,9 +43,10 @@ public class UGame : MonoBehaviour
         }
     }
 
-    private Unit GetUnit(UnitFactory fac, IElementType eType, Island visIsland)
+    private Unit GetUnit(UnitFactory fac, IElementType eType, Island visIsland,Vector3 pos)
     {
         var u = fac.Create();
+        u.Position = pos;
         u.ElementType = eType;
         u.Container = visIsland;
         u.MaxSpeed = 1f;
@@ -54,7 +56,7 @@ public class UGame : MonoBehaviour
     private void FocusOnUnit(Unit u)
     {
         cam = cam ?? new FollowCamera(u);
-        m = m ?? new Mover(u);
+        m = m ?? new Mover(u,fP.ModelToEntity);
         cam.toFollow = u;
         m.unit = u;
     }
@@ -62,7 +64,7 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
-        ship.Position += new Vector3(0.8f*-Time.deltaTime,0,0);
+        ship.Position += new Vector3(0.2f*-Time.deltaTime,0,0);
         fP.UnitMovementControllerFactory.Update(Time.deltaTime);
         fP.UnitActionHandlerFactory.Update();
         cam.update();

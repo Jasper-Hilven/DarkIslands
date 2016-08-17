@@ -2,6 +2,7 @@
 {
     public interface IUnitCommand
     {
-        
+        IUnitAction GetAction();
+
     }
 }

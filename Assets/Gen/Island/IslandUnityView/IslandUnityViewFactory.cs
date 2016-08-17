@@ -4,6 +4,11 @@ namespace DarkIslands
   public partial class IslandUnityViewFactory: IIslandElementFactory
   {
 public Dictionary<Island,IslandUnityView> Elements= new Dictionary<Island,IslandUnityView>();
+    public ModelToEntity ModelToEntity;
+
+    public IslandUnityViewFactory(ModelToEntity ModelToEntity){
+      this.ModelToEntity= ModelToEntity;
+    }
 
     public void RemoveExtension(Island Island){
       var element = Elements[Island];

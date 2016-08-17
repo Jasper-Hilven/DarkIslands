@@ -8,5 +8,9 @@
         }
 
         public Ship Ship { get; set; }
+        public IUnitAction GetAction()
+        {
+            return new EnterShipAction(Ship);
+        }
     }
 }
