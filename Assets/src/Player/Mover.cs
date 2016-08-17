@@ -48,8 +48,7 @@ namespace DarkIslands.Player
                     var island = obj as Island;
                     if (island != null)
                     {
-                        var relPos= new Vector3(hitPoint.x, hitPoint.y, hitPoint.z) - unit.Container.Position;
-                        unit.CurrentCommand= new GoToRelativePositionCommand(relPos);   
+                        unit.CurrentCommand= new GoToIslandPositionCommand(unit,hitPoint,island);   
                     }
 
                 }

@@ -18,19 +18,45 @@ namespace DarkIslands
       }
     }
       private Vector3 _Position{get;set;}
-    public Vector3 Speed
+    public Vector3 GoalPosition
     {
       get{
-        return _Speed;
+        return _GoalPosition;
       }
       set
       {
-        this._Speed= value;
+        this._GoalPosition= value;
         foreach( var vShipChanged in ChangeListeners)
-          vShipChanged.SpeedChanged();
+          vShipChanged.GoalPositionChanged();
       }
     }
-      private Vector3 _Speed{get;set;}
+      private Vector3 _GoalPosition{get;set;}
+    public bool HasGoalPosition
+    {
+      get{
+        return _HasGoalPosition;
+      }
+      set
+      {
+        this._HasGoalPosition= value;
+        foreach( var vShipChanged in ChangeListeners)
+          vShipChanged.HasGoalPositionChanged();
+      }
+    }
+      private bool _HasGoalPosition{get;set;}
+    public float MaxSpeed
+    {
+      get{
+        return _MaxSpeed;
+      }
+      set
+      {
+        this._MaxSpeed= value;
+        foreach( var vShipChanged in ChangeListeners)
+          vShipChanged.MaxSpeedChanged();
+      }
+    }
+      private float _MaxSpeed{get;set;}
     public int LifePoints
     {
       get{
