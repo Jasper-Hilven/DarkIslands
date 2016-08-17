@@ -5,6 +5,7 @@ namespace DarkIslands
 {
     public class EnterShipAction : IUnitAction
     {
+        private static float enterdistancesSq = 0.5f*0.5f;
         public EnterShipAction(Ship ship)
         {
             this.Ship = ship;
@@ -19,7 +20,7 @@ namespace DarkIslands
                 unit.HasRelativeGoalPosition = true;
             }
             var distance = unit.Position - this.Ship.Position;
-            if (distance.sqrMagnitude < 1)
+            if (distance.sqrMagnitude < enterdistancesSq)
             {
                 
                 unit.ContainerToEnter = this.Ship;
