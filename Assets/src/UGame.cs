@@ -47,7 +47,7 @@ public class UGame : MonoBehaviour
         }
         catch (Exception e)
         {
-            Console.WriteLine();
+            Console.WriteLine(e);
         }
     }
 
@@ -58,6 +58,8 @@ public class UGame : MonoBehaviour
         u.ElementType = eType;
         u.Container = visIsland;
         u.hasLight = true;
+        u.ElementInfo= eType.IsLightning? new ElementInfo(5,1,1,1,1):new ElementInfo(eType,2) ;
+        u.hasElementView = true;
         u.MaxSpeed = 1f;
         return u;
     }
@@ -76,6 +78,7 @@ public class UGame : MonoBehaviour
         fP.UnitMovementControllerFactory.Update(Time.deltaTime);
         fP.UnitActionHandlerFactory.Update();
         fP.ShipMovementControllerFactory.Update(Time.deltaTime);
+        fP.UnitELementViewFactory.Update(Time.deltaTime);
         cam.update();
         m.Update();
     }

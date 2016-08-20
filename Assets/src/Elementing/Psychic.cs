@@ -13,10 +13,22 @@ namespace DarkIslands
         {
             return SGetName();
         }
+
+        public int GetIndex()
+        {
+            return 2;
+        }
+
         public Color GetColor()
         {
             return Color.white;
         }
+
+        public bool IsLightning { get; private set; }
+        public bool IsMagma { get; private set; }
+        public bool IsPsychic { get { return true; } }
+        public bool IsToxic { get; private set; }
+        public bool IsWater { get; private set; }
 
         public float DamageMultiplierAgainst(IElementType other)
         {

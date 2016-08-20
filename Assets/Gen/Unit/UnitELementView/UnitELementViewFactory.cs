@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 namespace DarkIslands
 {
-  public partial class UnitLightControllerFactory: IUnitElementFactory
+  public partial class UnitELementViewFactory: IUnitElementFactory
   {
-public Dictionary<Unit,UnitLightController> Elements= new Dictionary<Unit,UnitLightController>();
+public Dictionary<Unit,UnitELementView> Elements= new Dictionary<Unit,UnitELementView>();
 
     public void RemoveExtension(Unit Unit){
       var element = Elements[Unit];
@@ -12,7 +12,7 @@ public Dictionary<Unit,UnitLightController> Elements= new Dictionary<Unit,UnitLi
     }
 
     public void ExtendUnit(Unit Unit){
-      var element =new UnitLightController(Unit, this);
+      var element =new UnitELementView(Unit, this);
       Elements.Add(Unit,element);
       Unit.ChangeListeners.Add(element);
     }

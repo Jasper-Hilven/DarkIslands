@@ -19,7 +19,7 @@ namespace DarkIslands
     public UnitContainerManagerFactory UnitContainerManagerFactory;
     public IWOContainerControllerUnitFactory IWOContainerControllerUnitFactory;
     public UnitLightControllerFactory UnitLightControllerFactory;
-    public UnitManaViewFactory UnitManaViewFactory;
+    public UnitELementViewFactory UnitELementViewFactory;
     public WorldObjectHarvestControllerFactory WorldObjectHarvestControllerFactory;
     public WorldObjectFactory WorldObjectFactory;
     public WorldObjectUnityViewFactory WorldObjectUnityViewFactory;
@@ -43,7 +43,7 @@ var CollisionProvider= new CollisionProvider();
       this.UnitContainerManagerFactory= new UnitContainerManagerFactory();
       this.IWOContainerControllerUnitFactory= new IWOContainerControllerUnitFactory();
       this.UnitLightControllerFactory= new UnitLightControllerFactory();
-      this.UnitManaViewFactory= new UnitManaViewFactory();
+      this.UnitELementViewFactory= new UnitELementViewFactory();
       this.WorldObjectHarvestControllerFactory= new WorldObjectHarvestControllerFactory();
       this.WorldObjectFactory= new WorldObjectFactory();
       this.WorldObjectUnityViewFactory= new WorldObjectUnityViewFactory(ModelToEntity);
@@ -61,7 +61,7 @@ var CollisionProvider= new CollisionProvider();
       UnitFactory.SubFactories.Add(UnitContainerManagerFactory);
       UnitFactory.SubFactories.Add(IWOContainerControllerUnitFactory);
       UnitFactory.SubFactories.Add(UnitLightControllerFactory);
-      UnitFactory.SubFactories.Add(UnitManaViewFactory);
+      UnitFactory.SubFactories.Add(UnitELementViewFactory);
       WorldObjectFactory.SubFactories.Add(WorldObjectHarvestControllerFactory);
       WorldObjectFactory.SubFactories.Add(WorldObjectUnityViewFactory);
     }

@@ -9,6 +9,12 @@ namespace DarkIslands
         {
             return SGetName();
         }
+
+        public int GetIndex()
+        {
+            return 1;
+        }
+
         public static string SGetName()
         {
             return "Magma";
@@ -17,6 +23,12 @@ namespace DarkIslands
         {
             return Color.red;
         }
+
+        public bool IsLightning { get; private set; }
+        public bool IsMagma { get { return true; } }
+        public bool IsPsychic { get; private set; }
+        public bool IsToxic { get; private set; }
+        public bool IsWater { get; private set; }
 
 
         public float DamageMultiplierAgainst(IElementType other)
