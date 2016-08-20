@@ -148,5 +148,57 @@ namespace DarkIslands
       }
     }
       private IUnitCommand _CurrentCommand{get;set;}
+    public bool hasLight
+    {
+      get{
+        return _hasLight;
+      }
+      set
+      {
+        this._hasLight= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.hasLightChanged();
+      }
+    }
+      private bool _hasLight{get;set;}
+    public bool hasElementView
+    {
+      get{
+        return _hasElementView;
+      }
+      set
+      {
+        this._hasElementView= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.hasElementViewChanged();
+      }
+    }
+      private bool _hasElementView{get;set;}
+    public ElementInfo ElementInfo
+    {
+      get{
+        return _ElementInfo;
+      }
+      set
+      {
+        this._ElementInfo= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.ElementInfoChanged();
+      }
+    }
+      private ElementInfo _ElementInfo{get;set;}
+    public IWOContainerController IWOContainerController
+    {
+      get{
+        return _IWOContainerController;
+      }
+      set
+      {
+        this._IWOContainerController= value;
+        foreach( var vUnitChanged in ChangeListeners)
+          vUnitChanged.IWOContainerControllerChanged();
+      }
+    }
+      private IWOContainerController _IWOContainerController{get;set;}
   }
 }

@@ -16,5 +16,9 @@ namespace DarkIslands{
     public virtual void ContainerToEnterChanged(){}
     public virtual void CurrentActionChanged(){}
     public virtual void CurrentCommandChanged(){}
+    public virtual void hasLightChanged(){}
+    public virtual void hasElementViewChanged(){}
+    public virtual void ElementInfoChanged(){}
+    public virtual void IWOContainerControllerChanged(){}
   }
 }

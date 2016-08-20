@@ -11,4 +11,8 @@ void ContainerChanged();
 void ContainerToEnterChanged();
 void CurrentActionChanged();
 void CurrentCommandChanged();
+void hasLightChanged();
+void hasElementViewChanged();
+void ElementInfoChanged();
+void IWOContainerControllerChanged();
 }

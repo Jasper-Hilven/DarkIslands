@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace DarkIslands
 {
@@ -18,8 +19,23 @@ namespace DarkIslands
             var currentShip = unit.Container as Ship;
             if (currentShip == null)
             {
-                unit.
+                unit.CurrentAction = null;
+                return;
             }
+            var intendedPosition = island.Position + relativeIslandPosition;
+            if (currentShip.Position != intendedPosition)
+            {
+                currentShip.GoalPosition = intendedPosition;
+                if (!currentShip.HasGoalPosition)
+                    currentShip.HasGoalPosition = true;
+
+            }
+            else
+            {
+                unit.ContainerToEnter = island;
+                unit.CurrentAction = null;
+            }
+
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DarkIslands
@@ -36,6 +37,8 @@ namespace DarkIslands
             unit.Container = null;
             units.Remove(unit);
         }
+        public List<Unit> GetContainingUnits
+        { get { return units.ToList(); } }
 
         public bool CanMoveForUnit(Unit unit)
         {

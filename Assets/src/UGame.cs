@@ -22,11 +22,19 @@ public class UGame : MonoBehaviour
         {
             fP = new FactoryProvider();
             fP.Initialize();
+            for (int i = 0; i < 100; i+=3)
+            {
+                var tree = fP.WorldObjectFactory.Create();
+                tree.Type = WorldObjectType.Tree;
+                tree.Position= new Vector3(i%10,0,i/10);
+            }
+
             ship = fP.ShipFactory.Create();
             ship.Position = new Vector3(2,0.2f,4);
+            ship.MaxSpeed = 0.4f;
             for (int i = 0; i < 2; i++)
             {
-                var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(9 * i, i, 2));
+                var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
                 islands.Add(simpleIsland);
             }
 
@@ -49,6 +57,7 @@ public class UGame : MonoBehaviour
         u.Position = pos;
         u.ElementType = eType;
         u.Container = visIsland;
+        u.hasLight = true;
         u.MaxSpeed = 1f;
         return u;
     }

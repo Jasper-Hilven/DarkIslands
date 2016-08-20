@@ -7,7 +7,7 @@ namespace DarkIslands
         public Island InitializeSimpleIsland(Vector3 position)
         {
             var island = this.Create();
-            island.Size = 4f;
+            island.Size = 20f;
             island.Position = position;
             return island;
         }

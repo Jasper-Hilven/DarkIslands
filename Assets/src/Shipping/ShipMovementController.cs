@@ -21,7 +21,7 @@
 
         public override void PositionChanged()
         {
-            Ship.HasGoalPosition = Ship.HasGoalPosition || Ship.GoalPosition != Ship.Position;
+            Ship.HasGoalPosition = Ship.HasGoalPosition && Ship.GoalPosition != Ship.Position;
         }
 
         public void Update(float deltaTime)

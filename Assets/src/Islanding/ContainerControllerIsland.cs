@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DarkIslands
 {
     public partial class ContainerControllerIsland:UnitContainerController
     {
-        public List<Unit> units = new List<Unit>();
+        public List<Unit> Units = new List<Unit>();
         public override void Init(Island Island, ContainerControllerIslandFactory ContainerControllerIslandFactory)
         {
             Island.UnitContainerController = this;
@@ -27,8 +28,8 @@ namespace DarkIslands
         {
             if (unit.Container != null)
                 return;
-            units.Add(unit);
-            unit.Container = this.Island;
+            Units.Add(unit);
+            unit.Container = Island;
         }
 
         public void RemoveUnit(Unit unit)
@@ -36,16 +37,19 @@ namespace DarkIslands
             if (unit.Container != Island)
                 return;
             unit.Container = null;
-            units.Remove(unit);
+            Units.Remove(unit);
         }
+
+        public List<Unit> GetContainingUnits
+        { get {return Units.ToList();} }
 
         public bool CanMoveForUnit(Unit unit)
         {
-            return units.Contains(unit);
+            return Units.Contains(unit);
         }
         public override void PositionChanged()
         {
-            foreach (var unit in units)
+            foreach (var unit in Units)
             {
                 unit.ContainerPosition = Island.Position;
             }
