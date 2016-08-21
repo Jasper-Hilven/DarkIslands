@@ -8,7 +8,7 @@ namespace DarkIslands
         public GameObject GetUnitVisualization()
         {
             var go= gB.LoadViaResources("Unit");
-            go.transform.localScale= new Vector3(0.3f,0.3f,0.3f);
+            go.transform.localScale= new Vector3(1f,1.7f,1f);
             return go;
         }
         public void Destroy(GameObject gObject)

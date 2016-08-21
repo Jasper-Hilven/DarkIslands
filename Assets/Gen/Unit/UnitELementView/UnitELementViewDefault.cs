@@ -19,6 +19,6 @@ namespace DarkIslands{
     public virtual void hasLightChanged(){}
     public virtual void hasElementViewChanged(){}
     public virtual void ElementInfoChanged(){}
-    public virtual void IWOContainerControllerChanged(){}
+    public virtual void WOContainerControllerChanged(){}
   }
 }

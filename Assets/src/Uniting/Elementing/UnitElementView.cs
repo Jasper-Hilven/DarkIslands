@@ -62,8 +62,8 @@ namespace DarkIslands
                 if (ElementBalls[i] == null)
                     continue;
                 var rotation = 4*(rotationTime+ rotationDiff*i);
-                var rotTrans = 0.4f;
-                var pos = Unit.Position + new Vector3(rotTrans*Mathf.Cos(rotation), 2, rotTrans*Mathf.Sin(rotation));
+                var rotTrans = 0.7f;
+                var pos = Unit.Position + new Vector3(rotTrans*Mathf.Cos(rotation), 3, rotTrans*Mathf.Sin(rotation));
                 ElementBalls[i].transform.localPosition = pos;
             }
         }

@@ -8,5 +8,6 @@ namespace DarkIslands{
     public virtual void PositionChanged(){}
     public virtual void SizeChanged(){}
     public virtual void UnitContainerControllerChanged(){}
+    public virtual void WOContainerControllerChanged(){}
   }
 }

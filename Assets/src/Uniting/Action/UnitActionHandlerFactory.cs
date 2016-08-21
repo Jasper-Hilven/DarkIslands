@@ -7,12 +7,12 @@ namespace DarkIslands
     {
         public HashSet<UnitActionHandler> toUpdate= new HashSet<UnitActionHandler>();
 
-        public void Update()
+        public void Update(float deltaTime)
         {
             var toUpClone = toUpdate.ToList();
             foreach (var unitActionHandler in toUpClone)
             {
-                unitActionHandler.Update();
+                unitActionHandler.Update(deltaTime);
             }
         }
     }

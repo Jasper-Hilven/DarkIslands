@@ -36,7 +36,7 @@ namespace DarkIslands
         {
             if (unitLight == null)
                 return;
-            this.unitLight.transform.localPosition = this.Unit.Position + new Vector3(0, 2, 0);
+            this.unitLight.transform.localPosition = this.Unit.Position + new Vector3(0, 4, 0);
         }
 
         public override void Destroy()

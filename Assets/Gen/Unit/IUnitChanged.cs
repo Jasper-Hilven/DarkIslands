@@ -14,5 +14,5 @@ void CurrentCommandChanged();
 void hasLightChanged();
 void hasElementViewChanged();
 void ElementInfoChanged();
-void IWOContainerControllerChanged();
+void WOContainerControllerChanged();
 }

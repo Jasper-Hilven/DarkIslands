@@ -11,10 +11,10 @@ namespace DarkIslands
         public EmbarkShipToIslandAction(Vector3 absoluteIslandPosition, Island island)
         {
             relativeIslandPosition = absoluteIslandPosition - island.Position;
-            this.island = island;
+            this.island = island;   
         }
 
-        public void Update(Unit unit)
+        public void Update(Unit unit,float deltaTime)
         {
             var currentShip = unit.Container as Ship;
             if (currentShip == null)
@@ -23,7 +23,7 @@ namespace DarkIslands
                 return;
             }
             var intendedPosition = island.Position + relativeIslandPosition;
-            if (currentShip.Position != intendedPosition)
+            if ((currentShip.Position - intendedPosition).sqrMagnitude > 0.01f)
             {
                 currentShip.GoalPosition = intendedPosition;
                 if (!currentShip.HasGoalPosition)

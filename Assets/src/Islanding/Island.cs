@@ -2,7 +2,7 @@
 
 namespace DarkIslands
 {
-    public partial class Island:IUnitContainer
+    public partial class Island:IUnitContainer,IWOContainer
     {
     }
 }

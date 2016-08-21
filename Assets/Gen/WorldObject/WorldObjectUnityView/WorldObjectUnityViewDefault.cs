@@ -9,5 +9,8 @@ namespace DarkIslands{
     public virtual void PositionChanged(){}
     public virtual void HarvestControllerChanged(){}
     public virtual void TypeChanged(){}
+    public virtual void RelativePositionChanged(){}
+    public virtual void ContainerPositionChanged(){}
+    public virtual void ContainerChanged(){}
   }
 }

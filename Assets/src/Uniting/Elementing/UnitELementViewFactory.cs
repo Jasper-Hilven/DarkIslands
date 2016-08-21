@@ -13,7 +13,7 @@ namespace DarkIslands
         {
             var gO= gM.LoadViaResources("UnitElementBall");
             gO.GetComponent<Renderer>().material.color = eType.GetColor();
-            gO.transform.localScale = gO.transform.localScale * (0.2f* Mathf.Sqrt(size));
+            gO.transform.localScale = gO.transform.localScale * (0.7f* Mathf.Sqrt(size));
             return gO;
         }
         public void DestroyElementView(GameObject ElementView)

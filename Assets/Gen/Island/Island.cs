@@ -44,5 +44,18 @@ namespace DarkIslands
       }
     }
       private UnitContainerController _UnitContainerController{get;set;}
+    public IWOContainerController WOContainerController
+    {
+      get{
+        return _WOContainerController;
+      }
+      set
+      {
+        this._WOContainerController= value;
+        foreach( var vIslandChanged in ChangeListeners)
+          vIslandChanged.WOContainerControllerChanged();
+      }
+    }
+      private IWOContainerController _WOContainerController{get;set;}
   }
 }

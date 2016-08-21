@@ -19,12 +19,12 @@
             Unit.CurrentCommand = null;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
 
             if (this.Unit.CurrentAction == null)
                 return;
-            this.Unit.CurrentAction.Update(this.Unit);
+            this.Unit.CurrentAction.Update(this.Unit,deltaTime);
 
         }
         public override void CurrentActionChanged()

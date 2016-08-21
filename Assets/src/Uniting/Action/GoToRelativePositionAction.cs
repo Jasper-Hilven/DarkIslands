@@ -10,7 +10,7 @@ namespace DarkIslands
         {
             this.relativePosition = relativePosition;
         }
-        public void Update(Unit unit)
+        public void Update(Unit unit, float deltaTime)
         {
             if (unit.RelativeGoalPosition != relativePosition)
             {

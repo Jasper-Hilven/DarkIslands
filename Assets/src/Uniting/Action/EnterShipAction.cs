@@ -12,7 +12,7 @@ namespace DarkIslands
         }
 
         public Ship Ship { get; set; }
-        public void Update(Unit unit)
+        public void Update(Unit unit,float deltaTime)
         {
             if (unit.RelativeGoalPosition != this.Ship.Position - unit.ContainerPosition)
             {

@@ -6,7 +6,7 @@ namespace DarkIslands
     public partial class UnitMovementController
     {
         public Unit Unit { get; set; }
-        private float arrivalDistance = 0.01f * 0.01f;
+        private float arrivalDistance = 0.1f * 0.1f;
         private UnitMovementControllerFactory fac;
 
         public override void Init(Unit Unit, UnitMovementControllerFactory UnitMovementControllerFactory)

@@ -22,27 +22,28 @@ public class UGame : MonoBehaviour
         {
             fP = new FactoryProvider();
             fP.Initialize();
-            for (int i = 0; i < 100; i+=3)
-            {
-                var tree = fP.WorldObjectFactory.Create();
-                tree.Type = WorldObjectType.Tree;
-                tree.Position= new Vector3(i%10,0,i/10);
-            }
 
             ship = fP.ShipFactory.Create();
-            ship.Position = new Vector3(2,0.2f,4);
-            ship.MaxSpeed = 0.4f;
+            ship.Position = new Vector3(2, 0.2f, 4);
+            ship.MaxSpeed = 3f;
             for (int i = 0; i < 2; i++)
             {
                 var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
                 islands.Add(simpleIsland);
             }
+            for (int i = 0; i < 100; i += 3)
+            {
+                var tree = fP.WorldObjectFactory.Create();
+                tree.Type = WorldObjectType.Tree;
+                islands[0].WOContainerController.AddWO(tree);
+                tree.RelativePosition = new Vector3(i % 10, 0, i / 10);
+            }
 
             var elementTypes = new List<IElementType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
             foreach (var eType in elementTypes)
-                units.Add(GetUnit(fP.UnitFactory, eType, islands[0], new Vector3(eType.GetName().Length-6,0,eType.DamageMultiplierAgainst(new Magma())-2)));
+                units.Add(GetUnit(fP.UnitFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
             FocusOnUnit(units[0]);
-            units[0].CurrentAction=new EnterShipAction(ship);
+            units[0].CurrentAction = new EnterShipAction(ship);
             units[2].CurrentAction = new EnterShipAction(ship);
         }
         catch (Exception e)
@@ -51,23 +52,23 @@ public class UGame : MonoBehaviour
         }
     }
 
-    private Unit GetUnit(UnitFactory fac, IElementType eType, Island visIsland,Vector3 pos)
+    private Unit GetUnit(UnitFactory fac, IElementType eType, Island visIsland, Vector3 pos)
     {
         var u = fac.Create();
         u.Position = pos;
         u.ElementType = eType;
-        u.Container = visIsland;
+        visIsland.UnitContainerController.AddUnit(u);
         u.hasLight = true;
-        u.ElementInfo= eType.IsLightning? new ElementInfo(5,1,1,1,1):new ElementInfo(eType,2) ;
+        u.ElementInfo = eType.IsLightning ? new ElementInfo(3, 3, 6, 11, 1) : new ElementInfo(eType, 2);
         u.hasElementView = true;
-        u.MaxSpeed = 1f;
+        u.MaxSpeed = 2f;
         return u;
     }
 
     private void FocusOnUnit(Unit u)
     {
         cam = cam ?? new FollowCamera(u);
-        m = m ?? new Mover(u,fP.ModelToEntity);
+        m = m ?? new Mover(u, fP.ModelToEntity);
         cam.toFollow = u;
         m.unit = u;
     }
@@ -76,9 +77,10 @@ public class UGame : MonoBehaviour
     {
         UpdateFocussedUnit();
         fP.UnitMovementControllerFactory.Update(Time.deltaTime);
-        fP.UnitActionHandlerFactory.Update();
+        fP.UnitActionHandlerFactory.Update(Time.deltaTime);
         fP.ShipMovementControllerFactory.Update(Time.deltaTime);
         fP.UnitELementViewFactory.Update(Time.deltaTime);
+        islands[0].Position = islands[0].Position + new Vector3(Time.deltaTime / 10f, 0, 0);
         cam.update();
         m.Update();
     }

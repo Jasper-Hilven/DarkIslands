@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 namespace DarkIslands
 {
-  public partial class WorldObjectHarvestControllerFactory: IWorldObjectElementFactory
+  public partial class WOHarvestControllerFactory: IWorldObjectElementFactory
   {
-public Dictionary<WorldObject,WorldObjectHarvestController> Elements= new Dictionary<WorldObject,WorldObjectHarvestController>();
+public Dictionary<WorldObject,WOHarvestController> Elements= new Dictionary<WorldObject,WOHarvestController>();
 
     public void RemoveExtension(WorldObject WorldObject){
       var element = Elements[WorldObject];
@@ -12,7 +12,7 @@ public Dictionary<WorldObject,WorldObjectHarvestController> Elements= new Dictio
     }
 
     public void ExtendWorldObject(WorldObject WorldObject){
-      var element =new WorldObjectHarvestController(WorldObject, this);
+      var element =new WOHarvestController(WorldObject, this);
       Elements.Add(WorldObject,element);
       WorldObject.ChangeListeners.Add(element);
     }

@@ -50,6 +50,11 @@ namespace DarkIslands.Player
                     {
                         unit.CurrentCommand= new GoToIslandPositionCommand(unit,hitPoint,island);   
                     }
+                    var wo = obj as WorldObject;
+                    if (wo != null)
+                    {
+                        
+                    }
 
                 }
                 catch (Exception e)

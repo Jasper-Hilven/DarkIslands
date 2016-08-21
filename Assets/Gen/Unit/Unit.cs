@@ -187,18 +187,18 @@ namespace DarkIslands
       }
     }
       private ElementInfo _ElementInfo{get;set;}
-    public IWOContainerController IWOContainerController
+    public IWOContainerController WOContainerController
     {
       get{
-        return _IWOContainerController;
+        return _WOContainerController;
       }
       set
       {
-        this._IWOContainerController= value;
+        this._WOContainerController= value;
         foreach( var vUnitChanged in ChangeListeners)
-          vUnitChanged.IWOContainerControllerChanged();
+          vUnitChanged.WOContainerControllerChanged();
       }
     }
-      private IWOContainerController _IWOContainerController{get;set;}
+      private IWOContainerController _WOContainerController{get;set;}
   }
 }

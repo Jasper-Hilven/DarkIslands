@@ -31,7 +31,7 @@ namespace DarkIslands
       }
     }
       private Vector3 _Position{get;set;}
-    public WorldObjectHarvestController HarvestController
+    public WOHarvestController HarvestController
     {
       get{
         return _HarvestController;
@@ -43,7 +43,7 @@ namespace DarkIslands
           vWorldObjectChanged.HarvestControllerChanged();
       }
     }
-      private WorldObjectHarvestController _HarvestController{get;set;}
+      private WOHarvestController _HarvestController{get;set;}
     public WorldObjectType Type
     {
       get{
@@ -57,5 +57,44 @@ namespace DarkIslands
       }
     }
       private WorldObjectType _Type{get;set;}
+    public Vector3 RelativePosition
+    {
+      get{
+        return _RelativePosition;
+      }
+      set
+      {
+        this._RelativePosition= value;
+        foreach( var vWorldObjectChanged in ChangeListeners)
+          vWorldObjectChanged.RelativePositionChanged();
+      }
+    }
+      private Vector3 _RelativePosition{get;set;}
+    public Vector3 ContainerPosition
+    {
+      get{
+        return _ContainerPosition;
+      }
+      set
+      {
+        this._ContainerPosition= value;
+        foreach( var vWorldObjectChanged in ChangeListeners)
+          vWorldObjectChanged.ContainerPositionChanged();
+      }
+    }
+      private Vector3 _ContainerPosition{get;set;}
+    public IWOContainer Container
+    {
+      get{
+        return _Container;
+      }
+      set
+      {
+        this._Container= value;
+        foreach( var vWorldObjectChanged in ChangeListeners)
+          vWorldObjectChanged.ContainerChanged();
+      }
+    }
+      private IWOContainer _Container{get;set;}
   }
 }
