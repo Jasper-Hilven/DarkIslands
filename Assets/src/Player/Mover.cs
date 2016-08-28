@@ -9,7 +9,7 @@ namespace DarkIslands.Player
         public IslandElement unit;
         private ModelToEntity mToEntity;
 
-        public Mover(IslandElement unit,ModelToEntity mToEntity)
+        public Mover(IslandElement unit, ModelToEntity mToEntity)
         {
             this.unit = unit;
             this.mToEntity = mToEntity;
@@ -34,29 +34,22 @@ namespace DarkIslands.Player
             {
                 var hitPoint = hit.point;
 
-                unit.HasRelativeGoalPosition = true;
                 var gameObject = hit.collider.gameObject;
-                try
+
+                var obj = mToEntity.modelToEntity[gameObject];
+                var island = obj as Island;
+                if (island != null)
                 {
-                    var obj = mToEntity.modelToEntity[gameObject];
-                    var island = obj as Island;
-                    if (island != null)
-                    {
-                        unit.CurrentCommand= new GoToIslandPositionCommand(unit,hitPoint,island);   
-                    }
-                    var wo = obj as IslandElement;
-                    if (wo != null)
-                    {
-                        
-                    }
+                    unit.CurrentCommand = new GoToIslandPositionCommand(unit, hitPoint, island);
+                }
+                var wo = obj as IslandElement;
+                if (wo != null)
+                {
 
                 }
-                catch (Exception e)
-                {
-                    Console.Write(e.Message);
-                    return;
-                }
-                
+
+
+
             }
         }
     }

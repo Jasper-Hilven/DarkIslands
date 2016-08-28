@@ -7,7 +7,7 @@
 
         public override void Init(IslandElement IslandElement, IslandElementActionHandlerFactory UnitActionHandlerFactory)
         {
-            this.Unit = Unit;
+            this.Unit = IslandElement;
             this.UnitActionHandlerFactory = UnitActionHandlerFactory;
         }
 
