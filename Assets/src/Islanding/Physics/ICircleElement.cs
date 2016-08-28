@@ -5,18 +5,17 @@ namespace DarkIslands
     public interface ICircleElement
     {
         CircleElementProperties CircleElementProperties { get; }
+        Vector3 CollisionPosition { get; }
     }
 
     public class CircleElementProperties
     {
-        public CircleElementProperties(float radius, Vector3 position)
+        public CircleElementProperties(float radius)
         {
             Radius = radius;
-            Position = position;
         }
 
         public float Radius { get; private set; }
-        public Vector3 Position { get; private set; }
 
     }
 }

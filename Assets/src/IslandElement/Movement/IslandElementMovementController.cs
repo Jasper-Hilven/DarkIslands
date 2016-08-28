@@ -100,7 +100,8 @@ namespace DarkIslands
                 return;
             if (this.IslandElement.Island == null)
                 return;
-            var goalDistance = this.IslandElement.RelativeGoalPosition - this.IslandElement.RelativeToContainerPosition;
+            var oldPosition = this.IslandElement.RelativeToContainerPosition;
+            var goalDistance = this.IslandElement.RelativeGoalPosition - oldPosition;
             var maxMovement = this.IslandElement.MaxSpeed * deltaTime;
             if (goalDistance.sqrMagnitude < maxMovement * maxMovement)
             {
@@ -109,8 +110,9 @@ namespace DarkIslands
             }
             goalDistance.Normalize();
             var movement = maxMovement * goalDistance.normalized;
-            var newPosition = this.IslandElement.RelativeToContainerPosition + movement;
-            this.IslandElement.RelativeToContainerPosition = ProjectRelativePositionToContainer(newPosition);
+            var newPosition = oldPosition + movement;
+            if(this.IslandElement.Island.IslandCollision.CanMoveTowards(IslandElement,oldPosition,newPosition))
+              this.IslandElement.RelativeToContainerPosition = ProjectRelativePositionToContainer(newPosition);
         }
 
         public override void Destroy()

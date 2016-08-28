@@ -8,6 +8,7 @@ namespace DarkIslands
     {
         public Dictionary<IntVector2, List<ICircleElement>> BaseElements =
             new Dictionary<IntVector2, List<ICircleElement>>();
+        public Dictionary<ICircleElement, IntVector2> CurrentPositions = new Dictionary<ICircleElement, IntVector2>();
 
         private float resolution;
 
@@ -18,12 +19,12 @@ namespace DarkIslands
 
         public void Add(ICircleElement element)
         {
-            AddElement(element,GetBasePosition(element.CircleElementProperties.Position));
+            AddElement(element,GetBasePosition(element.CollisionPosition));
         }
 
         public void Remove(ICircleElement element)
         {
-            RemoveElement(element, GetBasePosition(element.CircleElementProperties.Position));
+            RemoveElement(element, GetBasePosition(element.CollisionPosition));
         }
 
         private IntVector2 GetBasePosition(Vector3 position)
@@ -33,9 +34,12 @@ namespace DarkIslands
 
         private List<ICircleElement> GetElements(IntVector2 chunk)
         {
-            if (BaseElements[chunk] == null)
-                BaseElements[chunk] = new List<ICircleElement>();
-            return BaseElements[chunk];
+            List<ICircleElement> ret;
+            if (BaseElements.TryGetValue(chunk, out ret))
+                return ret;
+            ret = new List<ICircleElement>();
+            BaseElements.Add(chunk,ret);
+            return ret;
         }
 
         private void MoveElementBetweenChunks(ICircleElement element, IntVector2 oldPosition, IntVector2 newPosition)
@@ -46,6 +50,7 @@ namespace DarkIslands
 
         private void AddElement(ICircleElement element, IntVector2 newPosition)
         {
+            CurrentPositions[element] = newPosition;
             GetElements(new IntVector2(newPosition.x - 1, newPosition.y - 1)).Add(element);
             GetElements(new IntVector2(newPosition.x - 1, newPosition.y)).Add(element);
             GetElements(new IntVector2(newPosition.x - 1, newPosition.y + 1)).Add(element);
@@ -59,6 +64,7 @@ namespace DarkIslands
 
         private void RemoveElement(ICircleElement element, IntVector2 oldPosition)
         {
+            CurrentPositions.Remove(element);
             GetElements(oldPosition).Remove(element);
             GetElements(new IntVector2(oldPosition.x - 1, oldPosition.y - 1)).Remove(element);
             GetElements(new IntVector2(oldPosition.x - 1, oldPosition.y)).Remove(element);
@@ -71,9 +77,9 @@ namespace DarkIslands
             GetElements(new IntVector2(oldPosition.x + 1, oldPosition.y + 1)).Remove(element);
         }
 
-        public void Move(ICircleElement element, Vector3 previousPosition, Vector3 Position)
+        public void Move(ICircleElement element, Vector3 Position)
         {
-            var oldBasePosition = GetBasePosition(previousPosition);
+            var oldBasePosition = CurrentPositions[element];
             var newBasePosition = GetBasePosition(Position);
             if (oldBasePosition == newBasePosition)
                 return;
@@ -87,7 +93,7 @@ namespace DarkIslands
         {
             if (a == b)
                 return false;
-            return (a.CircleElementProperties.Position - bPosition).sqrMagnitude <= (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
+            return (a.CollisionPosition - bPosition).sqrMagnitude <= (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
         }
         public bool CanMoveWithoutCollision(ICircleElement element, Vector3 Position)
         {

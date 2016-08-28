@@ -21,9 +21,16 @@ namespace DarkIslands
                 return;
             }
             if (IslandElement.Island != null)
-                IslandElement.Island.ContainerControllerIsland.RemoveUnit(IslandElement);
+                IslandElement.Island.ContainerControllerIsland.RemoveElement(IslandElement);
             IslandElement.IslandToEnter.ContainerControllerIsland.AddElement(IslandElement);
             IslandElement.IslandToEnter = null;
+        }
+
+        public override void RelativeToContainerPositionChanged()
+        {
+            if (IslandElement.Island == null)
+                return;
+            IslandElement.Island.ContainerControllerIsland.MoveElement(IslandElement,IslandElement.RelativeToContainerPosition);
         }
     }
 }
