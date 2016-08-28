@@ -31,31 +31,44 @@ namespace DarkIslands
       }
     }
       private float _Size{get;set;}
-    public UnitContainerController UnitContainerController
+    public ContainerControllerIsland ContainerControllerIsland
     {
       get{
-        return _UnitContainerController;
+        return _ContainerControllerIsland;
       }
       set
       {
-        this._UnitContainerController= value;
+        this._ContainerControllerIsland= value;
         foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.UnitContainerControllerChanged();
+          vIslandChanged.ContainerControllerIslandChanged();
       }
     }
-      private UnitContainerController _UnitContainerController{get;set;}
-    public IWOContainerController WOContainerController
+      private ContainerControllerIsland _ContainerControllerIsland{get;set;}
+    public OnIslandCollision IslandCollision
     {
       get{
-        return _WOContainerController;
+        return _IslandCollision;
       }
       set
       {
-        this._WOContainerController= value;
+        this._IslandCollision= value;
         foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.WOContainerControllerChanged();
+          vIslandChanged.IslandCollisionChanged();
       }
     }
-      private IWOContainerController _WOContainerController{get;set;}
+      private OnIslandCollision _IslandCollision{get;set;}
+    public CircleElementProperties CircleElementProperties
+    {
+      get{
+        return _CircleElementProperties;
+      }
+      set
+      {
+        this._CircleElementProperties= value;
+        foreach( var vIslandChanged in ChangeListeners)
+          vIslandChanged.CircleElementPropertiesChanged();
+      }
+    }
+      private CircleElementProperties _CircleElementProperties{get;set;}
   }
 }

@@ -7,7 +7,8 @@ namespace DarkIslands{
     }
     public virtual void PositionChanged(){}
     public virtual void SizeChanged(){}
-    public virtual void UnitContainerControllerChanged(){}
-    public virtual void WOContainerControllerChanged(){}
+    public virtual void ContainerControllerIslandChanged(){}
+    public virtual void IslandCollisionChanged(){}
+    public virtual void CircleElementPropertiesChanged(){}
   }
 }

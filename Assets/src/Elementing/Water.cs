@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace DarkIslands
 {
-    public class Water: IElementType 
+    public class Water: IElementalType 
     {
         public static string SGetName()
         {
             return "Water";
         }
 
-        string IElementType.GetName()
+        string IElementalType.GetName()
         {
             return Water.SGetName();
         }
@@ -32,7 +32,7 @@ namespace DarkIslands
         public bool IsToxic { get; private set; }
         public bool IsWater { get { return true; } }
 
-        public float DamageMultiplierAgainst(IElementType other)
+        public float DamageMultiplierAgainst(IElementalType other)
         {
             if (other.GetName() == Water.SGetName())
                 return 1;

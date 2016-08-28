@@ -10,22 +10,17 @@ public class UGame : MonoBehaviour
 {
 
     // Use this for initialization
-    private Ship ship;
     private List<Island> islands = new List<Island>();
     private FactoryProvider fP;
     private FollowCamera cam;
     private Mover m;
-    private List<Unit> units = new List<Unit>();
+    private List<IslandElement> units = new List<IslandElement>();
+    private List<IslandElement> trees = new List<IslandElement>();
     void Start()
     {
-        try
-        {
             fP = new FactoryProvider();
             fP.Initialize();
 
-            ship = fP.ShipFactory.Create();
-            ship.Position = new Vector3(2, 0.2f, 4);
-            ship.MaxSpeed = 3f;
             for (int i = 0; i < 2; i++)
             {
                 var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
@@ -33,39 +28,35 @@ public class UGame : MonoBehaviour
             }
             for (int i = 0; i < 100; i += 3)
             {
-                var tree = fP.WorldObjectFactory.Create();
-                tree.Type = WorldObjectType.Tree;
-                islands[0].WOContainerController.AddWO(tree);
-                tree.RelativePosition = new Vector3(i % 10, 0, i / 10);
+                var tree = fP.IslandElementFactory.Create();
+                tree.IslandElementViewSettings = new IslandElementViewSettings() {IsTree = true};
+                trees.Add(tree);
+                islands[0].ContainerControllerIsland.AddElement(tree);
+                tree.RelativeToContainerPosition = new Vector3(i % 10, 0, i / 10);
             }
 
-            var elementTypes = new List<IElementType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
+            var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
             foreach (var eType in elementTypes)
-                units.Add(GetUnit(fP.UnitFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
+                units.Add(GetUnit(fP.IslandElementFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
             FocusOnUnit(units[0]);
-            units[0].CurrentAction = new EnterShipAction(ship);
-            units[2].CurrentAction = new EnterShipAction(ship);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
     }
 
-    private Unit GetUnit(UnitFactory fac, IElementType eType, Island visIsland, Vector3 pos)
+    private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos)
     {
         var u = fac.Create();
         u.Position = pos;
-        u.ElementType = eType;
-        visIsland.UnitContainerController.AddUnit(u);
+        
+        visIsland.ContainerControllerIsland.AddElement(u);
+        u.IslandElementViewSettings=new IslandElementViewSettings() {IsUnit = true};
         u.hasLight = true;
-        u.ElementInfo = eType.IsLightning ? new ElementInfo(3, 3, 6, 11, 1) : new ElementInfo(eType, 2);
-        u.hasElementView = true;
+        u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
+        u.ElementalType = eType;
+        u.hasElementalView = true;
         u.MaxSpeed = 2f;
         return u;
     }
 
-    private void FocusOnUnit(Unit u)
+    private void FocusOnUnit(IslandElement u)
     {
         cam = cam ?? new FollowCamera(u);
         m = m ?? new Mover(u, fP.ModelToEntity);
@@ -76,10 +67,9 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
-        fP.UnitMovementControllerFactory.Update(Time.deltaTime);
-        fP.UnitActionHandlerFactory.Update(Time.deltaTime);
-        fP.ShipMovementControllerFactory.Update(Time.deltaTime);
-        fP.UnitELementViewFactory.Update(Time.deltaTime);
+        fP.IslandElementMovementControllerFactory.Update(Time.deltaTime);
+        fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
+        fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         islands[0].Position = islands[0].Position + new Vector3(Time.deltaTime / 10f, 0, 0);
         cam.update();
         m.Update();

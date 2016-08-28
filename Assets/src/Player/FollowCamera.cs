@@ -6,8 +6,8 @@ namespace DarkIslands.Player
     public class FollowCamera
     {
         private Camera camera;
-        public Unit toFollow;
-        public FollowCamera(Unit unit)
+        public IslandElement toFollow;
+        public FollowCamera(IslandElement unit)
         {
             this.toFollow = unit;
         }

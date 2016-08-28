@@ -6,10 +6,10 @@ namespace DarkIslands.Player
 {
     public class Mover
     {
-        public Unit unit;
+        public IslandElement unit;
         private ModelToEntity mToEntity;
 
-        public Mover(Unit unit,ModelToEntity mToEntity)
+        public Mover(IslandElement unit,ModelToEntity mToEntity)
         {
             this.unit = unit;
             this.mToEntity = mToEntity;
@@ -39,18 +39,12 @@ namespace DarkIslands.Player
                 try
                 {
                     var obj = mToEntity.modelToEntity[gameObject];
-                    var ship = obj as Ship;
-                    if (ship != null)
-                    {
-                        unit.CurrentCommand=new EnterShipCommand(ship);
-                        return;
-                    }
                     var island = obj as Island;
                     if (island != null)
                     {
                         unit.CurrentCommand= new GoToIslandPositionCommand(unit,hitPoint,island);   
                     }
-                    var wo = obj as WorldObject;
+                    var wo = obj as IslandElement;
                     if (wo != null)
                     {
                         

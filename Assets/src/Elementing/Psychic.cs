@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DarkIslands
 {
-    public class Psychic:IElementType
+    public class Psychic:IElementalType
     {
         public static string SGetName()
         {
@@ -30,7 +30,7 @@ namespace DarkIslands
         public bool IsToxic { get; private set; }
         public bool IsWater { get; private set; }
 
-        public float DamageMultiplierAgainst(IElementType other)
+        public float DamageMultiplierAgainst(IElementalType other)
         {
             if (other.GetName() == Psychic.SGetName())
                 return 1f;

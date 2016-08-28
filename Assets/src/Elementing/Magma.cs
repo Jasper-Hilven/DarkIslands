@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DarkIslands
 {
-    public class Magma:IElementType
+    public class Magma:IElementalType
     {
         public string GetName()
         {
@@ -31,7 +31,7 @@ namespace DarkIslands
         public bool IsWater { get; private set; }
 
 
-        public float DamageMultiplierAgainst(IElementType other)
+        public float DamageMultiplierAgainst(IElementalType other)
         {
             if (other.GetName() == Magma.SGetName())
                 return 1f;

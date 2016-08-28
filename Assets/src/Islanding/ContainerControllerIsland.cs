@@ -5,53 +5,49 @@ using UnityEngine;
 
 namespace DarkIslands
 {
-    public partial class ContainerControllerIsland:UnitContainerController
+    public partial class ContainerControllerIsland
     {
-        public List<Unit> Units = new List<Unit>();
+        public List<IslandElement> IslandElements = new List<IslandElement>();
         public override void Init(Island Island, ContainerControllerIslandFactory ContainerControllerIslandFactory)
         {
-            Island.UnitContainerController = this;
+            Island.ContainerControllerIsland = this;
             this.Island = Island;
             base.Init(Island, ContainerControllerIslandFactory);
-
         }
 
+        public Island Island { get; set; }
 
-        public IUnitContainer Island { get; set; }
 
-        public bool CanAddUnit(Unit unit)
+       
+
+        public void AddElement(IslandElement unit)
         {
-            return true;
-        }
-
-        public void AddUnit(Unit unit)
-        {
-            if (unit.Container != null)
+            if (unit.Island != null)
                 return;
-            Units.Add(unit);
-            unit.Container = Island;
+            IslandElements.Add(unit);
+            unit.Island = Island;
         }
 
-        public void RemoveUnit(Unit unit)
+        public void RemoveUnit(IslandElement unit)
         {
-            if (unit.Container != Island)
+            if (unit.Island != Island)
                 return;
-            unit.Container = null;
-            Units.Remove(unit);
+            unit.Island = null;
+            IslandElements.Remove(unit);
         }
 
-        public List<Unit> GetContainingUnits
-        { get {return Units.ToList();} }
+        public List<IslandElement> GetContainingUnits
+        { get {return IslandElements.ToList();} }
 
-        public bool CanMoveForUnit(Unit unit)
+        public bool CanMoveForUnit(IslandElement unit)
         {
-            return Units.Contains(unit);
+            return false;
         }
         public override void PositionChanged()
         {
-            foreach (var unit in Units)
+            foreach (var unit in GetContainingUnits)
             {
-                unit.ContainerPosition = Island.Position;
+                unit.IslandPosition = Island.Position;
             }
         }
 
