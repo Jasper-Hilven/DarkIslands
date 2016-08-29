@@ -93,7 +93,7 @@ namespace DarkIslands
         {
             if (a == b)
                 return false;
-            return (a.CollisionPosition - bPosition).sqrMagnitude <= (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
+            return (a.CollisionPosition - bPosition).sqrMagnitude < (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
         }
         public bool CanMoveWithoutCollision(ICircleElement element, Vector3 Position)
         {
@@ -114,21 +114,20 @@ namespace DarkIslands
         public Vector3 GetElementPositionWithoutColliding(ICircleElement element, Vector3 oldPosition, Vector3 newPosition)
         {
             var newBasePosition = GetBasePosition(newPosition);
-            var allButMe = GetElements(newBasePosition).Where(e => e!= element);
+            var allButMe = GetElements(newBasePosition).Where(e => e!= element).ToList();
             newPosition = allButMe.Aggregate(newPosition, (current, circleElement) => PushPositionAway(current, element.CircleElementProperties.Radius, circleElement));
-            return newPosition;
+            return !CanMoveWithoutCollision(element, newPosition) ? oldPosition : newPosition; //If still collision after correction => Don't move
         }
 
         public Vector3 PushPositionAway(Vector3 Position, float radius, ICircleElement other)
         {
             var otherRad = other.CircleElementProperties.Radius;
-
             var distance = Position - other.CollisionPosition;
             var sqrMagnitude = distance.sqrMagnitude;
             var totalRadius = otherRad+radius;
             if (sqrMagnitude > totalRadius* totalRadius)
                 return Position;
-            return other.CollisionPosition + totalRadius*distance.normalized;
+            return other.CollisionPosition + (totalRadius+0.01f)*distance.normalized;
         }
 
     }

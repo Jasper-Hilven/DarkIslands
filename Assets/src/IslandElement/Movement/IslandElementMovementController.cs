@@ -111,9 +111,10 @@ namespace DarkIslands
             goalDistance.Normalize();
             var movement = maxMovement * goalDistance.normalized;
             var newPosition = oldPosition + movement;
+            var moveElementWithoutColliding = IslandElement.Island.IslandCollision.MoveElementWithoutColliding(IslandElement, oldPosition,
+                newPosition);
             this.IslandElement.RelativeToContainerPosition =
-                   IslandElement.Island.IslandCollision.MoveElementWithoutColliding(IslandElement, oldPosition,
-                       newPosition);
+                   new Vector3(moveElementWithoutColliding.x,0,moveElementWithoutColliding.z);
 
         }
 
