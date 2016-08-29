@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
-
 namespace DarkIslands
 {
   public partial class OnIslandCollision:OnIslandCollisionDefault
@@ -8,6 +6,5 @@ namespace DarkIslands
     public OnIslandCollision(Island Island, OnIslandCollisionFactory OnIslandCollisionFactory){
     Init(Island, OnIslandCollisionFactory);
     }
-
   }
 }
