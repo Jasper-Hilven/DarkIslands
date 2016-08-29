@@ -78,7 +78,7 @@ namespace DarkIslands
             throw new Exception("Container type not known");
         }
 
-       
+
         private Vector3 ProjectRelativePositionToIsland(Vector3 relativePosition)
         {
             var visitingIsland = IslandElement.Island as Island;
@@ -111,8 +111,10 @@ namespace DarkIslands
             goalDistance.Normalize();
             var movement = maxMovement * goalDistance.normalized;
             var newPosition = oldPosition + movement;
-            if(this.IslandElement.Island.IslandCollision.CanMoveTowards(IslandElement,oldPosition,newPosition))
-              this.IslandElement.RelativeToContainerPosition = ProjectRelativePositionToContainer(newPosition);
+            this.IslandElement.RelativeToContainerPosition =
+                   IslandElement.Island.IslandCollision.MoveElementWithoutColliding(IslandElement, oldPosition,
+                       newPosition);
+
         }
 
         public override void Destroy()

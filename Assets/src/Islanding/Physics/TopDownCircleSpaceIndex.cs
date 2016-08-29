@@ -110,5 +110,26 @@ namespace DarkIslands
             }
             return GetElements(newBasePosition).Any(e => collide(e, element, Position));
         }
+
+        public Vector3 GetElementPositionWithoutColliding(ICircleElement element, Vector3 oldPosition, Vector3 newPosition)
+        {
+            var newBasePosition = GetBasePosition(newPosition);
+            var allButMe = GetElements(newBasePosition).Where(e => e!= element);
+            newPosition = allButMe.Aggregate(newPosition, (current, circleElement) => PushPositionAway(current, element.CircleElementProperties.Radius, circleElement));
+            return newPosition;
+        }
+
+        public Vector3 PushPositionAway(Vector3 Position, float radius, ICircleElement other)
+        {
+            var otherRad = other.CircleElementProperties.Radius;
+
+            var distance = Position - other.CollisionPosition;
+            var sqrMagnitude = distance.sqrMagnitude;
+            var totalRadius = otherRad+radius;
+            if (sqrMagnitude > totalRadius* totalRadius)
+                return Position;
+            return other.CollisionPosition + totalRadius*distance.normalized;
+        }
+
     }
 }

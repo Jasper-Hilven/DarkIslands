@@ -27,5 +27,13 @@ namespace DarkIslands
         {
             return spaceIndex.CanMoveWithoutCollision(mover, newPosition);
         }
+        public Vector3 MoveElementWithoutColliding(IslandElement islandElement, Vector3 oldPosition, Vector3 newPosition)
+        {
+            if (!CanMoveTowards(islandElement, oldPosition, newPosition))
+                newPosition = spaceIndex.GetElementPositionWithoutColliding(islandElement, oldPosition, newPosition);
+            MoveElement(islandElement, newPosition);
+            return newPosition;
+        }
+
     }
 }

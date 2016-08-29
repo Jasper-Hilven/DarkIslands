@@ -30,14 +30,14 @@ public class UGame : MonoBehaviour
             {
                 var tree = fP.IslandElementFactory.Create();
                 tree.IslandElementViewSettings = new IslandElementViewSettings() {IsTree = true};
-                tree.CircleElementProperties= new CircleElementProperties(0.1f);
+                tree.CircleElementProperties= new CircleElementProperties(0.5f);
                 trees.Add(tree);
                 islands[0].ContainerControllerIsland.AddElement(tree);
                 tree.RelativeToContainerPosition = new Vector3(2*(i % 10), 0, 2*(i / 10));
             }
 
             var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
-            foreach (var eType in elementTypes.Skip(4))
+            foreach (var eType in elementTypes.Skip(0))
                 units.Add(GetUnit(fP.IslandElementFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
             FocusOnUnit(units[0]);
     }
@@ -52,7 +52,7 @@ public class UGame : MonoBehaviour
         u.hasLight = true;
         u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
         u.ElementalType = eType;
-        u.CircleElementProperties= new CircleElementProperties(0.1f);
+        u.CircleElementProperties= new CircleElementProperties(0.5f);
         u.hasElementalView = true;
         u.MaxSpeed = 2f;
         return u;
