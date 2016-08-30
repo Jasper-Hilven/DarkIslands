@@ -22,6 +22,7 @@ namespace DarkIslands{
     public virtual void IsElementalColoredChanged(){}
     public virtual void ElementalInfoChanged(){}
     public virtual void HarvestControllerChanged(){}
+    public virtual void HarvestInfoChanged(){}
     public virtual void CircleElementPropertiesChanged(){}
   }
 }

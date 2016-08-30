@@ -17,5 +17,6 @@ void hasElementalViewChanged();
 void IsElementalColoredChanged();
 void ElementalInfoChanged();
 void HarvestControllerChanged();
+void HarvestInfoChanged();
 void CircleElementPropertiesChanged();
 }

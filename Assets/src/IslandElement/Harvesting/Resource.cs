@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DarkIslands.Harvesting
+namespace DarkIslands
 {
     public enum ResourceType
     {

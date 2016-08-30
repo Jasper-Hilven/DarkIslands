@@ -226,6 +226,19 @@ namespace DarkIslands
       }
     }
       private HarvestController _HarvestController{get;set;}
+    public HarvestInfo HarvestInfo
+    {
+      get{
+        return _HarvestInfo;
+      }
+      set
+      {
+        this._HarvestInfo= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.HarvestInfoChanged();
+      }
+    }
+      private HarvestInfo _HarvestInfo{get;set;}
     public CircleElementProperties CircleElementProperties
     {
       get{

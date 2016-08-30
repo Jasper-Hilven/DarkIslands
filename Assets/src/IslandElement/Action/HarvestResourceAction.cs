@@ -2,9 +2,10 @@
 {
     public class HarvestResourceAction : IIslandElementAction
     {
+        public enum HarvestAction{ Chop,Mine,Smash}
         private IslandElement resource;
         private float harvestTime = 0f;
-        public HarvestResourceAction(IslandElement unit, IslandElement resource)
+        public HarvestResourceAction(IslandElement unit, IslandElement resource, HarvestAction action)
         {
             this.resource = resource;
         }
