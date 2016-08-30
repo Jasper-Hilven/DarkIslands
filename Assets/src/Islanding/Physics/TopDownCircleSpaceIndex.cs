@@ -93,6 +93,10 @@ namespace DarkIslands
         {
             if (a == b)
                 return false;
+            if (a.CircleElementProperties == null)
+                return false;
+            if (b.CircleElementProperties == null)
+                return false;
             return (a.CollisionPosition - bPosition).sqrMagnitude < (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
         }
         public bool CanMoveWithoutCollision(ICircleElement element, Vector3 Position)

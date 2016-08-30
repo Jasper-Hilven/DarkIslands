@@ -24,9 +24,10 @@ public class UGame : MonoBehaviour
             for (int i = 0; i < 2; i++)
             {
                 var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
-                islands.Add(simpleIsland);
+            simpleIsland.CircleElementProperties = new CircleElementProperties(1);
+            islands.Add(simpleIsland);
             }
-            for (int i = 0; i < 360; i += 5 )
+            for (int i = 0; i < 360; i += 8 )
             {
                 var tree = fP.IslandElementFactory.Create();
                 tree.IslandElementViewSettings = new IslandElementViewSettings() {IsTree = true};
@@ -34,7 +35,7 @@ public class UGame : MonoBehaviour
                 trees.Add(tree);
                 islands[0].ContainerControllerIsland.AddElement(tree);
                 var radAngle = 2*Mathf.PI/360f*i;
-                tree.RelativeToContainerPosition = new Vector3(10*Mathf.Cos(radAngle), 0, 10 * Mathf.Sin(radAngle));
+                tree.RelativeToContainerPosition = new Vector3(18*Mathf.Cos(radAngle), 0, 18 * Mathf.Sin(radAngle));
             }
 
             var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
