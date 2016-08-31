@@ -5,71 +5,32 @@ namespace DarkIslands
   public partial class IslandElement
   {
   public List<IIslandElementChanged> ChangeListeners= new List<IIslandElementChanged>();
-    public IElementalType ElementalType
+    public int LifePoints
     {
       get{
-        return _ElementalType;
+        return _LifePoints;
       }
       set
       {
-        this._ElementalType= value;
+        this._LifePoints= value;
         foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.ElementalTypeChanged();
+          vIslandElementChanged.LifePointsChanged();
       }
     }
-      private IElementalType _ElementalType{get;set;}
-    public Vector3 RelativeGoalPosition
+      private int _LifePoints{get;set;}
+    public Inventory Inventory
     {
       get{
-        return _RelativeGoalPosition;
+        return _Inventory;
       }
       set
       {
-        this._RelativeGoalPosition= value;
+        this._Inventory= value;
         foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.RelativeGoalPositionChanged();
+          vIslandElementChanged.InventoryChanged();
       }
     }
-      private Vector3 _RelativeGoalPosition{get;set;}
-    public bool HasRelativeGoalPosition
-    {
-      get{
-        return _HasRelativeGoalPosition;
-      }
-      set
-      {
-        this._HasRelativeGoalPosition= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.HasRelativeGoalPositionChanged();
-      }
-    }
-      private bool _HasRelativeGoalPosition{get;set;}
-    public float MaxSpeed
-    {
-      get{
-        return _MaxSpeed;
-      }
-      set
-      {
-        this._MaxSpeed= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.MaxSpeedChanged();
-      }
-    }
-      private float _MaxSpeed{get;set;}
-    public Vector3 Position
-    {
-      get{
-        return _Position;
-      }
-      set
-      {
-        this._Position= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.PositionChanged();
-      }
-    }
-      private Vector3 _Position{get;set;}
+      private Inventory _Inventory{get;set;}
     public Vector3 IslandPosition
     {
       get{
@@ -96,6 +57,19 @@ namespace DarkIslands
       }
     }
       private Vector3 _RelativeToContainerPosition{get;set;}
+    public Vector3 Position
+    {
+      get{
+        return _Position;
+      }
+      set
+      {
+        this._Position= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.PositionChanged();
+      }
+    }
+      private Vector3 _Position{get;set;}
     public Island Island
     {
       get{
@@ -122,6 +96,58 @@ namespace DarkIslands
       }
     }
       private Island _IslandToEnter{get;set;}
+    public CircleElementProperties CircleElementProperties
+    {
+      get{
+        return _CircleElementProperties;
+      }
+      set
+      {
+        this._CircleElementProperties= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.CircleElementPropertiesChanged();
+      }
+    }
+      private CircleElementProperties _CircleElementProperties{get;set;}
+    public float MaxSpeed
+    {
+      get{
+        return _MaxSpeed;
+      }
+      set
+      {
+        this._MaxSpeed= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.MaxSpeedChanged();
+      }
+    }
+      private float _MaxSpeed{get;set;}
+    public Vector3 RelativeGoalPosition
+    {
+      get{
+        return _RelativeGoalPosition;
+      }
+      set
+      {
+        this._RelativeGoalPosition= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.RelativeGoalPositionChanged();
+      }
+    }
+      private Vector3 _RelativeGoalPosition{get;set;}
+    public bool HasRelativeGoalPosition
+    {
+      get{
+        return _HasRelativeGoalPosition;
+      }
+      set
+      {
+        this._HasRelativeGoalPosition= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.HasRelativeGoalPositionChanged();
+      }
+    }
+      private bool _HasRelativeGoalPosition{get;set;}
     public IIslandElementAction CurrentAction
     {
       get{
@@ -161,58 +187,6 @@ namespace DarkIslands
       }
     }
       private bool _hasLight{get;set;}
-    public IslandElementViewSettings IslandElementViewSettings
-    {
-      get{
-        return _IslandElementViewSettings;
-      }
-      set
-      {
-        this._IslandElementViewSettings= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.IslandElementViewSettingsChanged();
-      }
-    }
-      private IslandElementViewSettings _IslandElementViewSettings{get;set;}
-    public bool hasElementalView
-    {
-      get{
-        return _hasElementalView;
-      }
-      set
-      {
-        this._hasElementalView= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.hasElementalViewChanged();
-      }
-    }
-      private bool _hasElementalView{get;set;}
-    public bool IsElementalColored
-    {
-      get{
-        return _IsElementalColored;
-      }
-      set
-      {
-        this._IsElementalColored= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.IsElementalColoredChanged();
-      }
-    }
-      private bool _IsElementalColored{get;set;}
-    public ElementalInfo ElementalInfo
-    {
-      get{
-        return _ElementalInfo;
-      }
-      set
-      {
-        this._ElementalInfo= value;
-        foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.ElementalInfoChanged();
-      }
-    }
-      private ElementalInfo _ElementalInfo{get;set;}
     public HarvestController HarvestController
     {
       get{
@@ -239,18 +213,135 @@ namespace DarkIslands
       }
     }
       private HarvestInfo _HarvestInfo{get;set;}
-    public CircleElementProperties CircleElementProperties
+    public bool IsElementalColored
     {
       get{
-        return _CircleElementProperties;
+        return _IsElementalColored;
       }
       set
       {
-        this._CircleElementProperties= value;
+        this._IsElementalColored= value;
         foreach( var vIslandElementChanged in ChangeListeners)
-          vIslandElementChanged.CircleElementPropertiesChanged();
+          vIslandElementChanged.IsElementalColoredChanged();
       }
     }
-      private CircleElementProperties _CircleElementProperties{get;set;}
+      private bool _IsElementalColored{get;set;}
+    public bool hasElementalView
+    {
+      get{
+        return _hasElementalView;
+      }
+      set
+      {
+        this._hasElementalView= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.hasElementalViewChanged();
+      }
+    }
+      private bool _hasElementalView{get;set;}
+    public ElementalInfo ElementalInfo
+    {
+      get{
+        return _ElementalInfo;
+      }
+      set
+      {
+        this._ElementalInfo= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.ElementalInfoChanged();
+      }
+    }
+      private ElementalInfo _ElementalInfo{get;set;}
+    public IElementalType ElementalType
+    {
+      get{
+        return _ElementalType;
+      }
+      set
+      {
+        this._ElementalType= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.ElementalTypeChanged();
+      }
+    }
+      private IElementalType _ElementalType{get;set;}
+    public int ManaPoints
+    {
+      get{
+        return _ManaPoints;
+      }
+      set
+      {
+        this._ManaPoints= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.ManaPointsChanged();
+      }
+    }
+      private int _ManaPoints{get;set;}
+    public int MaxManaPoints
+    {
+      get{
+        return _MaxManaPoints;
+      }
+      set
+      {
+        this._MaxManaPoints= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.MaxManaPointsChanged();
+      }
+    }
+      private int _MaxManaPoints{get;set;}
+    public bool CanUseMana
+    {
+      get{
+        return _CanUseMana;
+      }
+      set
+      {
+        this._CanUseMana= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.CanUseManaChanged();
+      }
+    }
+      private bool _CanUseMana{get;set;}
+    public bool IsSpawned
+    {
+      get{
+        return _IsSpawned;
+      }
+      set
+      {
+        this._IsSpawned= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.IsSpawnedChanged();
+      }
+    }
+      private bool _IsSpawned{get;set;}
+    public IslandElement SpawnParent
+    {
+      get{
+        return _SpawnParent;
+      }
+      set
+      {
+        this._SpawnParent= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.SpawnParentChanged();
+      }
+    }
+      private IslandElement _SpawnParent{get;set;}
+    public IslandElementViewSettings IslandElementViewSettings
+    {
+      get{
+        return _IslandElementViewSettings;
+      }
+      set
+      {
+        this._IslandElementViewSettings= value;
+        foreach( var vIslandElementChanged in ChangeListeners)
+          vIslandElementChanged.IslandElementViewSettingsChanged();
+      }
+    }
+      private IslandElementViewSettings _IslandElementViewSettings{get;set;}
   }
 }

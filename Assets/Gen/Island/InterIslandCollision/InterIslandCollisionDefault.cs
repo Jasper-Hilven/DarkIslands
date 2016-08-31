@@ -7,6 +7,7 @@ namespace DarkIslands{
     }
     public virtual void PositionChanged(){}
     public virtual void SizeChanged(){}
+    public virtual void SpeedChanged(){}
     public virtual void ContainerControllerIslandChanged(){}
     public virtual void IslandCollisionChanged(){}
     public virtual void CircleElementPropertiesChanged(){}

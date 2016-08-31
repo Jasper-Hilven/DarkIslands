@@ -3,47 +3,60 @@ namespace DarkIslands
   public class FactoryProvider
   {
     public IslandFactory IslandFactory;
-    public IslandUnityViewFactory IslandUnityViewFactory;
+    public IslandSizeControllerFactory IslandSizeControllerFactory;
+    public IslandMovementControllerFactory IslandMovementControllerFactory;
     public ContainerControllerIslandFactory ContainerControllerIslandFactory;
     public OnIslandCollisionFactory OnIslandCollisionFactory;
     public InterIslandCollisionFactory InterIslandCollisionFactory;
+    public IslandUnityViewFactory IslandUnityViewFactory;
     public IslandManaControllerFactory IslandManaControllerFactory;
     public IslandElementFactory IslandElementFactory;
-    public IslandElementUnityViewFactory IslandElementUnityViewFactory;
+    public InventoryControllerFactory InventoryControllerFactory;
+    public IslandElementContainerManagerFactory IslandElementContainerManagerFactory;
     public IslandElementMovementControllerFactory IslandElementMovementControllerFactory;
     public IslandElementActionHandlerFactory IslandElementActionHandlerFactory;
-    public IslandElementContainerManagerFactory IslandElementContainerManagerFactory;
     public IslandElementLightControllerFactory IslandElementLightControllerFactory;
-    public IslandElementElementalViewFactory IslandElementElementalViewFactory;
     public HarvestControllerFactory HarvestControllerFactory;
+    public IslandElementElementalViewFactory IslandElementElementalViewFactory;
+    public IslandElementSpawnControllerFactory IslandElementSpawnControllerFactory;
+    public IslandElementUnityViewFactory IslandElementUnityViewFactory;
+    public LifeControllerFactory LifeControllerFactory;
 public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
       this.IslandFactory= new IslandFactory();
-      this.IslandUnityViewFactory= new IslandUnityViewFactory(ModelToEntity);
+      this.IslandSizeControllerFactory= new IslandSizeControllerFactory();
+      this.IslandMovementControllerFactory= new IslandMovementControllerFactory();
       this.ContainerControllerIslandFactory= new ContainerControllerIslandFactory();
       this.OnIslandCollisionFactory= new OnIslandCollisionFactory();
       this.InterIslandCollisionFactory= new InterIslandCollisionFactory();
+      this.IslandUnityViewFactory= new IslandUnityViewFactory(ModelToEntity);
       this.IslandManaControllerFactory= new IslandManaControllerFactory();
       this.IslandElementFactory= new IslandElementFactory();
-      this.IslandElementUnityViewFactory= new IslandElementUnityViewFactory(ModelToEntity);
+      this.InventoryControllerFactory= new InventoryControllerFactory();
+      this.IslandElementContainerManagerFactory= new IslandElementContainerManagerFactory();
       this.IslandElementMovementControllerFactory= new IslandElementMovementControllerFactory();
       this.IslandElementActionHandlerFactory= new IslandElementActionHandlerFactory();
-      this.IslandElementContainerManagerFactory= new IslandElementContainerManagerFactory();
       this.IslandElementLightControllerFactory= new IslandElementLightControllerFactory();
-      this.IslandElementElementalViewFactory= new IslandElementElementalViewFactory();
       this.HarvestControllerFactory= new HarvestControllerFactory();
-      IslandFactory.SubFactories.Add(IslandUnityViewFactory);
+      this.IslandElementElementalViewFactory= new IslandElementElementalViewFactory();
+      this.IslandElementSpawnControllerFactory= new IslandElementSpawnControllerFactory();
+      this.IslandElementUnityViewFactory= new IslandElementUnityViewFactory(ModelToEntity);
+      this.LifeControllerFactory= new LifeControllerFactory();
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
       IslandFactory.SubFactories.Add(OnIslandCollisionFactory);
       IslandFactory.SubFactories.Add(InterIslandCollisionFactory);
+      IslandFactory.SubFactories.Add(IslandUnityViewFactory);
       IslandFactory.SubFactories.Add(IslandManaControllerFactory);
-      IslandElementFactory.SubFactories.Add(IslandElementUnityViewFactory);
+      IslandElementFactory.SubFactories.Add(InventoryControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementContainerManagerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementMovementControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementActionHandlerFactory);
-      IslandElementFactory.SubFactories.Add(IslandElementContainerManagerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementLightControllerFactory);
-      IslandElementFactory.SubFactories.Add(IslandElementElementalViewFactory);
       IslandElementFactory.SubFactories.Add(HarvestControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementElementalViewFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementSpawnControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementUnityViewFactory);
+      IslandElementFactory.SubFactories.Add(LifeControllerFactory);
     }
   }
 }

@@ -1,22 +1,29 @@
 public interface IIslandElementChanged
 {
-void ElementalTypeChanged();
-void RelativeGoalPositionChanged();
-void HasRelativeGoalPositionChanged();
-void MaxSpeedChanged();
-void PositionChanged();
+void LifePointsChanged();
+void InventoryChanged();
 void IslandPositionChanged();
 void RelativeToContainerPositionChanged();
+void PositionChanged();
 void IslandChanged();
 void IslandToEnterChanged();
+void CircleElementPropertiesChanged();
+void MaxSpeedChanged();
+void RelativeGoalPositionChanged();
+void HasRelativeGoalPositionChanged();
 void CurrentActionChanged();
 void CurrentCommandChanged();
 void hasLightChanged();
-void IslandElementViewSettingsChanged();
-void hasElementalViewChanged();
-void IsElementalColoredChanged();
-void ElementalInfoChanged();
 void HarvestControllerChanged();
 void HarvestInfoChanged();
-void CircleElementPropertiesChanged();
+void IsElementalColoredChanged();
+void hasElementalViewChanged();
+void ElementalInfoChanged();
+void ElementalTypeChanged();
+void ManaPointsChanged();
+void MaxManaPointsChanged();
+void CanUseManaChanged();
+void IsSpawnedChanged();
+void SpawnParentChanged();
+void IslandElementViewSettingsChanged();
 }

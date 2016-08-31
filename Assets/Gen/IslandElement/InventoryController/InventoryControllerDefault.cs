@@ -1,9 +1,9 @@
 namespace DarkIslands{
-  public class IslandElementElementalViewDefault: IIslandElementChanged
+  public class InventoryControllerDefault: IIslandElementChanged
   {
     public virtual void Destroy(){
     }
-    public virtual void Init(IslandElement IslandElement, IslandElementElementalViewFactory IslandElementElementalViewFactory){
+    public virtual void Init(IslandElement IslandElement, InventoryControllerFactory InventoryControllerFactory){
     }
     public virtual void LifePointsChanged(){}
     public virtual void InventoryChanged(){}

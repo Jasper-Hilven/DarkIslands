@@ -31,6 +31,19 @@ namespace DarkIslands
       }
     }
       private float _Size{get;set;}
+    public float Speed
+    {
+      get{
+        return _Speed;
+      }
+      set
+      {
+        this._Speed= value;
+        foreach( var vIslandChanged in ChangeListeners)
+          vIslandChanged.SpeedChanged();
+      }
+    }
+      private float _Speed{get;set;}
     public ContainerControllerIsland ContainerControllerIsland
     {
       get{
