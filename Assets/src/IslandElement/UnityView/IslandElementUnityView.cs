@@ -22,7 +22,7 @@ namespace DarkIslands
                 this.UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement);
                 return;
             }
-            this.UIUnit = UnitUnityViewFactory.GetUnitVisualization();
+            this.UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);
         }
 
         public override void IsElementalColoredChanged()

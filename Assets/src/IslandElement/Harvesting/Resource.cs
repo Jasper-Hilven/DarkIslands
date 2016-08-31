@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DarkIslands
 {
@@ -12,5 +13,15 @@ namespace DarkIslands
         Ice,
         MindStone,
         PoisonBerry
+    }
+
+    public class ResourceAmount
+    {
+        public ResourceAmount(Dictionary<ResourceType, int> amount)
+        {
+            Amount = amount;
+        }
+
+        public Dictionary<ResourceType,int>Amount { get; private set; }
     }
 }

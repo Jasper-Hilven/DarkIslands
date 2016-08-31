@@ -27,7 +27,7 @@ namespace DarkIslands
                 return new HarvestResourceAction(Actor, Other, HarvestResourceAction.HarvestAction.Mine);
             if (Other.HarvestInfo.CanBeHarvestAttacked && Actor.HarvestInfo.CanHarvestAttack)
                 return new HarvestResourceAction(Actor, Other, HarvestResourceAction.HarvestAction.Smash);
-            throw new NotImplementedException("Follow unit or something like that.");
+            return new FollowAction(Actor, Other);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace DarkIslands.Player
                 var wo = obj as IslandElement;
                 if (wo != null)
                 {
-
+                    unit.CurrentCommand =new OtherIslandElementCommand(unit,wo);
                 }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DarkIslands
 {
@@ -17,6 +18,27 @@ namespace DarkIslands
         public bool CanBeChopped { get; private set; }
         public bool CanBeMined { get; private set; }
         public bool CanBeHarvestAttacked { get; private set;}
+
+        public bool CanBeHarvested(HarvestResourceAction.HarvestAction action)
+        {
+            if(action == HarvestResourceAction.HarvestAction.Chop)
+               return this.CanBeChopped;
+            if (action == HarvestResourceAction.HarvestAction.Mine)
+                return this.CanBeMined;
+            if (action == HarvestResourceAction.HarvestAction.Smash)
+                return this.CanBeHarvestAttacked;
+            throw new NotImplementedException();
+        }
+        public bool CanHarvest(HarvestResourceAction.HarvestAction action)
+        {
+            if (action == HarvestResourceAction.HarvestAction.Chop)
+                return this.CanChop;
+            if (action == HarvestResourceAction.HarvestAction.Mine)
+                return this.CanMine;
+            if (action == HarvestResourceAction.HarvestAction.Smash)
+                return this.CanHarvestAttack;
+            throw new NotImplementedException();
+        }
         public Dictionary<ResourceType,int> ResourcesToHarvest { get; private set; }
         
         public bool CanChop { get; private set; }

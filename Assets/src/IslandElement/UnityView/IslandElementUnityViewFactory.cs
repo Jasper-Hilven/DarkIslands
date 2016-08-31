@@ -7,9 +7,10 @@ namespace DarkIslands
         private GameObjectManager gB = new GameObjectManager();
         private System.Random r = new System.Random();
 
-        public GameObject GetUnitVisualization()
+        public GameObject GetUnitVisualization(IslandElement unit)
         {
             var go= gB.LoadViaResources("Unit");
+            this.ModelToEntity.modelToEntity.Add(go, unit);
             return go;
         }
         public GameObject GetTreeVisualization(IslandElement tree)

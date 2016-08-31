@@ -8,6 +8,7 @@ namespace DarkIslands
   public List<IIslandElementIsAliveChanged> ChangeIsAliveListeners= new List<IIslandElementIsAliveChanged>();
   public List<IIslandElementInventoryChanged> ChangeInventoryListeners= new List<IIslandElementInventoryChanged>();
   public List<IIslandElementHasInventoryChanged> ChangeHasInventoryListeners= new List<IIslandElementHasInventoryChanged>();
+  public List<IIslandElementInventoryControllerChanged> ChangeInventoryControllerListeners= new List<IIslandElementInventoryControllerChanged>();
   public List<IIslandElementIslandPositionChanged> ChangeIslandPositionListeners= new List<IIslandElementIslandPositionChanged>();
   public List<IIslandElementRelativeToContainerPositionChanged> ChangeRelativeToContainerPositionListeners= new List<IIslandElementRelativeToContainerPositionChanged>();
   public List<IIslandElementPositionChanged> ChangePositionListeners= new List<IIslandElementPositionChanged>();
@@ -87,6 +88,19 @@ namespace DarkIslands
       }
     }
       private bool _HasInventory{get;set;}
+    public InventoryController InventoryController
+    {
+      get{
+        return _InventoryController;
+      }
+      set
+      {
+        this._InventoryController= value;
+        foreach( var vIslandElementInventoryControllerChanged in ChangeInventoryControllerListeners)
+          vIslandElementInventoryControllerChanged.InventoryControllerChanged();
+      }
+    }
+      private InventoryController _InventoryController{get;set;}
     public Vector3 IslandPosition
     {
       get{
