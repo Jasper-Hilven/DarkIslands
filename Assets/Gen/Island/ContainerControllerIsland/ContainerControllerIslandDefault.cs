@@ -1,15 +1,11 @@
 namespace DarkIslands{
-  public class ContainerControllerIslandDefault: IIslandChanged
+  public class ContainerControllerIslandDefault: IIslandContainerControllerIslandChanged, IIslandPositionChanged
   {
     public virtual void Destroy(){
     }
     public virtual void Init(Island Island, ContainerControllerIslandFactory ContainerControllerIslandFactory){
     }
-    public virtual void PositionChanged(){}
-    public virtual void SizeChanged(){}
-    public virtual void SpeedChanged(){}
     public virtual void ContainerControllerIslandChanged(){}
-    public virtual void IslandCollisionChanged(){}
-    public virtual void CircleElementPropertiesChanged(){}
+    public virtual void PositionChanged(){}
   }
 }

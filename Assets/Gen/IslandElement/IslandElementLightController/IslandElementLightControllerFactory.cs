@@ -14,7 +14,8 @@ public Dictionary<IslandElement,IslandElementLightController> Elements= new Dict
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementLightController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
+      IslandElement.ChangehasLightListeners.Add(element);
+      IslandElement.ChangePositionListeners.Add(element);
     }
   }
 }

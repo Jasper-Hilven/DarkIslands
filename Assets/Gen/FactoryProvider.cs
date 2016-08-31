@@ -20,6 +20,9 @@ namespace DarkIslands
     public IslandElementElementalViewFactory IslandElementElementalViewFactory;
     public IslandElementSpawnControllerFactory IslandElementSpawnControllerFactory;
     public IslandElementUnityViewFactory IslandElementUnityViewFactory;
+    public IslandElementUnityAnimationControllerFactory IslandElementUnityAnimationControllerFactory;
+    public IslandElementHoverControllerFactory IslandElementHoverControllerFactory;
+    public IslandSelectionControllerFactory IslandSelectionControllerFactory;
     public LifeControllerFactory LifeControllerFactory;
 public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
@@ -41,6 +44,9 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       this.IslandElementElementalViewFactory= new IslandElementElementalViewFactory();
       this.IslandElementSpawnControllerFactory= new IslandElementSpawnControllerFactory();
       this.IslandElementUnityViewFactory= new IslandElementUnityViewFactory(ModelToEntity);
+      this.IslandElementUnityAnimationControllerFactory= new IslandElementUnityAnimationControllerFactory(ModelToEntity);
+      this.IslandElementHoverControllerFactory= new IslandElementHoverControllerFactory();
+      this.IslandSelectionControllerFactory= new IslandSelectionControllerFactory();
       this.LifeControllerFactory= new LifeControllerFactory();
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
       IslandFactory.SubFactories.Add(OnIslandCollisionFactory);
@@ -56,6 +62,9 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       IslandElementFactory.SubFactories.Add(IslandElementElementalViewFactory);
       IslandElementFactory.SubFactories.Add(IslandElementSpawnControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementUnityViewFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementUnityAnimationControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementHoverControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandSelectionControllerFactory);
       IslandElementFactory.SubFactories.Add(LifeControllerFactory);
     }
   }

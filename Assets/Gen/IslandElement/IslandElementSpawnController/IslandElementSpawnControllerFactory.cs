@@ -14,7 +14,6 @@ public Dictionary<IslandElement,IslandElementSpawnController> Elements= new Dict
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementSpawnController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
     }
   }
 }

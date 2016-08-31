@@ -14,7 +14,8 @@ public Dictionary<Island,ContainerControllerIsland> Elements= new Dictionary<Isl
     public void ExtendIsland(Island Island){
       var element =new ContainerControllerIsland(Island, this);
       Elements.Add(Island,element);
-      Island.ChangeListeners.Add(element);
+      Island.ChangeContainerControllerIslandListeners.Add(element);
+      Island.ChangePositionListeners.Add(element);
     }
   }
 }

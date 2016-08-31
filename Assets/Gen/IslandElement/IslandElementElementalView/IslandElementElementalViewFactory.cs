@@ -14,7 +14,10 @@ public Dictionary<IslandElement,IslandElementElementalView> Elements= new Dictio
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementElementalView(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
+      IslandElement.ChangeIsElementalColoredListeners.Add(element);
+      IslandElement.ChangehasElementalViewListeners.Add(element);
+      IslandElement.ChangeElementalInfoListeners.Add(element);
+      IslandElement.ChangeElementalTypeListeners.Add(element);
     }
   }
 }

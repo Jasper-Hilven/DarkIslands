@@ -4,7 +4,12 @@ namespace DarkIslands
 {
   public partial class Island
   {
-  public List<IIslandChanged> ChangeListeners= new List<IIslandChanged>();
+  public List<IIslandPositionChanged> ChangePositionListeners= new List<IIslandPositionChanged>();
+  public List<IIslandSizeChanged> ChangeSizeListeners= new List<IIslandSizeChanged>();
+  public List<IIslandSpeedChanged> ChangeSpeedListeners= new List<IIslandSpeedChanged>();
+  public List<IIslandContainerControllerIslandChanged> ChangeContainerControllerIslandListeners= new List<IIslandContainerControllerIslandChanged>();
+  public List<IIslandIslandCollisionChanged> ChangeIslandCollisionListeners= new List<IIslandIslandCollisionChanged>();
+  public List<IIslandCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandCircleElementPropertiesChanged>();
     public Vector3 Position
     {
       get{
@@ -13,8 +18,8 @@ namespace DarkIslands
       set
       {
         this._Position= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.PositionChanged();
+        foreach( var vIslandPositionChanged in ChangePositionListeners)
+          vIslandPositionChanged.PositionChanged();
       }
     }
       private Vector3 _Position{get;set;}
@@ -26,8 +31,8 @@ namespace DarkIslands
       set
       {
         this._Size= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.SizeChanged();
+        foreach( var vIslandSizeChanged in ChangeSizeListeners)
+          vIslandSizeChanged.SizeChanged();
       }
     }
       private float _Size{get;set;}
@@ -39,8 +44,8 @@ namespace DarkIslands
       set
       {
         this._Speed= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.SpeedChanged();
+        foreach( var vIslandSpeedChanged in ChangeSpeedListeners)
+          vIslandSpeedChanged.SpeedChanged();
       }
     }
       private float _Speed{get;set;}
@@ -52,8 +57,8 @@ namespace DarkIslands
       set
       {
         this._ContainerControllerIsland= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.ContainerControllerIslandChanged();
+        foreach( var vIslandContainerControllerIslandChanged in ChangeContainerControllerIslandListeners)
+          vIslandContainerControllerIslandChanged.ContainerControllerIslandChanged();
       }
     }
       private ContainerControllerIsland _ContainerControllerIsland{get;set;}
@@ -65,8 +70,8 @@ namespace DarkIslands
       set
       {
         this._IslandCollision= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.IslandCollisionChanged();
+        foreach( var vIslandIslandCollisionChanged in ChangeIslandCollisionListeners)
+          vIslandIslandCollisionChanged.IslandCollisionChanged();
       }
     }
       private OnIslandCollision _IslandCollision{get;set;}
@@ -78,8 +83,8 @@ namespace DarkIslands
       set
       {
         this._CircleElementProperties= value;
-        foreach( var vIslandChanged in ChangeListeners)
-          vIslandChanged.CircleElementPropertiesChanged();
+        foreach( var vIslandCircleElementPropertiesChanged in ChangeCircleElementPropertiesListeners)
+          vIslandCircleElementPropertiesChanged.CircleElementPropertiesChanged();
       }
     }
       private CircleElementProperties _CircleElementProperties{get;set;}

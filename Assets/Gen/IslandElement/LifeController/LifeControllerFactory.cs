@@ -14,7 +14,6 @@ public Dictionary<IslandElement,LifeController> Elements= new Dictionary<IslandE
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new LifeController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
     }
   }
 }

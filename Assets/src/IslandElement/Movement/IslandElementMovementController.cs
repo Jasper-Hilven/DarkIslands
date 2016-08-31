@@ -59,7 +59,7 @@ namespace DarkIslands
         public override void IslandPositionChanged()
         {
             if (IslandElement.Island == null)
-                return;
+                return; 
             FixPosition();
         }
 

@@ -1,7 +1,9 @@
 public interface IIslandElementChanged
 {
 void LifePointsChanged();
+void IsAliveChanged();
 void InventoryChanged();
+void HasInventoryChanged();
 void IslandPositionChanged();
 void RelativeToContainerPositionChanged();
 void PositionChanged();
@@ -26,4 +28,7 @@ void CanUseManaChanged();
 void IsSpawnedChanged();
 void SpawnParentChanged();
 void IslandElementViewSettingsChanged();
+void IsAnimatedChanged();
+void GivesHoverInformationChanged();
+void CanBeSelectedChanged();
 }

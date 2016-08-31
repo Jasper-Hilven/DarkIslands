@@ -14,7 +14,6 @@ public Dictionary<IslandElement,InventoryController> Elements= new Dictionary<Is
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new InventoryController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
     }
   }
 }

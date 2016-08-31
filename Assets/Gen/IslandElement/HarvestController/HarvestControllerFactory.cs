@@ -14,7 +14,7 @@ public Dictionary<IslandElement,HarvestController> Elements= new Dictionary<Isla
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new HarvestController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
+      IslandElement.ChangeHarvestControllerListeners.Add(element);
     }
   }
 }

@@ -14,7 +14,11 @@ public Dictionary<IslandElement,IslandElementMovementController> Elements= new D
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementMovementController(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
+      IslandElement.ChangeRelativeToContainerPositionListeners.Add(element);
+      IslandElement.ChangeRelativeGoalPositionListeners.Add(element);
+      IslandElement.ChangeHasRelativeGoalPositionListeners.Add(element);
+      IslandElement.ChangeIslandPositionListeners.Add(element);
+      IslandElement.ChangeIslandListeners.Add(element);
     }
   }
 }

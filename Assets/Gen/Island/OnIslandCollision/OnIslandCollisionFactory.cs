@@ -14,7 +14,6 @@ public Dictionary<Island,OnIslandCollision> Elements= new Dictionary<Island,OnIs
     public void ExtendIsland(Island Island){
       var element =new OnIslandCollision(Island, this);
       Elements.Add(Island,element);
-      Island.ChangeListeners.Add(element);
     }
   }
 }

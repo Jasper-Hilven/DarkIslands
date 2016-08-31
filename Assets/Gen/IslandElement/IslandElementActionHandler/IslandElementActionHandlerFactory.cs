@@ -14,7 +14,8 @@ public Dictionary<IslandElement,IslandElementActionHandler> Elements= new Dictio
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementActionHandler(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeListeners.Add(element);
+      IslandElement.ChangeCurrentCommandListeners.Add(element);
+      IslandElement.ChangeCurrentActionListeners.Add(element);
     }
   }
 }

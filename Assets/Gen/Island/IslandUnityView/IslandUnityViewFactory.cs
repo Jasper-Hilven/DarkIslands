@@ -19,7 +19,8 @@ public Dictionary<Island,IslandUnityView> Elements= new Dictionary<Island,Island
     public void ExtendIsland(Island Island){
       var element =new IslandUnityView(Island, this);
       Elements.Add(Island,element);
-      Island.ChangeListeners.Add(element);
+      Island.ChangeSizeListeners.Add(element);
+      Island.ChangePositionListeners.Add(element);
     }
   }
 }
