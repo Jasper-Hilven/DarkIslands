@@ -12,6 +12,7 @@ namespace DarkIslands
   public List<IIslandElementIslandPositionChanged> ChangeIslandPositionListeners= new List<IIslandElementIslandPositionChanged>();
   public List<IIslandElementRelativeToContainerPositionChanged> ChangeRelativeToContainerPositionListeners= new List<IIslandElementRelativeToContainerPositionChanged>();
   public List<IIslandElementPositionChanged> ChangePositionListeners= new List<IIslandElementPositionChanged>();
+  public List<IIslandElementSizeChanged> ChangeSizeListeners= new List<IIslandElementSizeChanged>();
   public List<IIslandElementIslandChanged> ChangeIslandListeners= new List<IIslandElementIslandChanged>();
   public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
@@ -140,6 +141,19 @@ namespace DarkIslands
       }
     }
       private Vector3 _Position{get;set;}
+    public float Size
+    {
+      get{
+        return _Size;
+      }
+      set
+      {
+        this._Size= value;
+        foreach( var vIslandElementSizeChanged in ChangeSizeListeners)
+          vIslandElementSizeChanged.SizeChanged();
+      }
+    }
+      private float _Size{get;set;}
     public Island Island
     {
       get{

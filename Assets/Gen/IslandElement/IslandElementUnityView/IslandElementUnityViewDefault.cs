@@ -1,5 +1,5 @@
 namespace DarkIslands{
-  public class IslandElementUnityViewDefault: IIslandElementIslandElementViewSettingsChanged, IIslandElementIsElementalColoredChanged, IIslandElementElementalTypeChanged, IIslandElementPositionChanged
+  public class IslandElementUnityViewDefault: IIslandElementIslandElementViewSettingsChanged, IIslandElementIsElementalColoredChanged, IIslandElementElementalTypeChanged, IIslandElementPositionChanged, IIslandElementSizeChanged
   {
     public virtual void Destroy(){
     }
@@ -9,5 +9,6 @@ namespace DarkIslands{
     public virtual void IsElementalColoredChanged(){}
     public virtual void ElementalTypeChanged(){}
     public virtual void PositionChanged(){}
+    public virtual void SizeChanged(){}
   }
 }

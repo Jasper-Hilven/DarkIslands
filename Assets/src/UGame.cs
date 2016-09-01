@@ -32,6 +32,7 @@ public class UGame : MonoBehaviour
             var tree = fP.IslandElementFactory.Create();
             tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true };
             tree.CircleElementProperties = new CircleElementProperties(0.5f);
+            
             trees.Add(tree);
             tree.HarvestInfo = new HarvestInfo(false, false, null, false, false, false);
             islands[0].ContainerControllerIsland.AddElement(tree);

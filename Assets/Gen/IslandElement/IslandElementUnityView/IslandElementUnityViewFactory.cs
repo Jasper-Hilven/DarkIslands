@@ -23,6 +23,7 @@ public Dictionary<IslandElement,IslandElementUnityView> Elements= new Dictionary
       IslandElement.ChangeIsElementalColoredListeners.Add(element);
       IslandElement.ChangeElementalTypeListeners.Add(element);
       IslandElement.ChangePositionListeners.Add(element);
+      IslandElement.ChangeSizeListeners.Add(element);
     }
   }
 }
