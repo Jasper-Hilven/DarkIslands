@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DarkIslands
 {
     public class HarvestInfo
     {
-        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<ResourceType, int> resourcesToHarvest, bool canChop, bool canMine, bool canBeHarvestAttacked)
+        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<ResourceType, int> resourcesToHarvest, Dictionary<ResourceType, int> initialResources, bool canChop, bool canMine, bool canBeHarvestAttacked)
         {
             CanBeChopped = canBeChopped;
             CanBeMined = canBeMined;
@@ -13,16 +14,29 @@ namespace DarkIslands
             CanChop = canChop;
             CanMine = canMine;
             CanBeHarvestAttacked = canBeHarvestAttacked;
+            this.InitialResources = initialResources;
+        }
+
+
+        public HarvestInfo ChangeResources(ResourceAmount changes, bool add = true)//TODO make simple clone
+        {
+            var rToHarvest = ResourcesToHarvest.ToDictionary(entry => entry.Key,entry => entry.Value);
+            var initialResources= InitialResources.ToDictionary(entry => entry.Key,entry => entry.Value);
+            foreach (var change in changes.Amount)
+            {
+                rToHarvest[change.Key] += add ? change.Value : -change.Value;
+            }
+            return new HarvestInfo(CanBeChopped, CanBeMined, rToHarvest, initialResources, CanChop, CanMine, CanBeHarvestAttacked);
         }
 
         public bool CanBeChopped { get; private set; }
         public bool CanBeMined { get; private set; }
-        public bool CanBeHarvestAttacked { get; private set;}
+        public bool CanBeHarvestAttacked { get; private set; }
 
         public bool CanBeHarvested(HarvestResourceAction.HarvestAction action)
         {
-            if(action == HarvestResourceAction.HarvestAction.Chop)
-               return this.CanBeChopped;
+            if (action == HarvestResourceAction.HarvestAction.Chop)
+                return this.CanBeChopped;
             if (action == HarvestResourceAction.HarvestAction.Mine)
                 return this.CanBeMined;
             if (action == HarvestResourceAction.HarvestAction.Smash)
@@ -39,10 +53,11 @@ namespace DarkIslands
                 return this.CanHarvestAttack;
             throw new NotImplementedException();
         }
-        public Dictionary<ResourceType,int> ResourcesToHarvest { get; private set; }
-        
+        public Dictionary<ResourceType, int> ResourcesToHarvest { get; private set; }
+        public Dictionary<ResourceType, int> InitialResources { get; private set; }
+
         public bool CanChop { get; private set; }
         public bool CanMine { get; private set; }
-        public bool CanHarvestAttack { get; private set;}
+        public bool CanHarvestAttack { get; private set; }
     }
 }

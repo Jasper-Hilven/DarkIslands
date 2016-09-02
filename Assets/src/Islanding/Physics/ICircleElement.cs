@@ -10,10 +10,13 @@ namespace DarkIslands
 
     public class CircleElementProperties
     {
-        public CircleElementProperties(float radius)
+        public CircleElementProperties(float radius,float originalRadius)
         {
             Radius = radius;
+            OriginalRadius = radius;
         }
+
+        public float OriginalRadius { get; set; }
 
         public float Radius { get; private set; }
 

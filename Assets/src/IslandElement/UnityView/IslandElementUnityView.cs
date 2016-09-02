@@ -13,16 +13,30 @@ namespace DarkIslands
             this.UnitUnityViewFactory = IslandElementUnityViewFactory;
         }
 
+        public override void SizeChanged()
+        {
+            UpdateSize();
+        }
+
+        private void UpdateSize()
+        {
+            if (UIUnit == null)
+                return;
+            UIUnit.transform.localScale = new Vector3(IslandElement.Size, IslandElement.Size, IslandElement.Size);
+        }
+
         public override void IslandElementViewSettingsChanged()
         {
             if (UIUnit != null)
                 Destroy();
             if (IslandElement.IslandElementViewSettings.IsTree)
             {
-                this.UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement);
+                UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement);//TODO this dependent code out to specific interface
+                UpdateSize();
                 return;
             }
-            this.UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);
+            UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
+            UpdateSize();
         }
 
         public override void IsElementalColoredChanged()

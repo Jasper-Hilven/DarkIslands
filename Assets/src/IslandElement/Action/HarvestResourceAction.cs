@@ -21,7 +21,7 @@
         }
         public void Update(IslandElement unit, float deltaTime)
         {
-            if ((unit.Position - resource.Position).sqrMagnitude > 0.01)
+            if ((unit.Position - resource.Position).sqrMagnitude > 1.1f)//Todo correct abstraction around goind towards other islandelement
             {
                 harvestTime = 0f;
                 unit.RelativeGoalPosition = resource.RelativeToContainerPosition;
@@ -38,11 +38,9 @@
                 harvestTime += deltaTime;
                 return;
             }
-            
-            harvestTime -= 1f;
-            var resHarvested= resource.HarvestController.Harvest(1f);
-            unit.InventoryController.AddResource(resHarvested);
 
+            harvestTime -= 1f;
+            unit.HarvestController.Harvest(1f,resource);
         }
     }
 }

@@ -9,7 +9,6 @@
         {
             this.actor = actor;
             this.followed = followed;
-
         }
 
         public void Update(IslandElement islandElement, float deltaTime)

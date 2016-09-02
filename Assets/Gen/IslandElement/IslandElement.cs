@@ -12,7 +12,6 @@ namespace DarkIslands
   public List<IIslandElementIslandPositionChanged> ChangeIslandPositionListeners= new List<IIslandElementIslandPositionChanged>();
   public List<IIslandElementRelativeToContainerPositionChanged> ChangeRelativeToContainerPositionListeners= new List<IIslandElementRelativeToContainerPositionChanged>();
   public List<IIslandElementPositionChanged> ChangePositionListeners= new List<IIslandElementPositionChanged>();
-  public List<IIslandElementSizeChanged> ChangeSizeListeners= new List<IIslandElementSizeChanged>();
   public List<IIslandElementIslandChanged> ChangeIslandListeners= new List<IIslandElementIslandChanged>();
   public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
@@ -24,6 +23,8 @@ namespace DarkIslands
   public List<IIslandElementhasLightChanged> ChangehasLightListeners= new List<IIslandElementhasLightChanged>();
   public List<IIslandElementHarvestControllerChanged> ChangeHarvestControllerListeners= new List<IIslandElementHarvestControllerChanged>();
   public List<IIslandElementHarvestInfoChanged> ChangeHarvestInfoListeners= new List<IIslandElementHarvestInfoChanged>();
+  public List<IIslandElementSizeChanged> ChangeSizeListeners= new List<IIslandElementSizeChanged>();
+  public List<IIslandElementSizeControllerChanged> ChangeSizeControllerListeners= new List<IIslandElementSizeControllerChanged>();
   public List<IIslandElementIsElementalColoredChanged> ChangeIsElementalColoredListeners= new List<IIslandElementIsElementalColoredChanged>();
   public List<IIslandElementhasElementalViewChanged> ChangehasElementalViewListeners= new List<IIslandElementhasElementalViewChanged>();
   public List<IIslandElementElementalInfoChanged> ChangeElementalInfoListeners= new List<IIslandElementElementalInfoChanged>();
@@ -141,19 +142,6 @@ namespace DarkIslands
       }
     }
       private Vector3 _Position{get;set;}
-    public float Size
-    {
-      get{
-        return _Size;
-      }
-      set
-      {
-        this._Size= value;
-        foreach( var vIslandElementSizeChanged in ChangeSizeListeners)
-          vIslandElementSizeChanged.SizeChanged();
-      }
-    }
-      private float _Size{get;set;}
     public Island Island
     {
       get{
@@ -297,6 +285,32 @@ namespace DarkIslands
       }
     }
       private HarvestInfo _HarvestInfo{get;set;}
+    public float Size
+    {
+      get{
+        return _Size;
+      }
+      set
+      {
+        this._Size= value;
+        foreach( var vIslandElementSizeChanged in ChangeSizeListeners)
+          vIslandElementSizeChanged.SizeChanged();
+      }
+    }
+      private float _Size{get;set;}
+    public ISizeController SizeController
+    {
+      get{
+        return _SizeController;
+      }
+      set
+      {
+        this._SizeController= value;
+        foreach( var vIslandElementSizeControllerChanged in ChangeSizeControllerListeners)
+          vIslandElementSizeControllerChanged.SizeControllerChanged();
+      }
+    }
+      private ISizeController _SizeController{get;set;}
     public bool IsElementalColored
     {
       get{

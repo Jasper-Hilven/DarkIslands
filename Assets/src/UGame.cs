@@ -24,20 +24,23 @@ public class UGame : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
-            simpleIsland.CircleElementProperties = new CircleElementProperties(1);
+            simpleIsland.CircleElementProperties = new CircleElementProperties(1,1);
             islands.Add(simpleIsland);
         }
         for (int i = 0; i < 360; i += 8)
         {
             var tree = fP.IslandElementFactory.Create();
             tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true };
-            tree.CircleElementProperties = new CircleElementProperties(0.5f);
-            
+            tree.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
+            tree.HarvestController.harvestTactic= new TreeHarvestControllerTactic(tree);
+            tree.SizeController = new TreeSizeController();
+            var resourceCount = new Dictionary<ResourceType, int>();
+            resourceCount[ResourceType.Wood] = 10;
+            tree.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
             trees.Add(tree);
-            tree.HarvestInfo = new HarvestInfo(false, false, null, false, false, false);
             islands[0].ContainerControllerIsland.AddElement(tree);
             var radAngle = 2 * Mathf.PI / 360f * i;
-            tree.RelativeToContainerPosition = new Vector3(18 * Mathf.Cos(radAngle), 0, 18 * Mathf.Sin(radAngle));
+            tree.RelativeToContainerPosition = new Vector3(i == 0? 0:18 * Mathf.Cos(radAngle), 0, i == 0 ? 0 : 18 * Mathf.Sin(radAngle));
         }
 
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
@@ -56,8 +59,9 @@ public class UGame : MonoBehaviour
         u.hasLight = true;
         u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
         u.ElementalType = eType;
-        u.HarvestInfo = new HarvestInfo(false, false, null, false, false, false);
-        u.CircleElementProperties = new CircleElementProperties(0.5f);
+        u.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
+        u.HarvestController.harvestTactic= new HumanHarvestControllerTactic(u);
+        u.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
         u.hasElementalView = true;
         u.MaxSpeed = 2f;
         return u;

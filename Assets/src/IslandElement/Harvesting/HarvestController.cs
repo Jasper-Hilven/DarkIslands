@@ -12,30 +12,30 @@ namespace DarkIslands
         public override void Init(IslandElement IslandElement, HarvestControllerFactory HarvestControllerFactory)
         {
             this.IslandElement = IslandElement;
+            this.IslandElement.HarvestController = this;
             this.fac = HarvestControllerFactory;
             base.Init(IslandElement, HarvestControllerFactory);
         }
 
 
-        public ResourceAmount Harvest(float f)
+        public ResourceAmount GetHarvested(float effort)
         {
-            if(harvestTactic ==null)
+            if (harvestTactic == null)
                 return new ResourceAmount(new Dictionary<ResourceType, int>());
-            throw new NotImplementedException();
+            return harvestTactic.GetHarvested(effort);
+        }
+
+        public void Harvest(float harvestEffort, IslandElement other)
+        {
+            if (harvestTactic == null)
+                return;
+            harvestTactic.Harvest(harvestEffort, other);
         }
     }
 
     public interface IHarvestControllerTactic
     {
-        ResourceAmount Harvest(float harvestEffort, IslandElement element);
-    }
-
-    public class TreeHarvestControllerTactic:IHarvestControllerTactic
-    {
-        public ResourceAmount Harvest(float harvestEffort, IslandElement element)
-        {
-            element.HarvestInfo.ResourcesToHarvest.ContainsKey(ResourceType.Wood);
-            return null;
-        }
+        void Harvest(float harvestEffort, IslandElement harvested);
+        ResourceAmount GetHarvested(float harvestEffort);
     }
 }
