@@ -29,7 +29,9 @@ public class UGame : MonoBehaviour
         }
         for (int i = 0; i < 360; i += 8)
         {
+            
             var tree = fP.IslandElementFactory.Create();
+            tree.Factory = fP.IslandElementFactory;
             tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true };
             tree.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
             tree.HarvestController.harvestTactic= new TreeHarvestControllerTactic(tree);
@@ -44,7 +46,7 @@ public class UGame : MonoBehaviour
         }
 
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
-        foreach (var eType in elementTypes.Skip(0))
+        foreach (var eType in elementTypes.Skip(3))
             units.Add(GetUnit(fP.IslandElementFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
         FocusOnUnit(units[0]);
     }
@@ -55,6 +57,7 @@ public class UGame : MonoBehaviour
         u.Position = pos;
 
         visIsland.ContainerControllerIsland.AddElement(u);
+        u.Factory = fac;
         u.IslandElementViewSettings = new IslandElementViewSettings() { IsUnit = true };
         u.hasLight = true;
         u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
@@ -78,7 +81,6 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
-        fP.IslandElementMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         islands[0].Position = islands[0].Position + new Vector3(Time.deltaTime / 10f, 0, 0);

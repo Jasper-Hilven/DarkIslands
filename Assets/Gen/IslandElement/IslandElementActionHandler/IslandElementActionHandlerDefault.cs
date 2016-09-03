@@ -1,5 +1,5 @@
 namespace DarkIslands{
-  public class IslandElementActionHandlerDefault: IIslandElementCurrentCommandChanged, IIslandElementCurrentActionChanged
+  public class IslandElementActionHandlerDefault: IIslandElementCurrentCommandChanged, IIslandElementCurrentActionChanged, IIslandElementCurrentLifeActionChanged
   {
     public virtual void Destroy(){
     }
@@ -7,5 +7,6 @@ namespace DarkIslands{
     }
     public virtual void CurrentCommandChanged(){}
     public virtual void CurrentActionChanged(){}
+    public virtual void CurrentLifeActionChanged(){}
   }
 }

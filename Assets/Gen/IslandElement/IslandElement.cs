@@ -4,8 +4,7 @@ namespace DarkIslands
 {
   public partial class IslandElement
   {
-  public List<IIslandElementLifePointsChanged> ChangeLifePointsListeners= new List<IIslandElementLifePointsChanged>();
-  public List<IIslandElementIsAliveChanged> ChangeIsAliveListeners= new List<IIslandElementIsAliveChanged>();
+  public List<IIslandElementFactoryChanged> ChangeFactoryListeners= new List<IIslandElementFactoryChanged>();
   public List<IIslandElementInventoryChanged> ChangeInventoryListeners= new List<IIslandElementInventoryChanged>();
   public List<IIslandElementHasInventoryChanged> ChangeHasInventoryListeners= new List<IIslandElementHasInventoryChanged>();
   public List<IIslandElementInventoryControllerChanged> ChangeInventoryControllerListeners= new List<IIslandElementInventoryControllerChanged>();
@@ -16,10 +15,12 @@ namespace DarkIslands
   public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
   public List<IIslandElementMaxSpeedChanged> ChangeMaxSpeedListeners= new List<IIslandElementMaxSpeedChanged>();
+  public List<IIslandElementMovementControllerChanged> ChangeMovementControllerListeners= new List<IIslandElementMovementControllerChanged>();
   public List<IIslandElementRelativeGoalPositionChanged> ChangeRelativeGoalPositionListeners= new List<IIslandElementRelativeGoalPositionChanged>();
   public List<IIslandElementHasRelativeGoalPositionChanged> ChangeHasRelativeGoalPositionListeners= new List<IIslandElementHasRelativeGoalPositionChanged>();
   public List<IIslandElementCurrentCommandChanged> ChangeCurrentCommandListeners= new List<IIslandElementCurrentCommandChanged>();
   public List<IIslandElementCurrentActionChanged> ChangeCurrentActionListeners= new List<IIslandElementCurrentActionChanged>();
+  public List<IIslandElementCurrentLifeActionChanged> ChangeCurrentLifeActionListeners= new List<IIslandElementCurrentLifeActionChanged>();
   public List<IIslandElementhasLightChanged> ChangehasLightListeners= new List<IIslandElementhasLightChanged>();
   public List<IIslandElementHarvestControllerChanged> ChangeHarvestControllerListeners= new List<IIslandElementHarvestControllerChanged>();
   public List<IIslandElementHarvestInfoChanged> ChangeHarvestInfoListeners= new List<IIslandElementHarvestInfoChanged>();
@@ -32,38 +33,33 @@ namespace DarkIslands
   public List<IIslandElementManaPointsChanged> ChangeManaPointsListeners= new List<IIslandElementManaPointsChanged>();
   public List<IIslandElementMaxManaPointsChanged> ChangeMaxManaPointsListeners= new List<IIslandElementMaxManaPointsChanged>();
   public List<IIslandElementCanUseManaChanged> ChangeCanUseManaListeners= new List<IIslandElementCanUseManaChanged>();
+  public List<IIslandElementCanDehydrateChanged> ChangeCanDehydrateListeners= new List<IIslandElementCanDehydrateChanged>();
+  public List<IIslandElementHydrationPointsChanged> ChangeHydrationPointsListeners= new List<IIslandElementHydrationPointsChanged>();
+  public List<IIslandElementMaxHydrationPointsChanged> ChangeMaxHydrationPointsListeners= new List<IIslandElementMaxHydrationPointsChanged>();
+  public List<IIslandElementDehydrationRateChanged> ChangeDehydrationRateListeners= new List<IIslandElementDehydrationRateChanged>();
+  public List<IIslandElementLifePointsChanged> ChangeLifePointsListeners= new List<IIslandElementLifePointsChanged>();
+  public List<IIslandElementLifeControllerChanged> ChangeLifeControllerListeners= new List<IIslandElementLifeControllerChanged>();
+  public List<IIslandElementMaxLifePointsChanged> ChangeMaxLifePointsListeners= new List<IIslandElementMaxLifePointsChanged>();
+  public List<IIslandElementIsAliveChanged> ChangeIsAliveListeners= new List<IIslandElementIsAliveChanged>();
   public List<IIslandElementIsSpawnedChanged> ChangeIsSpawnedListeners= new List<IIslandElementIsSpawnedChanged>();
   public List<IIslandElementSpawnParentChanged> ChangeSpawnParentListeners= new List<IIslandElementSpawnParentChanged>();
   public List<IIslandElementIslandElementViewSettingsChanged> ChangeIslandElementViewSettingsListeners= new List<IIslandElementIslandElementViewSettingsChanged>();
   public List<IIslandElementIsAnimatedChanged> ChangeIsAnimatedListeners= new List<IIslandElementIsAnimatedChanged>();
   public List<IIslandElementGivesHoverInformationChanged> ChangeGivesHoverInformationListeners= new List<IIslandElementGivesHoverInformationChanged>();
   public List<IIslandElementCanBeSelectedChanged> ChangeCanBeSelectedListeners= new List<IIslandElementCanBeSelectedChanged>();
-    public int LifePoints
+    public IslandElementFactory Factory
     {
       get{
-        return _LifePoints;
+        return _Factory;
       }
       set
       {
-        this._LifePoints= value;
-        foreach( var vIslandElementLifePointsChanged in ChangeLifePointsListeners)
-          vIslandElementLifePointsChanged.LifePointsChanged();
+        this._Factory= value;
+        foreach( var vIslandElementFactoryChanged in ChangeFactoryListeners)
+          vIslandElementFactoryChanged.FactoryChanged();
       }
     }
-      private int _LifePoints{get;set;}
-    public bool IsAlive
-    {
-      get{
-        return _IsAlive;
-      }
-      set
-      {
-        this._IsAlive= value;
-        foreach( var vIslandElementIsAliveChanged in ChangeIsAliveListeners)
-          vIslandElementIsAliveChanged.IsAliveChanged();
-      }
-    }
-      private bool _IsAlive{get;set;}
+      private IslandElementFactory _Factory{get;set;}
     public Inventory Inventory
     {
       get{
@@ -194,6 +190,19 @@ namespace DarkIslands
       }
     }
       private float _MaxSpeed{get;set;}
+    public IslandElementMovementController MovementController
+    {
+      get{
+        return _MovementController;
+      }
+      set
+      {
+        this._MovementController= value;
+        foreach( var vIslandElementMovementControllerChanged in ChangeMovementControllerListeners)
+          vIslandElementMovementControllerChanged.MovementControllerChanged();
+      }
+    }
+      private IslandElementMovementController _MovementController{get;set;}
     public Vector3 RelativeGoalPosition
     {
       get{
@@ -246,6 +255,19 @@ namespace DarkIslands
       }
     }
       private IIslandElementAction _CurrentAction{get;set;}
+    public IIslandElementAction CurrentLifeAction
+    {
+      get{
+        return _CurrentLifeAction;
+      }
+      set
+      {
+        this._CurrentLifeAction= value;
+        foreach( var vIslandElementCurrentLifeActionChanged in ChangeCurrentLifeActionListeners)
+          vIslandElementCurrentLifeActionChanged.CurrentLifeActionChanged();
+      }
+    }
+      private IIslandElementAction _CurrentLifeAction{get;set;}
     public bool hasLight
     {
       get{
@@ -402,6 +424,110 @@ namespace DarkIslands
       }
     }
       private bool _CanUseMana{get;set;}
+    public bool CanDehydrate
+    {
+      get{
+        return _CanDehydrate;
+      }
+      set
+      {
+        this._CanDehydrate= value;
+        foreach( var vIslandElementCanDehydrateChanged in ChangeCanDehydrateListeners)
+          vIslandElementCanDehydrateChanged.CanDehydrateChanged();
+      }
+    }
+      private bool _CanDehydrate{get;set;}
+    public int HydrationPoints
+    {
+      get{
+        return _HydrationPoints;
+      }
+      set
+      {
+        this._HydrationPoints= value;
+        foreach( var vIslandElementHydrationPointsChanged in ChangeHydrationPointsListeners)
+          vIslandElementHydrationPointsChanged.HydrationPointsChanged();
+      }
+    }
+      private int _HydrationPoints{get;set;}
+    public int MaxHydrationPoints
+    {
+      get{
+        return _MaxHydrationPoints;
+      }
+      set
+      {
+        this._MaxHydrationPoints= value;
+        foreach( var vIslandElementMaxHydrationPointsChanged in ChangeMaxHydrationPointsListeners)
+          vIslandElementMaxHydrationPointsChanged.MaxHydrationPointsChanged();
+      }
+    }
+      private int _MaxHydrationPoints{get;set;}
+    public int DehydrationRate
+    {
+      get{
+        return _DehydrationRate;
+      }
+      set
+      {
+        this._DehydrationRate= value;
+        foreach( var vIslandElementDehydrationRateChanged in ChangeDehydrationRateListeners)
+          vIslandElementDehydrationRateChanged.DehydrationRateChanged();
+      }
+    }
+      private int _DehydrationRate{get;set;}
+    public int LifePoints
+    {
+      get{
+        return _LifePoints;
+      }
+      set
+      {
+        this._LifePoints= value;
+        foreach( var vIslandElementLifePointsChanged in ChangeLifePointsListeners)
+          vIslandElementLifePointsChanged.LifePointsChanged();
+      }
+    }
+      private int _LifePoints{get;set;}
+    public IslandElementLifeController LifeController
+    {
+      get{
+        return _LifeController;
+      }
+      set
+      {
+        this._LifeController= value;
+        foreach( var vIslandElementLifeControllerChanged in ChangeLifeControllerListeners)
+          vIslandElementLifeControllerChanged.LifeControllerChanged();
+      }
+    }
+      private IslandElementLifeController _LifeController{get;set;}
+    public int MaxLifePoints
+    {
+      get{
+        return _MaxLifePoints;
+      }
+      set
+      {
+        this._MaxLifePoints= value;
+        foreach( var vIslandElementMaxLifePointsChanged in ChangeMaxLifePointsListeners)
+          vIslandElementMaxLifePointsChanged.MaxLifePointsChanged();
+      }
+    }
+      private int _MaxLifePoints{get;set;}
+    public bool IsAlive
+    {
+      get{
+        return _IsAlive;
+      }
+      set
+      {
+        this._IsAlive= value;
+        foreach( var vIslandElementIsAliveChanged in ChangeIsAliveListeners)
+          vIslandElementIsAliveChanged.IsAliveChanged();
+      }
+    }
+      private bool _IsAlive{get;set;}
     public bool IsSpawned
     {
       get{

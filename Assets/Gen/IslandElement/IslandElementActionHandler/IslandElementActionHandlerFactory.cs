@@ -16,6 +16,7 @@ public Dictionary<IslandElement,IslandElementActionHandler> Elements= new Dictio
       Elements.Add(IslandElement,element);
       IslandElement.ChangeCurrentCommandListeners.Add(element);
       IslandElement.ChangeCurrentActionListeners.Add(element);
+      IslandElement.ChangeCurrentLifeActionListeners.Add(element);
     }
   }
 }

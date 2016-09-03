@@ -17,10 +17,7 @@ namespace DarkIslands
 
         public IIslandElementAction GetAction()
         {
-            if(onWhich == IslandElement.Island)
-              return new GoToRelativePositionAction(intendedPosition- onWhich.Position);
-           
-            return null;
+              return new GoToRelativePositionAction(intendedPosition- onWhich.Position, onWhich);           
         }
     }
 }

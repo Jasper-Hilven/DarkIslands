@@ -19,9 +19,17 @@
             Unit.CurrentCommand = null;
         }
 
+        public override void CurrentLifeActionChanged()
+        {
+        }
+
         public void Update(float deltaTime)
         {
-
+            if (this.Unit.CurrentLifeAction != null)
+            {
+                this.Unit.CurrentLifeAction.Update(this.Unit, deltaTime);
+                return;
+            }
             if (this.Unit.CurrentAction == null)
                 return;
             this.Unit.CurrentAction.Update(this.Unit,deltaTime);

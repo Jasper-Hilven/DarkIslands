@@ -21,11 +21,12 @@ namespace DarkIslands
     public CollisionSizeManagerFactory CollisionSizeManagerFactory;
     public IslandElementElementalViewFactory IslandElementElementalViewFactory;
     public IslandElementSpawnControllerFactory IslandElementSpawnControllerFactory;
+    public IslandElementHydrationControllerFactory IslandElementHydrationControllerFactory;
+    public IslandElementLifeControllerFactory IslandElementLifeControllerFactory;
     public IslandElementUnityViewFactory IslandElementUnityViewFactory;
     public IslandElementUnityAnimationControllerFactory IslandElementUnityAnimationControllerFactory;
     public IslandElementHoverControllerFactory IslandElementHoverControllerFactory;
     public IslandSelectionControllerFactory IslandSelectionControllerFactory;
-    public LifeControllerFactory LifeControllerFactory;
 public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
       this.IslandFactory= new IslandFactory();
@@ -47,11 +48,12 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       this.CollisionSizeManagerFactory= new CollisionSizeManagerFactory();
       this.IslandElementElementalViewFactory= new IslandElementElementalViewFactory();
       this.IslandElementSpawnControllerFactory= new IslandElementSpawnControllerFactory();
+      this.IslandElementHydrationControllerFactory= new IslandElementHydrationControllerFactory();
+      this.IslandElementLifeControllerFactory= new IslandElementLifeControllerFactory();
       this.IslandElementUnityViewFactory= new IslandElementUnityViewFactory(ModelToEntity);
       this.IslandElementUnityAnimationControllerFactory= new IslandElementUnityAnimationControllerFactory(ModelToEntity);
       this.IslandElementHoverControllerFactory= new IslandElementHoverControllerFactory();
       this.IslandSelectionControllerFactory= new IslandSelectionControllerFactory();
-      this.LifeControllerFactory= new LifeControllerFactory();
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
       IslandFactory.SubFactories.Add(OnIslandCollisionFactory);
       IslandFactory.SubFactories.Add(InterIslandCollisionFactory);
@@ -67,11 +69,12 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       IslandElementFactory.SubFactories.Add(CollisionSizeManagerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementElementalViewFactory);
       IslandElementFactory.SubFactories.Add(IslandElementSpawnControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementHydrationControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementLifeControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementUnityViewFactory);
       IslandElementFactory.SubFactories.Add(IslandElementUnityAnimationControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementHoverControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandSelectionControllerFactory);
-      IslandElementFactory.SubFactories.Add(LifeControllerFactory);
     }
   }
 }

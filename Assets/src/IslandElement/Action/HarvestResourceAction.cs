@@ -26,6 +26,7 @@
                 harvestTime = 0f;
                 unit.RelativeGoalPosition = resource.RelativeToContainerPosition;
                 unit.HasRelativeGoalPosition = true;
+                unit.MovementController.Update(deltaTime);
                 return;
             }
             if (!unit.HarvestInfo.CanHarvest(action) || !resource.HarvestInfo.CanBeHarvested(action))

@@ -11,8 +11,10 @@ namespace DarkIslands
 
         public override void Init(IslandElement IslandElement, IslandElementMovementControllerFactory IslandElementMovementControllerFactory)
         {
+
             this.fac = IslandElementMovementControllerFactory;
             this.IslandElement = IslandElement;
+            IslandElement.MovementController = this;
         }
 
         public override void RelativeToContainerPositionChanged()
@@ -33,14 +35,6 @@ namespace DarkIslands
         public override void RelativeGoalPositionChanged()
         {
             CheckIfArrivedInContainer();
-        }
-
-        public override void HasRelativeGoalPositionChanged()
-        {
-            if (IslandElement.HasRelativeGoalPosition && !this.fac.MovingElements.Contains(this))
-                fac.MovingElements.Add(this);
-            if (!IslandElement.HasRelativeGoalPosition && this.fac.MovingElements.Contains(this))
-                fac.MovingElements.Remove(this);
         }
 
         public override void IslandChanged()
@@ -120,7 +114,6 @@ namespace DarkIslands
 
         public override void Destroy()
         {
-            this.fac.MovingElements.Remove(this);
         }
     }
 }
