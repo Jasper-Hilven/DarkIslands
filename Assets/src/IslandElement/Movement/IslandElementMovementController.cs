@@ -52,6 +52,10 @@ namespace DarkIslands
 
         private void FixPosition()
         {
+            if (IslandElement.IslandPosition.magnitude != 0)
+            {
+                var a = 6;
+            }
             this.IslandElement.Position = IslandElement.IslandPosition + IslandElement.RelativeToContainerPosition;
         }
 

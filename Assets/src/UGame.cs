@@ -26,7 +26,7 @@ public class UGame : MonoBehaviour
             var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(0,0,0));
             islands.Add(simpleIsland);
         }
-        islands[0].Position = islands[1].Position + new Vector3(40.5f*Mathf.Cos(0), 0, 40.5f*Mathf.Sin(0));
+        islands[1].Position = islands[0].Position + new Vector3(90, 0, 0);
         for (int i = 0; i < 360; i += 8)
         {
             if (i > 100 && i < 200)
@@ -83,10 +83,9 @@ public class UGame : MonoBehaviour
         UpdateFocussedUnit();
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
-        float angle = Time.realtimeSinceStartup / 20f;
-        var island0Pos= islands[1].Position + new Vector3(40.5f * Mathf.Cos(angle), 0, 40.5f * Mathf.Sin(angle));
-        fP.InterIslandCollisionFactory.MoveDetectCollision(islands[0], island0Pos);
-
+        fP.IslandMovementControllerFactory.Update(Time.deltaTime);
+        islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass/5f,0,0)*Time.deltaTime);
+        islands[1].MovementController.AddImpuls(new Vector3(-islands[1].Mass / 5f, 0, 0) * Time.deltaTime);
         cam.update();
         m.Update();
     }

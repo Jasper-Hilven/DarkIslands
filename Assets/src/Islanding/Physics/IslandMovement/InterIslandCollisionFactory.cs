@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DarkIslands
@@ -24,6 +25,11 @@ namespace DarkIslands
             var ret= topDownCircleSpaceIndex.MoveDetectCollision(island, IslandToPosition[island], newPosition);
             IslandToPosition[island] = newPosition;
             return ret;
+        }
+
+        public List<Island> GetColliders(Island island)
+        {
+            return topDownCircleSpaceIndex.GetColliders(island, island.Position).Select(c => (Island) c).ToList();
         }
     }
 }

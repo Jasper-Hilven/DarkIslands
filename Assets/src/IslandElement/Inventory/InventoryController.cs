@@ -15,7 +15,6 @@ namespace DarkIslands
 
         public void AddResource(ResourceAmount resHarvested)
         {
-            Console.Out.WriteLine("Resources added");
         }
     }
 }

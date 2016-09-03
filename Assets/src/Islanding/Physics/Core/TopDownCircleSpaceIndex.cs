@@ -115,6 +115,11 @@ namespace DarkIslands
             return GetElements(newBasePosition).Any(e => collide(e, element, Position));
         }
 
+        public List<ICircleElement> GetColliders(ICircleElement element, Vector3 Position)
+        {
+            var basePosition = GetBasePosition(Position);
+            return GetElements(basePosition).Where(e => collide(e, element, Position)).ToList();
+        }
         public Vector3 GetElementPositionWithoutColliding(ICircleElement element, Vector3 oldPosition, Vector3 newPosition)
         {
             var newBasePosition = GetBasePosition(newPosition);

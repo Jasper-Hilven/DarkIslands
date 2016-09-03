@@ -4,27 +4,15 @@ namespace DarkIslands
 {
   public partial class Island
   {
-  public List<IIslandPositionChanged> ChangePositionListeners= new List<IIslandPositionChanged>();
   public List<IIslandSizeChanged> ChangeSizeListeners= new List<IIslandSizeChanged>();
   public List<IIslandMassChanged> ChangeMassListeners= new List<IIslandMassChanged>();
   public List<IIslandSizeControllerChanged> ChangeSizeControllerListeners= new List<IIslandSizeControllerChanged>();
+  public List<IIslandPositionChanged> ChangePositionListeners= new List<IIslandPositionChanged>();
+  public List<IIslandMovementControllerChanged> ChangeMovementControllerListeners= new List<IIslandMovementControllerChanged>();
   public List<IIslandSpeedChanged> ChangeSpeedListeners= new List<IIslandSpeedChanged>();
   public List<IIslandContainerControllerIslandChanged> ChangeContainerControllerIslandListeners= new List<IIslandContainerControllerIslandChanged>();
   public List<IIslandIslandCollisionChanged> ChangeIslandCollisionListeners= new List<IIslandIslandCollisionChanged>();
   public List<IIslandCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandCircleElementPropertiesChanged>();
-    public Vector3 Position
-    {
-      get{
-        return _Position;
-      }
-      set
-      {
-        this._Position= value;
-        foreach( var vIslandPositionChanged in ChangePositionListeners)
-          vIslandPositionChanged.PositionChanged();
-      }
-    }
-      private Vector3 _Position{get;set;}
     public float Size
     {
       get{
@@ -64,7 +52,33 @@ namespace DarkIslands
       }
     }
       private IslandSizeController _SizeController{get;set;}
-    public float Speed
+    public Vector3 Position
+    {
+      get{
+        return _Position;
+      }
+      set
+      {
+        this._Position= value;
+        foreach( var vIslandPositionChanged in ChangePositionListeners)
+          vIslandPositionChanged.PositionChanged();
+      }
+    }
+      private Vector3 _Position{get;set;}
+    public IslandMovementController MovementController
+    {
+      get{
+        return _MovementController;
+      }
+      set
+      {
+        this._MovementController= value;
+        foreach( var vIslandMovementControllerChanged in ChangeMovementControllerListeners)
+          vIslandMovementControllerChanged.MovementControllerChanged();
+      }
+    }
+      private IslandMovementController _MovementController{get;set;}
+    public Vector3 Speed
     {
       get{
         return _Speed;
@@ -76,7 +90,7 @@ namespace DarkIslands
           vIslandSpeedChanged.SpeedChanged();
       }
     }
-      private float _Speed{get;set;}
+      private Vector3 _Speed{get;set;}
     public ContainerControllerIsland ContainerControllerIsland
     {
       get{
