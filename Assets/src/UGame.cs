@@ -23,13 +23,14 @@ public class UGame : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
-            var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(29 * i, i, 2));
-            simpleIsland.CircleElementProperties = new CircleElementProperties(1,1);
+            var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(0,0,0));
             islands.Add(simpleIsland);
         }
+        islands[0].Position = islands[1].Position + new Vector3(40.5f*Mathf.Cos(0), 0, 40.5f*Mathf.Sin(0));
         for (int i = 0; i < 360; i += 8)
         {
-            
+            if (i > 100 && i < 200)
+                continue;
             var tree = fP.IslandElementFactory.Create();
             tree.Factory = fP.IslandElementFactory;
             tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true };
@@ -46,17 +47,16 @@ public class UGame : MonoBehaviour
         }
 
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
-        foreach (var eType in elementTypes.Skip(3))
-            units.Add(GetUnit(fP.IslandElementFactory, eType, islands[0], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
+        foreach (var eType in elementTypes.Skip(0))
+            units.Add(GetUnit(fP.IslandElementFactory, eType, islands[(eType.IsLightning || eType.IsToxic) ? 0: 1], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
         FocusOnUnit(units[0]);
     }
 
     private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos)
     {
         var u = fac.Create();
-        u.Position = pos;
-
         visIsland.ContainerControllerIsland.AddElement(u);
+        u.RelativeToContainerPosition = pos;
         u.Factory = fac;
         u.IslandElementViewSettings = new IslandElementViewSettings() { IsUnit = true };
         u.hasLight = true;
@@ -83,10 +83,14 @@ public class UGame : MonoBehaviour
         UpdateFocussedUnit();
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
-        islands[0].Position = islands[0].Position + new Vector3(Time.deltaTime / 10f, 0, 0);
+        float angle = Time.realtimeSinceStartup / 20f;
+        var island0Pos= islands[1].Position + new Vector3(40.5f * Mathf.Cos(angle), 0, 40.5f * Mathf.Sin(angle));
+        fP.InterIslandCollisionFactory.MoveDetectCollision(islands[0], island0Pos);
+
         cam.update();
         m.Update();
     }
+
 
     void UpdateFocussedUnit()
     {

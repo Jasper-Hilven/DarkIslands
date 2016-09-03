@@ -4,18 +4,21 @@
     {
         private IslandElement actor;
         private readonly IslandElement followed;
-
+        private GoToRelativePositionAction gotoPos;
         public FollowAction(IslandElement actor, IslandElement followed)
         {
+            this.gotoPos = new GoToRelativePositionAction(followed.RelativeToContainerPosition,followed.Island,1f);
             this.actor = actor;
             this.followed = followed;
         }
 
-        public void Update(IslandElement islandElement, float deltaTime)
+        public bool Update(IslandElement islandElement, float deltaTime)
         {
-            actor.RelativeGoalPosition = followed.RelativeToContainerPosition;
-            if (!actor.HasRelativeGoalPosition)
-                actor.HasRelativeGoalPosition = true;
+            //Todo stop following dead things.
+            gotoPos.Island = followed.Island;
+            gotoPos.RelativePosition = followed.RelativeToContainerPosition;
+            gotoPos.Update(islandElement, deltaTime);
+            return false;
         }
     }
 }

@@ -6,7 +6,6 @@ namespace DarkIslands
     public partial class IslandElementMovementController
     {
         public IslandElement IslandElement { get; set; }
-        private float arrivalDistance = 0.1f * 0.1f;
         private IslandElementMovementControllerFactory fac;
 
         public override void Init(IslandElement IslandElement, IslandElementMovementControllerFactory IslandElementMovementControllerFactory)
@@ -19,22 +18,16 @@ namespace DarkIslands
 
         public override void RelativeToContainerPositionChanged()
         {
-            CheckIfArrivedInContainer();
             FixPosition();
         }
 
-        private void CheckIfArrivedInContainer()
+        private void CheckIfArrivedInContainer(float arrivalDistance)
         {
             if (!IslandElement.HasRelativeGoalPosition)
                 return;
             var goalDistance = this.IslandElement.RelativeToContainerPosition - this.IslandElement.RelativeGoalPosition;
             if (goalDistance.sqrMagnitude < arrivalDistance)
                 this.IslandElement.HasRelativeGoalPosition = false;
-        }
-
-        public override void RelativeGoalPositionChanged()
-        {
-            CheckIfArrivedInContainer();
         }
 
         public override void IslandChanged()
@@ -88,7 +81,7 @@ namespace DarkIslands
             return new Vector3(x, y, z);
         }
 
-        public void Update(float deltaTime)
+        public void Update(float deltaTime,float arrivalDistance)
         {
             if (!IslandElement.HasRelativeGoalPosition)
                 return;

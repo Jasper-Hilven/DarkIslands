@@ -21,18 +21,21 @@
 
         public override void CurrentLifeActionChanged()
         {
+            UpdateToUpdateInFactory();
         }
 
         public void Update(float deltaTime)
         {
             if (this.Unit.CurrentLifeAction != null)
             {
-                this.Unit.CurrentLifeAction.Update(this.Unit, deltaTime);
+                if (this.Unit.CurrentLifeAction.Update(this.Unit, deltaTime))
+                    this.Unit.CurrentLifeAction = null;
                 return;
             }
             if (this.Unit.CurrentAction == null)
                 return;
-            this.Unit.CurrentAction.Update(this.Unit,deltaTime);
+            if (this.Unit.CurrentAction.Update(this.Unit, deltaTime))
+                this.Unit.CurrentAction = null;
 
         }
         public override void CurrentActionChanged()
@@ -42,9 +45,9 @@
 
         private void UpdateToUpdateInFactory()
         {
-            if (this.Unit.CurrentAction == null)
+            if (this.Unit.CurrentAction == null && this.Unit.CurrentLifeAction == null)
                 this.UnitActionHandlerFactory.toUpdate.Remove(this);
-            else
+            else if(!this.UnitActionHandlerFactory.toUpdate.Contains(this))
                 this.UnitActionHandlerFactory.toUpdate.Add(this);
         }
     }

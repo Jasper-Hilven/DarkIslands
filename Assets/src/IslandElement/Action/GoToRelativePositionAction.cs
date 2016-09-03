@@ -4,30 +4,45 @@ namespace DarkIslands
 {
     public class GoToRelativePositionAction: IIslandElementAction
     {
-        private Vector3 relativePosition;
+        public Vector3 RelativePosition { get; set; }
         public Island Island { get; set; }
-
-        public GoToRelativePositionAction(Vector3 relativePosition,Island island)
+        private Vector3 CurrentIslandRelativeGoalPosition { get; set;}
+        private float arrivedDistance;
+        private const float jumpDistance = 1f;
+        public GoToRelativePositionAction(Vector3 relativePosition,Island island,float arrivedDistance)
         {
-            this.relativePosition = relativePosition;
+            this.arrivedDistance = arrivedDistance;
+            this.RelativePosition = relativePosition;
             this.Island = island;
         }
 
 
-        public void Update(IslandElement unit, float deltaTime)
+        public bool Update(IslandElement unit, float deltaTime)
         {
+            CurrentIslandRelativeGoalPosition = RelativePosition;
             if (this.Island != unit.Island)
             {
-                
+                SetGoalPositionTowardsOtherIsland(unit);
             }
-            if (unit.RelativeGoalPosition != relativePosition || unit.HasRelativeGoalPosition == false)
+            if (unit.RelativeGoalPosition != CurrentIslandRelativeGoalPosition || unit.HasRelativeGoalPosition == false)
             {
-                unit.RelativeGoalPosition = relativePosition;
+                unit.RelativeGoalPosition = CurrentIslandRelativeGoalPosition;
                 unit.HasRelativeGoalPosition = true;
             }
-            unit.MovementController.Update(deltaTime);
-            if (!unit.HasRelativeGoalPosition)
-                unit.CurrentAction = null;
+            unit.MovementController.Update(deltaTime,arrivedDistance);
+            return this.Island == unit.Island && !unit.HasRelativeGoalPosition;
+        }
+
+        private void SetGoalPositionTowardsOtherIsland(IslandElement unit)
+        {
+            var maxDistance = (Island.Size+jumpDistance);
+            var canJump = (unit.Position - Island.Position).sqrMagnitude < maxDistance*maxDistance;
+            if (canJump)
+            {
+                unit.IslandToEnter = Island;
+                return;
+            }
+            CurrentIslandRelativeGoalPosition= RelativePosition+Island.Position - unit.IslandPosition;
         }
     }
 }

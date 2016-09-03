@@ -26,6 +26,7 @@ namespace DarkIslands
   public List<IIslandElementHarvestInfoChanged> ChangeHarvestInfoListeners= new List<IIslandElementHarvestInfoChanged>();
   public List<IIslandElementSizeChanged> ChangeSizeListeners= new List<IIslandElementSizeChanged>();
   public List<IIslandElementSizeControllerChanged> ChangeSizeControllerListeners= new List<IIslandElementSizeControllerChanged>();
+  public List<IIslandElementDropOffControllerChanged> ChangeDropOffControllerListeners= new List<IIslandElementDropOffControllerChanged>();
   public List<IIslandElementIsElementalColoredChanged> ChangeIsElementalColoredListeners= new List<IIslandElementIsElementalColoredChanged>();
   public List<IIslandElementhasElementalViewChanged> ChangehasElementalViewListeners= new List<IIslandElementhasElementalViewChanged>();
   public List<IIslandElementElementalInfoChanged> ChangeElementalInfoListeners= new List<IIslandElementElementalInfoChanged>();
@@ -333,6 +334,19 @@ namespace DarkIslands
       }
     }
       private ISizeController _SizeController{get;set;}
+    public IslandElementDropOffController DropOffController
+    {
+      get{
+        return _DropOffController;
+      }
+      set
+      {
+        this._DropOffController= value;
+        foreach( var vIslandElementDropOffControllerChanged in ChangeDropOffControllerListeners)
+          vIslandElementDropOffControllerChanged.DropOffControllerChanged();
+      }
+    }
+      private IslandElementDropOffController _DropOffController{get;set;}
     public bool IsElementalColored
     {
       get{

@@ -17,7 +17,7 @@ namespace DarkIslands
 
         public IIslandElementAction GetAction()
         {
-              return new GoToRelativePositionAction(intendedPosition- onWhich.Position, onWhich);           
+              return new GoToRelativePositionAction(intendedPosition- onWhich.Position, onWhich,0.1f);           
         }
     }
 }

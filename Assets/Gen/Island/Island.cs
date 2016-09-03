@@ -6,6 +6,8 @@ namespace DarkIslands
   {
   public List<IIslandPositionChanged> ChangePositionListeners= new List<IIslandPositionChanged>();
   public List<IIslandSizeChanged> ChangeSizeListeners= new List<IIslandSizeChanged>();
+  public List<IIslandMassChanged> ChangeMassListeners= new List<IIslandMassChanged>();
+  public List<IIslandSizeControllerChanged> ChangeSizeControllerListeners= new List<IIslandSizeControllerChanged>();
   public List<IIslandSpeedChanged> ChangeSpeedListeners= new List<IIslandSpeedChanged>();
   public List<IIslandContainerControllerIslandChanged> ChangeContainerControllerIslandListeners= new List<IIslandContainerControllerIslandChanged>();
   public List<IIslandIslandCollisionChanged> ChangeIslandCollisionListeners= new List<IIslandIslandCollisionChanged>();
@@ -36,6 +38,32 @@ namespace DarkIslands
       }
     }
       private float _Size{get;set;}
+    public float Mass
+    {
+      get{
+        return _Mass;
+      }
+      set
+      {
+        this._Mass= value;
+        foreach( var vIslandMassChanged in ChangeMassListeners)
+          vIslandMassChanged.MassChanged();
+      }
+    }
+      private float _Mass{get;set;}
+    public IslandSizeController SizeController
+    {
+      get{
+        return _SizeController;
+      }
+      set
+      {
+        this._SizeController= value;
+        foreach( var vIslandSizeControllerChanged in ChangeSizeControllerListeners)
+          vIslandSizeControllerChanged.SizeControllerChanged();
+      }
+    }
+      private IslandSizeController _SizeController{get;set;}
     public float Speed
     {
       get{

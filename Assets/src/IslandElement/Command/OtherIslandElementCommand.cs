@@ -19,8 +19,6 @@ namespace DarkIslands
 
         public IIslandElementAction GetAction()
         {
-            if (Actor.Island != Other.Island)
-                return null;
             if (Other.HarvestInfo.CanBeChopped && Actor.HarvestInfo.CanChop)
                 return new HarvestResourceAction(Actor, Other,HarvestResourceAction.HarvestAction.Chop);
             if (Other.HarvestInfo.CanBeMined && Actor.HarvestInfo.CanMine)

@@ -22,9 +22,16 @@ namespace DarkIslands
         {
             if (UIUnit == null)
                 return;
+            
             UIUnit.transform.localScale = new Vector3(IslandElement.Size, IslandElement.Size, IslandElement.Size);
         }
 
+        private void UpdatePosition()
+        {
+            if(this.IslandElement.Position != null && this.UIUnit != null)
+            this.UIUnit.transform.position = this.IslandElement.Position;
+
+        }
         public override void IslandElementViewSettingsChanged()
         {
             if (UIUnit != null)
@@ -33,10 +40,12 @@ namespace DarkIslands
             {
                 UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement);//TODO this dependent code out to specific interface
                 UpdateSize();
+                UpdatePosition();
                 return;
             }
             UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
             UpdateSize();
+            UpdatePosition();
         }
 
         public override void IsElementalColoredChanged()
