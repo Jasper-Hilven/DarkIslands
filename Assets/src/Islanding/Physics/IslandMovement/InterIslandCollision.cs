@@ -39,7 +39,10 @@ namespace DarkIslands
                 Island.MovementController.AddImpuls(impulsTowardsIsland);
                 collider.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude*0.5f*minMass);
                 Island.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * 0.5f * minMass);
-
+                foreach (var islandElement in Island.ContainerControllerIsland.IslandElements)
+                    islandElement.DropOffController.DoDropOffIfOffIsland();
+                foreach (var islandElement in collider.ContainerControllerIsland.IslandElements)
+                    islandElement.DropOffController.DoDropOffIfOffIsland();
             }
         }
 

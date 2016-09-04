@@ -12,8 +12,8 @@ namespace DarkIslands
   public List<IIslandElementRelativeToContainerPositionChanged> ChangeRelativeToContainerPositionListeners= new List<IIslandElementRelativeToContainerPositionChanged>();
   public List<IIslandElementPositionChanged> ChangePositionListeners= new List<IIslandElementPositionChanged>();
   public List<IIslandElementIslandChanged> ChangeIslandListeners= new List<IIslandElementIslandChanged>();
-  public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
+  public List<IIslandElementIslandManagerChanged> ChangeIslandManagerListeners= new List<IIslandElementIslandManagerChanged>();
   public List<IIslandElementMaxSpeedChanged> ChangeMaxSpeedListeners= new List<IIslandElementMaxSpeedChanged>();
   public List<IIslandElementMovementControllerChanged> ChangeMovementControllerListeners= new List<IIslandElementMovementControllerChanged>();
   public List<IIslandElementRelativeGoalPositionChanged> ChangeRelativeGoalPositionListeners= new List<IIslandElementRelativeGoalPositionChanged>();
@@ -21,6 +21,7 @@ namespace DarkIslands
   public List<IIslandElementCurrentCommandChanged> ChangeCurrentCommandListeners= new List<IIslandElementCurrentCommandChanged>();
   public List<IIslandElementCurrentActionChanged> ChangeCurrentActionListeners= new List<IIslandElementCurrentActionChanged>();
   public List<IIslandElementCurrentLifeActionChanged> ChangeCurrentLifeActionListeners= new List<IIslandElementCurrentLifeActionChanged>();
+  public List<IIslandElementActionHandlerChanged> ChangeActionHandlerListeners= new List<IIslandElementActionHandlerChanged>();
   public List<IIslandElementhasLightChanged> ChangehasLightListeners= new List<IIslandElementhasLightChanged>();
   public List<IIslandElementHarvestControllerChanged> ChangeHarvestControllerListeners= new List<IIslandElementHarvestControllerChanged>();
   public List<IIslandElementHarvestInfoChanged> ChangeHarvestInfoListeners= new List<IIslandElementHarvestInfoChanged>();
@@ -152,19 +153,6 @@ namespace DarkIslands
       }
     }
       private Island _Island{get;set;}
-    public Island IslandToEnter
-    {
-      get{
-        return _IslandToEnter;
-      }
-      set
-      {
-        this._IslandToEnter= value;
-        foreach( var vIslandElementIslandToEnterChanged in ChangeIslandToEnterListeners)
-          vIslandElementIslandToEnterChanged.IslandToEnterChanged();
-      }
-    }
-      private Island _IslandToEnter{get;set;}
     public CircleElementProperties CircleElementProperties
     {
       get{
@@ -178,6 +166,19 @@ namespace DarkIslands
       }
     }
       private CircleElementProperties _CircleElementProperties{get;set;}
+    public IslandElementContainerManager IslandManager
+    {
+      get{
+        return _IslandManager;
+      }
+      set
+      {
+        this._IslandManager= value;
+        foreach( var vIslandElementIslandManagerChanged in ChangeIslandManagerListeners)
+          vIslandElementIslandManagerChanged.IslandManagerChanged();
+      }
+    }
+      private IslandElementContainerManager _IslandManager{get;set;}
     public float MaxSpeed
     {
       get{
@@ -269,6 +270,19 @@ namespace DarkIslands
       }
     }
       private IIslandElementAction _CurrentLifeAction{get;set;}
+    public IslandElementActionHandler ActionHandler
+    {
+      get{
+        return _ActionHandler;
+      }
+      set
+      {
+        this._ActionHandler= value;
+        foreach( var vIslandElementActionHandlerChanged in ChangeActionHandlerListeners)
+          vIslandElementActionHandlerChanged.ActionHandlerChanged();
+      }
+    }
+      private IslandElementActionHandler _ActionHandler{get;set;}
     public bool hasLight
     {
       get{

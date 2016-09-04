@@ -6,24 +6,22 @@ namespace DarkIslands
     {
         public override void Init(IslandElement IslandElement, IslandElementContainerManagerFactory IslandElementContainerManagerFactory)
         {
+            IslandElement.IslandManager = this;
             this.IslandElement = IslandElement;
         }
 
         public IslandElement IslandElement { get; set; }
 
-        public override void IslandToEnterChanged()
+        public void EnterIsland(Island island)
         {
-            if (IslandElement.IslandToEnter == null)
-                return;
-            if (IslandElement.IslandToEnter == IslandElement.Island)
+            if (island == IslandElement.Island)
             {
-                IslandElement.IslandToEnter = null;
                 return;
             }
             if (IslandElement.Island != null)
                 IslandElement.Island.ContainerControllerIsland.RemoveElement(IslandElement);
-            IslandElement.IslandToEnter.ContainerControllerIsland.AddElement(IslandElement);
-            IslandElement.IslandToEnter = null;
+            if(island != null)
+            island.ContainerControllerIsland.AddElement(IslandElement);
         }
 
         public override void RelativeToContainerPositionChanged()

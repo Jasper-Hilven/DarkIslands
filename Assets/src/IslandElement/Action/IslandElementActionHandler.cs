@@ -9,6 +9,7 @@
         {
             this.Unit = IslandElement;
             this.UnitActionHandlerFactory = UnitActionHandlerFactory;
+            IslandElement.ActionHandler = this;
         }
 
         public override void CurrentCommandChanged()
@@ -17,11 +18,6 @@
                 return;
             Unit.CurrentAction = this.Unit.CurrentCommand.GetAction();
             Unit.CurrentCommand = null;
-        }
-
-        public override void CurrentLifeActionChanged()
-        {
-            UpdateToUpdateInFactory();
         }
 
         public void Update(float deltaTime)
@@ -49,6 +45,18 @@
                 this.UnitActionHandlerFactory.toUpdate.Remove(this);
             else if(!this.UnitActionHandlerFactory.toUpdate.Contains(this))
                 this.UnitActionHandlerFactory.toUpdate.Add(this);
+        }
+
+        public void AddLifeAction(IIslandElementAction dropOffAction)
+        {
+            this.Unit.CurrentLifeAction = dropOffAction;
+            UpdateToUpdateInFactory();
+        }
+
+
+        public override void Destroy()
+        {
+            this.UnitActionHandlerFactory.toUpdate.Remove(this);
         }
     }
 }

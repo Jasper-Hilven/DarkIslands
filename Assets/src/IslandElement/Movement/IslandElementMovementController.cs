@@ -52,10 +52,6 @@ namespace DarkIslands
 
         private void FixPosition()
         {
-            if (IslandElement.IslandPosition.magnitude != 0)
-            {
-                var a = 6;
-            }
             this.IslandElement.Position = IslandElement.IslandPosition + IslandElement.RelativeToContainerPosition;
         }
 
@@ -108,6 +104,8 @@ namespace DarkIslands
                    new Vector3(moveElementWithoutColliding.x,0,moveElementWithoutColliding.z);
 
         }
+
+        
 
         public override void Destroy()
         {

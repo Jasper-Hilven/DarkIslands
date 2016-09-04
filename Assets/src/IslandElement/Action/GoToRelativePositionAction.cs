@@ -39,7 +39,7 @@ namespace DarkIslands
             var canJump = (unit.Position - Island.Position).sqrMagnitude < maxDistance*maxDistance;
             if (canJump)
             {
-                unit.IslandToEnter = Island;
+                unit.IslandManager.EnterIsland(Island);
                 return;
             }
             CurrentIslandRelativeGoalPosition= RelativePosition+Island.Position - unit.IslandPosition;

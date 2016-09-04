@@ -18,15 +18,17 @@ public class UGame : MonoBehaviour
     private List<IslandElement> trees = new List<IslandElement>();
     void Start()
     {
+        var rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
             var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(0,0,0));
             islands.Add(simpleIsland);
+            if(i > 0)
+            islands[i].Position = islands[i-1].Position + new Vector3(90, 0, 0);
         }
-        islands[1].Position = islands[0].Position + new Vector3(90, 0, 0);
         for (int i = 0; i < 360; i += 8)
         {
             if (i > 100 && i < 200)
@@ -43,7 +45,8 @@ public class UGame : MonoBehaviour
             trees.Add(tree);
             islands[0].ContainerControllerIsland.AddElement(tree);
             var radAngle = 2 * Mathf.PI / 360f * i;
-            tree.RelativeToContainerPosition = new Vector3(i == 0? 0:18 * Mathf.Cos(radAngle), 0, i == 0 ? 0 : 18 * Mathf.Sin(radAngle));
+            var distance = rand.Next(5, 15);
+            tree.RelativeToContainerPosition = new Vector3(i == 0? 0: distance * Mathf.Cos(radAngle), 0, i == 0 ? 0 : distance * Mathf.Sin(radAngle));
         }
 
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
@@ -84,8 +87,8 @@ public class UGame : MonoBehaviour
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
-        islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass/5f,0,0)*Time.deltaTime);
-        islands[1].MovementController.AddImpuls(new Vector3(-islands[1].Mass / 5f, 0, 0) * Time.deltaTime);
+        //islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass/5f,0,0)*Time.deltaTime);
+        islands[3].MovementController.AddImpuls(new Vector3(-islands[3].Mass / 5f, 0, 0) * Time.deltaTime);
         cam.update();
         m.Update();
     }
