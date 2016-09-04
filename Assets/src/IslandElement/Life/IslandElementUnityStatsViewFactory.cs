@@ -13,28 +13,28 @@ namespace DarkIslands
         }
         public GameObject GetManaVisualization(int manaPoints, int maxManaPoints)
         {
-            return GetBarForStat(Color.magenta, Color.black, Color.cyan, manaPoints, maxManaPoints);
+            return GetBarForStat(Color.black, Color.gray, Color.white, manaPoints, maxManaPoints);
         }
         public GameObject GetHydrationVisualization(int hydrationPoints, int maxHydrationPoints)
         {
-            return GetBarForStat(Color.yellow, Color.black, Color.blue, hydrationPoints, maxHydrationPoints);
+            return GetBarForStat(Color.yellow, Color.gray, Color.blue, hydrationPoints, maxHydrationPoints);
         }
 
         private GameObject GetBarForStat(Color lowColor, Color neutralColor, Color highColor, float value, float maxValue)
         {
-            float positiveValue = (value) / (maxValue);
+            float positiveValue = Mathf.Max(Mathf.Min(1f,value / (maxValue)),0);
             float negativeValue = 1.0001f - positiveValue;
 
             var barPositive = gB.LoadViaResources("Bar");
             var barNegative = gB.LoadViaResources("Bar");
             var barHolder = gB.LoadViaResources("BarHolder");
-            barPositive.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, highColor, positiveValue);
-            barNegative.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, lowColor, negativeValue);
+            barPositive.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, highColor, positiveValue*0.95f);
+            barNegative.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, lowColor, negativeValue * 0.95f);
             barPositive.transform.SetParent(barHolder.transform);
             barPositive.transform.localScale = new Vector3(positiveValue, 0.1f, 0.1f);
             barNegative.transform.localScale = new Vector3(negativeValue, 0.1f, 0.1f);
-            barPositive.transform.localPosition = new Vector3(-(negativeValue/2f), 0, 0);
             barNegative.transform.localPosition = new Vector3(positiveValue/2f, 0, 0);
+            barPositive.transform.localPosition = new Vector3(-(negativeValue / 2f), 0f, 0f);
             barNegative.transform.SetParent(barHolder.transform);
             return barHolder;
         }
