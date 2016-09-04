@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DarkIslands;
 using DarkIslands.Player;
+using DarkIslands.World;
 
 public class UGame : MonoBehaviour
 {
@@ -15,53 +16,32 @@ public class UGame : MonoBehaviour
     private FollowCamera cam;
     private Mover m;
     private List<IslandElement> units = new List<IslandElement>();
-    private List<IslandElement> trees = new List<IslandElement>();
     void Start()
     {
         var rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
-
-        for (int i = 0; i < 4; i++)
-        {
-            var simpleIsland = fP.IslandFactory.InitializeSimpleIsland(new Vector3(0,0,0));
-            islands.Add(simpleIsland);
-            if(i > 0)
-            islands[i].Position = islands[i-1].Position + new Vector3(90, 0, 0);
-        }
-        for (int i = 0; i < 360; i += 8)
-        {
-            if (i > 100 && i < 200)
-                continue;
-            var tree = fP.IslandElementFactory.Create();
-            tree.Factory = fP.IslandElementFactory;
-            tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true };
-            tree.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
-            tree.HarvestController.harvestTactic= new TreeHarvestControllerTactic(tree);
-            tree.SizeController = new TreeSizeController();
-            var resourceCount = new Dictionary<ResourceType, int>();
-            resourceCount[ResourceType.Wood] = 10;
-            tree.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
-            trees.Add(tree);
-            islands[0].ContainerControllerIsland.AddElement(tree);
-            var radAngle = 2 * Mathf.PI / 360f * i;
-            var distance = rand.Next(5, 15);
-            tree.RelativeToContainerPosition = new Vector3(i == 0? 0: distance * Mathf.Cos(radAngle), 0, i == 0 ? 0 : distance * Mathf.Sin(radAngle));
-        }
-
+        var worldBuilder= new WorldBuilder();
+        worldBuilder.BuildWorld(fP);
+        islands = fP.IslandFactory.elements;
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
+        
         foreach (var eType in elementTypes.Skip(0))
-            units.Add(GetUnit(fP.IslandElementFactory, eType, islands[(eType.IsLightning || eType.IsToxic) ? 0: 1], new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2)));
+        {
+            var onIsland = islands[(eType.IsLightning || eType.IsToxic) ? 0: 1];
+            var position = new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2);
+            units.Add(GetUnit(fP.IslandElementFactory, eType, onIsland, position,rand));
+        }
         FocusOnUnit(units[0]);
     }
 
-    private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos)
+    private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos,System.Random r)
     {
         var u = fac.Create();
         visIsland.ContainerControllerIsland.AddElement(u);
         u.RelativeToContainerPosition = pos;
         u.Factory = fac;
-        u.IslandElementViewSettings = new IslandElementViewSettings() { IsUnit = true };
+        u.IslandElementViewSettings = new IslandElementViewSettings() { IsUnit = true,HasLifeStatVisualization = true};
         u.hasLight = true;
         u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
         u.ElementalType = eType;
@@ -69,7 +49,18 @@ public class UGame : MonoBehaviour
         u.HarvestController.harvestTactic= new HumanHarvestControllerTactic(u);
         u.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
         u.hasElementalView = true;
+
         u.MaxSpeed = 2f;
+
+        u.LifePoints = 5;
+        u.MaxLifePoints = r.Next(5, 10);
+
+        u.ManaPoints = 10;
+        u.MaxManaPoints = 20;
+
+        u.HydrationPoints = 30;
+        u.MaxHydrationPoints = 40;
+
         return u;
     }
 
@@ -87,8 +78,6 @@ public class UGame : MonoBehaviour
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
-        //islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass/5f,0,0)*Time.deltaTime);
-        islands[3].MovementController.AddImpuls(new Vector3(-islands[3].Mass / 5f, 0, 0) * Time.deltaTime);
         cam.update();
         m.Update();
     }

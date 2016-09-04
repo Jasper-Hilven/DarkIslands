@@ -38,7 +38,8 @@ namespace DarkIslands
                 Destroy();
             if (IslandElement.IslandElementViewSettings.IsTree)
             {
-                UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement);//TODO this dependent code out to specific interface
+                var seed = IslandElement.IslandElementViewSettings.Seed;
+                UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement,seed);//TODO this dependent code out to specific interface
                 UpdateSize();
                 UpdatePosition();
                 return;

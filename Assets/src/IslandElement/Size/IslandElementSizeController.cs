@@ -31,7 +31,7 @@ namespace DarkIslands
             {
                 size = islandElement.SizeController.GetIslandElementSize(islandElement);
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             if (Math.Abs(prevSize - size) < 0.001f)

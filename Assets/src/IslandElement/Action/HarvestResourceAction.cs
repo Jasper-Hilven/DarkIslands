@@ -5,13 +5,11 @@
         public enum HarvestAction{ Chop,Mine,Smash}
         private IslandElement resource;
         private float harvestTime = 0f;
-        private IslandElement unit;
         private HarvestAction action;
         private GoToRelativePositionAction gotoResourceAction;
-        public HarvestResourceAction(IslandElement unit, IslandElement resource, HarvestAction action)
+        public HarvestResourceAction( IslandElement resource, HarvestAction action)
         {
             harvestTime = 0f;
-            this.unit = unit;
             this.resource = resource;
             this.action = action;
         }

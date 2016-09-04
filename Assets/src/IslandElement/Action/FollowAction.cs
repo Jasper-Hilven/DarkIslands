@@ -2,13 +2,11 @@
 {
     public class FollowAction:IIslandElementAction
     {
-        private IslandElement actor;
         private readonly IslandElement followed;
         private GoToRelativePositionAction gotoPos;
         public FollowAction(IslandElement actor, IslandElement followed)
         {
             this.gotoPos = new GoToRelativePositionAction(followed.RelativeToContainerPosition,followed.Island,1f);
-            this.actor = actor;
             this.followed = followed;
         }
 

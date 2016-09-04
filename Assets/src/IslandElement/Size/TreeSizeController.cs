@@ -7,14 +7,9 @@ namespace DarkIslands
         public float GetIslandElementSize(IslandElement islandElement)
         {
             var sizeRatio = 1f;
-            try
-            {
-                sizeRatio = ((float)islandElement.HarvestInfo.ResourcesToHarvest[ResourceType.Wood]) /
-                                 (islandElement.HarvestInfo.InitialResources[ResourceType.Wood]);
-            }
-            catch (Exception e)
-            {
-            }
+            var current = islandElement.HarvestInfo.ResourcesToHarvest[ResourceType.Wood];
+            var max = islandElement.HarvestInfo.InitialResources[ResourceType.Wood];
+            sizeRatio = ((float)current) / max;
             return sizeRatio;
 
         }

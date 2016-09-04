@@ -20,11 +20,11 @@ namespace DarkIslands
         public IIslandElementAction GetAction()
         {
             if (Other.HarvestInfo.CanBeChopped && Actor.HarvestInfo.CanChop)
-                return new HarvestResourceAction(Actor, Other,HarvestResourceAction.HarvestAction.Chop);
+                return new HarvestResourceAction( Other,HarvestResourceAction.HarvestAction.Chop);
             if (Other.HarvestInfo.CanBeMined && Actor.HarvestInfo.CanMine)
-                return new HarvestResourceAction(Actor, Other, HarvestResourceAction.HarvestAction.Mine);
+                return new HarvestResourceAction(Other, HarvestResourceAction.HarvestAction.Mine);
             if (Other.HarvestInfo.CanBeHarvestAttacked && Actor.HarvestInfo.CanHarvestAttack)
-                return new HarvestResourceAction(Actor, Other, HarvestResourceAction.HarvestAction.Smash);
+                return new HarvestResourceAction(Other, HarvestResourceAction.HarvestAction.Smash);
             return new FollowAction(Actor, Other);
         }
     }
