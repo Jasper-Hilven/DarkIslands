@@ -52,14 +52,14 @@ public class UGame : MonoBehaviour
 
         u.MaxSpeed = 2f;
 
-        u.LifePoints = 5;
-        u.MaxLifePoints = r.Next(5, 10);
+        u.LifePoints = r.Next(1, 10);
+        u.MaxLifePoints = r.Next(u.LifePoints, 11);
 
-        u.ManaPoints = 10;
-        u.MaxManaPoints = 20;
+        u.ManaPoints = r.Next(0, 10);
+        u.MaxManaPoints = r.Next(u.ManaPoints, 11);
 
-        u.HydrationPoints = 30;
-        u.MaxHydrationPoints = 40;
+        u.HydrationPoints = r.Next(0, 10);
+        u.MaxHydrationPoints = r.Next(u.ManaPoints, 12);
 
         return u;
     }

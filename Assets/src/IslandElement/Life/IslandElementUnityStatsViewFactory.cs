@@ -11,11 +11,19 @@ namespace DarkIslands
         {
             return GetBarForStat(Color.red, Color.gray, Color.green, lifePoints,  maxLifePoints);
         }
+        public GameObject GetManaVisualization(int manaPoints, int maxManaPoints)
+        {
+            return GetBarForStat(Color.magenta, Color.black, Color.cyan, manaPoints, maxManaPoints);
+        }
+        public GameObject GetHydrationVisualization(int hydrationPoints, int maxHydrationPoints)
+        {
+            return GetBarForStat(Color.yellow, Color.black, Color.blue, hydrationPoints, maxHydrationPoints);
+        }
 
         private GameObject GetBarForStat(Color lowColor, Color neutralColor, Color highColor, float value, float maxValue)
         {
-            float positiveValue = ((float)value) / maxValue;
-            float negativeValue = 1f - positiveValue;
+            float positiveValue = (value) / (maxValue);
+            float negativeValue = 1.0001f - positiveValue;
 
             var barPositive = gB.LoadViaResources("Bar");
             var barNegative = gB.LoadViaResources("Bar");
@@ -31,14 +39,6 @@ namespace DarkIslands
             return barHolder;
         }
 
-        public GameObject GetManaVisualization(int manaPoints, int maxManaPoints)
-        {
-            return GetBarForStat(Color.black, Color.gray, Color.cyan, manaPoints, maxManaPoints);
-        }
-        public GameObject GetHydrationVisualization(int hydrationPoints, int maxHydrationPoints)
-        {
-            return GetBarForStat(Color.yellow, Color.gray, Color.blue, hydrationPoints, maxHydrationPoints);
-        }
 
         public void DestroyGO(GameObject gO)
         {
