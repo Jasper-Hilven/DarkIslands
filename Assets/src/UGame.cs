@@ -53,14 +53,15 @@ public class UGame : MonoBehaviour
         u.MaxSpeed = 2f;
 
         u.LifePoints = r.Next(1, 100);
-        u.MaxLifePoints = r.Next(u.LifePoints, 100);
+        u.MaxLifePoints = r.Next(u.LifePoints, 120);
 
-        u.ManaPoints = r.Next(0, 10);
-        u.MaxManaPoints = r.Next(u.ManaPoints, 11);
+        u.ManaPoints = r.Next(0, 100);
+        u.MaxManaPoints = r.Next(u.ManaPoints, 120);
 
-        u.HydrationPoints = r.Next(0, 100);
-        u.DehydrationRate = 150;
-        u.MaxHydrationPoints = r.Next(u.ManaPoints, 120);
+        u.HydrationPoints = r.Next(60, 100);
+        u.DehydrationRate = 60;
+        u.CanDehydrate = true;
+        u.MaxHydrationPoints = r.Next(u.HydrationPoints, 120);
 
         return u;
     }
@@ -87,7 +88,7 @@ public class UGame : MonoBehaviour
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
-
+        fP.IslandElementHydrationControllerFactory.Update(Time.deltaTime);
         cam.update();
         m.Update();
     }

@@ -14,8 +14,8 @@ namespace DarkIslands
         public override void Init(IslandElement IslandElement, IslandElementUnityStatsViewFactory IslandElementUnityStatsViewFactory)
         {
             drawLifeStats = false;
-            this.elem = IslandElement;
-            this.fac = IslandElementUnityStatsViewFactory;
+            elem = IslandElement;
+            fac = IslandElementUnityStatsViewFactory;
             base.Init(IslandElement, IslandElementUnityStatsViewFactory);
         }
 
@@ -94,7 +94,7 @@ namespace DarkIslands
 
         public override void Destroy()
         {
-
+            deleteStats();
         }
     }
 }
