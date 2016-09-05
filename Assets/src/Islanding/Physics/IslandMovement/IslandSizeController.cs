@@ -36,7 +36,7 @@ namespace DarkIslands
             var oldSize = Island.Size;
             var oldSurface = oldSize * oldSize;
             var newSurface = oldSurface - f / 10000;
-            var newSize = Mathf.Sqrt(newSurface);
+            var newSize = Mathf.Sqrt(newSurface < 0? 0: newSurface);
             SetSize(newSize);
         }
     }

@@ -52,14 +52,15 @@ public class UGame : MonoBehaviour
 
         u.MaxSpeed = 2f;
 
-        u.LifePoints = r.Next(1, 10);
-        u.MaxLifePoints = r.Next(u.LifePoints, 11);
+        u.LifePoints = r.Next(1, 100);
+        u.MaxLifePoints = r.Next(u.LifePoints, 100);
 
         u.ManaPoints = r.Next(0, 10);
         u.MaxManaPoints = r.Next(u.ManaPoints, 11);
 
-        u.HydrationPoints = r.Next(0, 10);
-        u.MaxHydrationPoints = r.Next(u.ManaPoints, 12);
+        u.HydrationPoints = r.Next(0, 100);
+        u.DehydrationRate = 150;
+        u.MaxHydrationPoints = r.Next(u.ManaPoints, 120);
 
         return u;
     }
@@ -75,9 +76,18 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
+        if (Time.time < 0.5f)
+        {
+            if (islands[0].Speed.sqrMagnitude < 2)
+                islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass*Time.deltaTime, 0, 0));
+            if (islands[1].Speed.sqrMagnitude < 2)
+                islands[1].MovementController.AddImpuls(new Vector3(-islands[1].Mass*Time.deltaTime, 0,
+                    islands[1].Mass*Time.deltaTime));
+        }
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
-        fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
+        fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
+
         cam.update();
         m.Update();
     }
@@ -85,6 +95,15 @@ public class UGame : MonoBehaviour
 
     void UpdateFocussedUnit()
     {
+        var force = islands[1].Mass * Time.deltaTime;
+        if (Input.GetKey(KeyCode.DownArrow))
+            islands[1].MovementController.AddImpuls(new Vector3(force,0,0));
+        if (Input.GetKey(KeyCode.UpArrow))
+            islands[1].MovementController.AddImpuls(new Vector3(-force, 0, 0));
+        if (Input.GetKey(KeyCode.LeftArrow))
+            islands[1].MovementController.AddImpuls(new Vector3(0, 0, -force));
+        if (Input.GetKey(KeyCode.RightArrow))
+            islands[1].MovementController.AddImpuls(new Vector3(0, 0 , force));
         if (Input.GetKeyDown(KeyCode.A))
             FocusOnUnit(units[0]);
         if (Input.GetKeyDown(KeyCode.Z))

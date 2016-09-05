@@ -23,7 +23,9 @@ namespace DarkIslands
 
         public override void SizeChanged()
         {
-            UIIsland.transform.localScale= new Vector3(Island.Size*2, 0.1f, Island.Size * 2);
+            var size = Island.Size;
+            size = size < 0 ? 0 : size;
+            UIIsland.transform.localScale= new Vector3(size*2, 0.1f, size * 2);
         }
 
         public override void Destroy()

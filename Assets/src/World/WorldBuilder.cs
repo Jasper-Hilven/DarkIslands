@@ -8,10 +8,8 @@ namespace DarkIslands.World
 
         public void BuildWorld(FactoryProvider provider)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                BuildIsland(provider, new Vector3(100*(i%3), 0, 100*(i/3)), 30*(1 + (i%2)), 42);
-            }
+            BuildIsland(provider, new Vector3(200, 0, 0), 100f, 2);
+            BuildIsland(provider, new Vector3(0, 0, 0), 72f, 2);
         }
 
         public Island BuildIsland(FactoryProvider provider, Vector3 Position, float size, int seed)

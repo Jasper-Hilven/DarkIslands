@@ -25,26 +25,32 @@ namespace DarkIslands
             if (!detectCollision)
                 return;
             var colliders = this.fac.GetColliders(Island);
-            
-            var currentSpeed = this.Island.Speed;
+
             foreach (var collider in colliders)
             {
                 var collisionDirection = (collider.Position - Island.Position).normalized; //Towards collider
                 var collisionSpeedDiff = collider.Speed - Island.Speed;
                 var SpeedDiffTowardsCollider = -Vector3.Project(collisionSpeedDiff, collisionDirection);
+                var elasticity = 0.3f;
                 var minMass = Mathf.Min(collider.Mass, Island.Mass);
-                var impulsTowardsCollider = SpeedDiffTowardsCollider* 1f * minMass;
-                var impulsTowardsIsland = -SpeedDiffTowardsCollider * 1f * minMass;
+                //More correct but minMass IS valid approximation (see comments below).
+                var impulsMassCofficient = (float) 1f / ((1f / collider.Mass) + (1f / Island.Mass));
+                var impulsMass = (1f + elasticity) * impulsMassCofficient;
+                var plasticBurnImpuls = (1 - elasticity) * impulsMassCofficient;
+                var impulsTowardsCollider = SpeedDiffTowardsCollider * impulsMass;
+                var impulsTowardsIsland = -SpeedDiffTowardsCollider * impulsMass;
                 collider.MovementController.AddImpuls(impulsTowardsCollider);
                 Island.MovementController.AddImpuls(impulsTowardsIsland);
-                collider.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude*0.5f*minMass);
-                Island.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * 0.5f * minMass);
+                collider.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
+                Island.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
                 foreach (var islandElement in Island.ContainerControllerIsland.IslandElements)
                     islandElement.DropOffController.DoDropOffIfOffIsland();
                 foreach (var islandElement in collider.ContainerControllerIsland.IslandElements)
                     islandElement.DropOffController.DoDropOffIfOffIsland();
             }
         }
+        //Ask Jasper why (1/(1/A + 1/B)) <= min(a,b) <= 2*(1/(1/A + 1/B)) which means that 
+        //min(a,b) is always between a perfect elastic and perfect plastic collision.
 
     }
 }

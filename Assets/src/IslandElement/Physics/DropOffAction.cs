@@ -4,7 +4,7 @@ namespace DarkIslands
 {
     public class DropOffAction:IIslandElementAction
     {
-        private float fallSpeed = 0f;
+        private float fallSpeed = 3f;
         public bool Update(IslandElement islandElement, float deltaTime)
         {
 
