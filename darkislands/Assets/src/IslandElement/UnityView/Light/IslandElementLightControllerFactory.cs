@@ -7,7 +7,10 @@ namespace DarkIslands
         private GameObjectManager gO= new GameObjectManager();
         public GameObject GetLight()
         {
-            return  gO.LoadViaResources("UnitLight");
+            var obj= gO.LoadViaResources("UnitLight");
+            var light= obj.GetComponent<Light>();
+            light.color = new Color(1, 1, 1);
+            return obj;
         }
 
         public void DestroyLight(GameObject unitLight)
