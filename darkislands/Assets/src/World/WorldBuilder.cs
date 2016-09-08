@@ -38,7 +38,7 @@ namespace DarkIslands.World
                 var radiusForTree = Mathf.Sqrt(rand.Next(minsQ, sizeSq/4)+Mathf.Sqrt(rand.Next(min, sizeBiCub))/2);
                 var angle = (float) rand.NextDouble()*360;
                 var pos= new Vector3(radiusForTree*Mathf.Cos(angle),0, radiusForTree * Mathf.Sin(angle));
-                SetATree(provider,pos,island,rand);
+                SetRockOrTree(provider,pos,island,rand);
             }
         }
 
@@ -47,15 +47,43 @@ namespace DarkIslands.World
             var fP = provider;
             var tree = fP.IslandElementFactory.Create();
             tree.Factory = fP.IslandElementFactory;
-            tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true,Seed= rand.Next(0,100) };
+            tree.IslandElementViewSettings = new IslandElementViewSettings() {IsTree = true,Seed= rand.Next(0,100), HasLifeStatVisualization = false};
             tree.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
-            tree.HarvestController.harvestTactic = new TreeHarvestControllerTactic(tree);
-            tree.SizeController = new TreeSizeController();
+            tree.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(tree,resourceType:ResourceType.Wood);
+            tree.SizeController = new ResourceAmountSizeController(ResourceType.Wood);
             var resourceCount = new Dictionary<ResourceType, int>();
             resourceCount[ResourceType.Wood] = 10;
             tree.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
             island.ContainerControllerIsland.AddElement(tree);
             tree.RelativeToContainerPosition = relPosition;
         }
+
+        public void SetRockOrTree(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
+        {
+            if(rand.Next(2) == 0)
+                SetARock(provider,relPosition,island,rand);
+            else
+                SetATree(provider,relPosition,island,rand);
+
+        }
+
+        public void SetARock(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
+        {
+            var fP = provider;
+            var rock = fP.IslandElementFactory.Create();
+            rock.Factory = fP.IslandElementFactory;
+            rock.IslandElementViewSettings = new IslandElementViewSettings() { IsRock = true, Seed = rand.Next(0, 100), HasLifeStatVisualization = false};
+            rock.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
+            rock.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(rock, resourceType: ResourceType.Stone);
+            rock.SizeController = new ResourceAmountSizeController(ResourceType.Stone);
+            var resourceCount = new Dictionary<ResourceType, int>();
+            resourceCount[ResourceType.Stone] = 10;
+            rock.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
+            island.ContainerControllerIsland.AddElement(rock);
+            rock.RelativeToContainerPosition = relPosition;
+        }
+
+
+
     }
 }

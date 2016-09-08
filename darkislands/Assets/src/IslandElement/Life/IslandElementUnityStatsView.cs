@@ -38,6 +38,8 @@ namespace DarkIslands
 
         void DrawAllStats()
         {
+            if (!elem.IslandElementViewSettings.HasLifeStatVisualization)
+                return;
             deleteStats();
             drawLifeStats = true;
             if (elem.MaxLifePoints != 0)

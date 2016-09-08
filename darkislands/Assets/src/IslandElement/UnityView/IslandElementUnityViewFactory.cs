@@ -22,6 +22,16 @@ namespace DarkIslands
             this.ModelToEntity.modelToEntity.Add(gO, tree);
             return gO;
         }
+
+        public GameObject GetRockVisualization(IslandElement tree, int seed)
+        {
+            var rockNb = (seed % 4);
+            var gO = gB.LoadViaResources("Rock" + rockNb);
+            gO.transform.Rotate(new Vector3(0, 0, 1), r.Next(360));
+            this.ModelToEntity.modelToEntity.Add(gO, tree);
+            return gO;
+        }
+
         public void Destroy(GameObject gObject)
         {
             this.ModelToEntity.modelToEntity.Remove(gObject);

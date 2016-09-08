@@ -77,7 +77,7 @@ public class UGame : MonoBehaviour
     void Update()
     {
         UpdateFocussedUnit();
-        if (Time.time < 0.5f)
+        if (false)
         {
             if (islands[0].Speed.sqrMagnitude < 2)
                 islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass*Time.deltaTime, 0, 0));

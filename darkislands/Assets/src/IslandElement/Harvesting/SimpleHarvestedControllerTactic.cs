@@ -3,24 +3,27 @@ using System.Collections.Generic;
 
 namespace DarkIslands
 {
-    public class TreeHarvestControllerTactic:IHarvestControllerTactic
+    public class SimpleHarvestedControllerTactic:IHarvestControllerTactic
     {
-        public TreeHarvestControllerTactic(IslandElement element)
+        public SimpleHarvestedControllerTactic(IslandElement element, ResourceType resourceType)
         {
+            this.resourceType = resourceType;
             this.element = element;
         }
 
         private IslandElement element;
+        private ResourceType resourceType;
+
         public ResourceAmount GetHarvested(float harvestEffort)
         {
             if(harvestEffort < 1f)
                 return new ResourceAmount(new Dictionary<ResourceType, int>());
 
-            if (element.HarvestInfo.ResourcesToHarvest[ResourceType.Wood] <= 0)
+            if (element.HarvestInfo.ResourcesToHarvest[resourceType] <= 0)
                 return new ResourceAmount(new Dictionary<ResourceType, int>());
-            var chopAWood = new Dictionary<ResourceType, int>();
-            chopAWood[ResourceType.Wood] = 1;
-            var resourceAmount = new ResourceAmount(chopAWood);
+            var harvested = new Dictionary<ResourceType, int>();
+            harvested[resourceType] = 1;
+            var resourceAmount = new ResourceAmount(harvested);
             element.HarvestInfo = element.HarvestInfo.ChangeResources(resourceAmount, false);
             return resourceAmount;
         }
