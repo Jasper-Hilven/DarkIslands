@@ -31,10 +31,11 @@ namespace DarkIslands
             barPositive.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, highColor, positiveValue*0.95f);
             barNegative.GetComponent<Renderer>().material.color = Color.Lerp(neutralColor, lowColor, negativeValue * 0.95f);
             barPositive.transform.SetParent(barHolder.transform);
-            barPositive.transform.localScale = new Vector3(positiveValue, 0.1f, 0.1f);
-            barNegative.transform.localScale = new Vector3(negativeValue, 0.1f, 0.1f);
-            barNegative.transform.localPosition = new Vector3(positiveValue/2f, 0, 0);
-            barPositive.transform.localPosition = new Vector3(-(negativeValue / 2f), 0f, 0f);
+            var size = 2f;
+            barPositive.transform.localScale = size * new Vector3(positiveValue, 0.1f, 0.1f);
+            barNegative.transform.localScale = size * new Vector3(negativeValue, 0.1f, 0.1f);
+            barNegative.transform.localPosition = size * new Vector3(positiveValue /2f, 0, 0);
+            barPositive.transform.localPosition = size * new Vector3(-(negativeValue / 2f), 0f, 0f);
             barNegative.transform.SetParent(barHolder.transform);
             return barHolder;
         }

@@ -115,25 +115,31 @@ namespace DarkIslandGen
                 ,UseFromParent = new List<Property>() { isElementalColored,hasElementalView,elementalInfo, elementalType} });
 
             //Mana
-            properties.Add(new Property("ManaPoints", "int"));
-            properties.Add(new Property("MaxManaPoints", "int"));
+            var manaPoints = new Property("ManaPoints", "int");
+            properties.Add(manaPoints);
+            var maxManaPoints = new Property("MaxManaPoints", "int");
+            properties.Add(maxManaPoints);
             properties.Add(new Property("CanUseMana", "bool"));
             islandElementParts.Add(new ModelClass() { Name = "IslandElementSpawnController", ParentRelation = islandElement });
 
             ///Hydration
             var candehydrate = new Property("CanDehydrate", "bool");
             properties.Add(candehydrate);
-            properties.Add(new Property("HydrationPoints", "int"));
-            properties.Add(new Property("MaxHydrationPoints", "int"));
+            var hydrationPoints = new Property("HydrationPoints", "int");
+            properties.Add(hydrationPoints);
+            var maxHydrationPoints = new Property("MaxHydrationPoints", "int");
+            properties.Add(maxHydrationPoints);
             properties.Add(new Property("DehydrationRate", "int"));
             islandElementParts.Add(new ModelClass(){Name = "IslandElementHydrationController", ParentRelation = islandElement 
             ,UseFromParent = new List<Property>() { candehydrate}});
 
 
             //LifePoints
-            properties.Add(new Property("LifePoints", "int"));
+            var lifePoints = new Property("LifePoints", "int");
+            properties.Add(lifePoints);
             properties.Add(new Property("LifeController", "IslandElementLifeController"));
-            properties.Add(new Property("MaxLifePoints", "int"));
+            var maxLifePoints = new Property("MaxLifePoints", "int");
+            properties.Add(maxLifePoints);
             properties.Add(new Property("IsAlive", new GType { name = "bool" }));
             islandElementParts.Add(new ModelClass() { Name = "IslandElementLifeController", ParentRelation = islandElement });
 
@@ -158,6 +164,13 @@ namespace DarkIslandGen
             //SelectController
             islandElementParts.Add(new ModelClass() { Name = "IslandSelectionController", ParentRelation = islandElement });
             properties.Add(new Property("CanBeSelected", "bool"));
+
+            //Stats visualization
+            islandElementParts.Add(new ModelClass("IslandElementUnityStatsView", islandElement) {UseFromParent = new List<Property>()
+            {
+                position,lifePoints,maxLifePoints,hydrationPoints,maxHydrationPoints,manaPoints,maxManaPoints,viewSettings
+            } });
+
 
 
             islandElement.properties = properties;

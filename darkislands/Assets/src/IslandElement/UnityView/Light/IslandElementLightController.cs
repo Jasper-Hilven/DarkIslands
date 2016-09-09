@@ -35,9 +35,11 @@ namespace DarkIslands
         {
             if (unitLight == null)
                 return;
-            this.unitLight.transform.localPosition = this.IslandElement.Position + new Vector3(0, 4, 0);
+            this.unitLight.transform.localPosition = this.IslandElement.Position + new Vector3(0, 5, 0);
             var light= this.unitLight.GetComponent<Light>();
-            light.color = new Color(IslandElement.Position.x / 10f, IslandElement.Position.z / 10f, 0.3f);
+            var cosFac = Mathf.Abs(Mathf.Cos(IslandElement.Position.x/5));
+            var sinFac = Mathf.Abs(Mathf.Sin(IslandElement.Position.z / 5));
+            light.color = new Color(2 * cosFac, 2 - sinFac- cosFac, 2*sinFac);
         }
 
         public override void Destroy()

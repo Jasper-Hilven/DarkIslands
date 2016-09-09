@@ -53,11 +53,11 @@ namespace DarkIslands
         private void SetLifeStatsCorrectPosition()
         {
             if (lifeStats != null)
-              lifeStats.transform.localPosition = elem.Position + new Vector3(0, 3, 0);
+              lifeStats.transform.localPosition = elem.Position + new Vector3(0, 3.2f, 0);
             if (manaStats != null)
                 manaStats.transform.localPosition = elem.Position + new Vector3(0, 2.8f, 0);
             if (hydrationStats != null)
-                hydrationStats.transform.localPosition = elem.Position + new Vector3(0, 2.6f, 0);
+                hydrationStats.transform.localPosition = elem.Position + new Vector3(0, 2.4f, 0);
         }
         public override void PositionChanged()
         {

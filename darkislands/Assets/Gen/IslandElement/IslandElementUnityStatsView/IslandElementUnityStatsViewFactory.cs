@@ -14,14 +14,14 @@ public Dictionary<IslandElement,IslandElementUnityStatsView> Elements= new Dicti
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementUnityStatsView(IslandElement, this);
       Elements.Add(IslandElement,element);
-      IslandElement.ChangeHydrationPointsListeners.Add(element);
-      IslandElement.ChangeMaxHydrationPointsListeners.Add(element);
+      IslandElement.ChangePositionListeners.Add(element);
       IslandElement.ChangeLifePointsListeners.Add(element);
       IslandElement.ChangeMaxLifePointsListeners.Add(element);
+      IslandElement.ChangeHydrationPointsListeners.Add(element);
+      IslandElement.ChangeMaxHydrationPointsListeners.Add(element);
       IslandElement.ChangeManaPointsListeners.Add(element);
       IslandElement.ChangeMaxManaPointsListeners.Add(element);
       IslandElement.ChangeIslandElementViewSettingsListeners.Add(element);
-      IslandElement.ChangePositionListeners.Add(element);
     }
   }
 }
