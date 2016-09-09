@@ -12,6 +12,7 @@ namespace DarkIslands
   public List<IIslandElementRelativeToContainerPositionChanged> ChangeRelativeToContainerPositionListeners= new List<IIslandElementRelativeToContainerPositionChanged>();
   public List<IIslandElementPositionChanged> ChangePositionListeners= new List<IIslandElementPositionChanged>();
   public List<IIslandElementIslandChanged> ChangeIslandListeners= new List<IIslandElementIslandChanged>();
+  public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
   public List<IIslandElementIslandManagerChanged> ChangeIslandManagerListeners= new List<IIslandElementIslandManagerChanged>();
   public List<IIslandElementMaxSpeedChanged> ChangeMaxSpeedListeners= new List<IIslandElementMaxSpeedChanged>();
@@ -153,6 +154,19 @@ namespace DarkIslands
       }
     }
       private Island _Island{get;set;}
+    public Island IslandToEnter
+    {
+      get{
+        return _IslandToEnter;
+      }
+      set
+      {
+        this._IslandToEnter= value;
+        foreach( var vIslandElementIslandToEnterChanged in ChangeIslandToEnterListeners)
+          vIslandElementIslandToEnterChanged.IslandToEnterChanged();
+      }
+    }
+      private Island _IslandToEnter{get;set;}
     public CircleElementProperties CircleElementProperties
     {
       get{

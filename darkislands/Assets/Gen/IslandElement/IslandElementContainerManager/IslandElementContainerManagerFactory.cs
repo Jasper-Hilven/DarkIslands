@@ -14,6 +14,7 @@ public Dictionary<IslandElement,IslandElementContainerManager> Elements= new Dic
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementContainerManager(IslandElement, this);
       Elements.Add(IslandElement,element);
+      IslandElement.ChangeIslandToEnterListeners.Add(element);
       IslandElement.ChangeIslandPositionListeners.Add(element);
       IslandElement.ChangeRelativeToContainerPositionListeners.Add(element);
     }

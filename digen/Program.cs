@@ -21,7 +21,7 @@ namespace DarkIslandGen
             foreach (var codeFile in allFiles)
             {
                 //TODO Fix relativeFilePath
-				//const string relativeFilePath = @"\darkislands\Assets\Gen\";
+                const string relativeFilePath = @"../../../darkislands/Assets/Gen/";
                 var path = relativeFilePath + codeFile.FileName;
                 var directory = Path.GetDirectoryName(path);
                 System.IO.Directory.CreateDirectory(directory);

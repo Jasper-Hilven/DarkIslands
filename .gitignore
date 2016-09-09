@@ -18,3 +18,11 @@ darkislands/Temp
 darkislands/*.csproj
 
 /digen/obj/Debug
+/digen/bin/Debug/DarkIslandGen.vshost.exe
+/digen/bin/Debug/DarkIslandGen.vshost.exe.config
+/digen/bin/Debug/DarkIslandGen.vshost.exe.manifest
+/digen/.vs/DarkIslandGen/v14/.suo
+/digen/bin/Debug/DarkIslandGen.exe
+/digen/bin/Debug/DarkIslandGen.exe.config
+/digen/bin/Debug/DarkIslandGen.pdb
+/darkislands/.vs/darkislands/v14/*.suo

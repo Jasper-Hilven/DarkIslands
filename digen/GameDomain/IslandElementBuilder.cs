@@ -37,6 +37,7 @@ namespace DarkIslandGen
             var islandToEnter = new Property("IslandToEnter", new GType() { name = "Island" });
             properties.Add(islandToEnter);
             properties.Add(circleProps);
+            properties.Add(new Property("IslandManager", "IslandElementContainerManager"));
             islandElementParts.Add(new ModelClass() { Name = "IslandElementContainerManager", ParentRelation = islandElement,
                 UseFromParent = new List<Property>() { islandToEnter, islandPosition, relativeToContainerPosition}});
 
@@ -55,11 +56,12 @@ namespace DarkIslandGen
             
             //Actions
             var curCommand = new Property("CurrentCommand", "IIslandElementCommand");
-            properties.Add(curCommand);
+            properties.Add(curCommand);     
             var curAction = new Property("CurrentAction", "IIslandElementAction");
             properties.Add(curAction);
             var curlifeAction = new Property("CurrentLifeAction", "IIslandElementAction");
             properties.Add(curlifeAction);
+            properties.Add(new Property("ActionHandler", "IslandElementActionHandler"));
             islandElementParts.Add(new ModelClass() { Name = "IslandElementActionHandler", ParentRelation = islandElement,UseFromParent = new List<Property>() {curCommand,curAction,curlifeAction}});
             
             //Light
