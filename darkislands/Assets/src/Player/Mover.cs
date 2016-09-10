@@ -19,12 +19,23 @@ namespace DarkIslands.Player
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
                 MoveUnitToMouseHit();
-
-
-
+            var direction = new Vector3();
+            if (Input.GetKey(KeyCode.DownArrow))
+                direction += new Vector3(0, 0, -1);
+            if (Input.GetKey(KeyCode.UpArrow))
+                direction += (new Vector3(0, 0, 1));
+            if (Input.GetKey(KeyCode.LeftArrow))
+                direction += (new Vector3(-1, 0, 0));
+            if (Input.GetKey(KeyCode.RightArrow))
+                direction += (new Vector3(1, 0, 0));
+            if (direction.magnitude > 0.1f)
+                MoveUnitIntoDirection(direction);
+        }
+        public void MoveUnitIntoDirection(Vector3 direction)
+        {
+            unit.CurrentCommand = new GoToIslandPositionCommand(unit, unit.Position + direction, unit.Island);
 
         }
-
         public void MoveUnitToMouseHit()
         {
             RaycastHit hit;
@@ -45,7 +56,7 @@ namespace DarkIslands.Player
                 var wo = obj as IslandElement;
                 if (wo != null)
                 {
-                    unit.CurrentCommand =new OtherIslandElementCommand(unit,wo);
+                    unit.CurrentCommand = new OtherIslandElementCommand(unit, wo);
                 }
 
 

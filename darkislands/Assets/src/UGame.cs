@@ -97,7 +97,7 @@ public class UGame : MonoBehaviour
     void UpdateFocussedUnit()
     {
         var force = islands[1].Mass * Time.deltaTime;
-        if (Input.GetKey(KeyCode.DownArrow))
+   /*     if (Input.GetKey(KeyCode.DownArrow))
             islands[1].MovementController.AddImpuls(new Vector3(force,0,0));
         if (Input.GetKey(KeyCode.UpArrow))
             islands[1].MovementController.AddImpuls(new Vector3(-force, 0, 0));
@@ -105,7 +105,7 @@ public class UGame : MonoBehaviour
             islands[1].MovementController.AddImpuls(new Vector3(0, 0, -force));
         if (Input.GetKey(KeyCode.RightArrow))
             islands[1].MovementController.AddImpuls(new Vector3(0, 0 , force));
-        if (Input.GetKeyDown(KeyCode.A))
+     */   if (Input.GetKeyDown(KeyCode.A))
             FocusOnUnit(units[0]);
         if (Input.GetKeyDown(KeyCode.Z))
             FocusOnUnit(units[1]);
