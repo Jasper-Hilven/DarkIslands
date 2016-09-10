@@ -23,11 +23,11 @@ namespace DarkIslands
             return gO;
         }
 
-        public GameObject GetRockVisualization(IslandElement tree, int seed)
+        public GameObject GetRockVisualization(IslandElement tree, bool big, int seed)
         {
-            var rockNb = (seed % 4);
+            var rockNb = big? 0: 1;
             var gO = gB.LoadViaResources("Rock" + rockNb);
-            gO.transform.Rotate(new Vector3(0, 0, 1), r.Next(360));
+            gO.transform.Rotate(new Vector3(0, 1, 0), r.Next(360));
             this.ModelToEntity.modelToEntity.Add(gO, tree);
             return gO;
         }

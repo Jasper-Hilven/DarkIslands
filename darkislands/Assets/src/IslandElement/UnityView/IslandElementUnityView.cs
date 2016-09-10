@@ -47,7 +47,7 @@ namespace DarkIslands
             if (IslandElement.IslandElementViewSettings.IsRock)
             {
                 var seed = IslandElement.IslandElementViewSettings.Seed;
-                UIUnit = UnitUnityViewFactory.GetRockVisualization(IslandElement, seed);//TODO this dependent code out to specific interface
+                UIUnit = UnitUnityViewFactory.GetRockVisualization(IslandElement,IslandElement.IslandElementViewSettings.RockInfo.Big, seed);//TODO this dependent code out to specific interface
                 UpdateSize();
                 UpdatePosition();
                 return;

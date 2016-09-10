@@ -17,7 +17,7 @@ namespace DarkIslands.Player
             if(camera == null)
                 camera = Camera.allCameras.First();
             camera.transform.rotation= Quaternion.Euler(50,0,0);
-            camera.transform.position = this.toFollow.Position + new Vector3(0, 19, -19);
+            camera.transform.position = this.toFollow.Position + new Vector3(0, 17, -17);
             
         }
     }

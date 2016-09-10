@@ -15,7 +15,8 @@ namespace DarkIslands
             var sizeRatio = 1f;
             var current = islandElement.HarvestInfo.ResourcesToHarvest[type];
             var max = islandElement.HarvestInfo.InitialResources[type];
-            sizeRatio = ((float)current) / max;
+            var ratio= ((float)current) / max;
+            sizeRatio = UnityEngine.Mathf.Sqrt(ratio);
             return sizeRatio;
 
         }

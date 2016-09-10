@@ -52,7 +52,7 @@ namespace DarkIslands.World
             tree.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(tree,resourceType:ResourceType.Wood);
             tree.SizeController = new ResourceAmountSizeController(ResourceType.Wood);
             var resourceCount = new Dictionary<ResourceType, int>();
-            resourceCount[ResourceType.Wood] = 10;
+            resourceCount[ResourceType.Wood] = 5;
             tree.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
             island.ContainerControllerIsland.AddElement(tree);
             tree.RelativeToContainerPosition = relPosition;
@@ -72,12 +72,13 @@ namespace DarkIslands.World
             var fP = provider;
             var rock = fP.IslandElementFactory.Create();
             rock.Factory = fP.IslandElementFactory;
-            rock.IslandElementViewSettings = new IslandElementViewSettings() { IsRock = true, Seed = rand.Next(0, 100), HasLifeStatVisualization = false};
+            bool isBig = rand.Next(0, 2) > 0;
+            rock.IslandElementViewSettings = new IslandElementViewSettings() { IsRock = true,RockInfo= new RockInfo {Big=true},Seed = rand.Next(0, 100), HasLifeStatVisualization = false};
             rock.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
             rock.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(rock, resourceType: ResourceType.Stone);
             rock.SizeController = new ResourceAmountSizeController(ResourceType.Stone);
             var resourceCount = new Dictionary<ResourceType, int>();
-            resourceCount[ResourceType.Stone] = 10;
+            resourceCount[ResourceType.Stone] = isBig? 2 : 1;
             rock.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
             island.ContainerControllerIsland.AddElement(rock);
             rock.RelativeToContainerPosition = relPosition;
