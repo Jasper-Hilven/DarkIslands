@@ -28,7 +28,8 @@ namespace DarkIslands.Player
                 direction += (new Vector3(-1, 0, 0));
             if (Input.GetKey(KeyCode.RightArrow))
                 direction += (new Vector3(1, 0, 0));
-            if (direction.magnitude > 0.1f)
+            direction *= 0.1f;
+            if (direction.sqrMagnitude > 0.00001f)
                 MoveUnitIntoDirection(direction);
         }
         public void MoveUnitIntoDirection(Vector3 direction)
