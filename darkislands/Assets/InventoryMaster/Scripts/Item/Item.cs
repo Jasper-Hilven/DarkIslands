@@ -33,7 +33,10 @@ public class Item
         this.maxStack = maxStack;
         this.itemAttributes = itemAttributes;
     }
-
+    public bool IsSameItem(Item other)
+    {
+        return other != null && other.itemValue == itemValue && other.itemID == itemID;
+    }
     public Item getCopy()
     {
         return (Item)this.MemberwiseClone();        

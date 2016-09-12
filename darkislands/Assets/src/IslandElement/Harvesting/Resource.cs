@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace DarkIslands
 {
-    public enum ResourceType
-    {
-        Wood, //From Tree
-        Stone, //From Rock
+    
+     /*   , //From Rock
         Gold, //From Gold rock
         RedMushroom, //From Red mushroom
         BrownMushroom, //From brown mushroom
@@ -16,7 +14,22 @@ namespace DarkIslands
         MindStone,   //Loot from mind demon
         PoisonStone, //Loot from poison demon
         PoisonBerry //Poison tree with mushroom (degrades to tree if picked)
+        */
+
+    public class ResourceType{
+        public static ResourceType Wood = new ResourceType("Wood");
+        public static ResourceType Stone = new ResourceType("Stone");
+        public string Name { get; private set; }
+
+        public ResourceType(string Name)
+        {
+            this.Name = Name;
+        }
+
     }
+
+
+   
 
     public class ResourceAmount
     {
@@ -24,7 +37,15 @@ namespace DarkIslands
         {
             Amount = amount;
         }
-
+        public bool Empty { get
+            {
+                foreach (var item in Amount.Values)
+                {
+                    if (item > 0)
+                        return false;
+                }
+                return true;
+            } }
         public Dictionary<ResourceType,int>Amount { get; private set; }
     }
 }

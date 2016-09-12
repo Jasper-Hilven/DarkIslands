@@ -1,72 +1,147 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 namespace DarkIslands
 {
-    class InventoryView : MonoBehaviour
+    public class InventoryViewFacade 
     {
         public UnityEngine.Object EventSystem { get; private set; }
-       private IslandElement FocussedUnit;
-
+        private IslandElement FocussedUnit;
+        private Inventory unityInventory;
         private bool inventoryBuild = false;
-            
-        public void FocusOnUnit(IslandElement u)
+        private DIInventoryDatabase database;
+        private GameObjectManager gObjManager;
+
+        public InventoryViewFacade(GameObjectManager gObjManager)
         {
-            if (u == null)
-                CloseInventoryView();
-            else
-                OpenInventoryView(u);
+            this.gObjManager = gObjManager;
+        }
+        public void SetDatabase(DIInventoryDatabase database)
+        {
+            this.database = database;
         }
 
-        private void OpenInventoryView(IslandElement u)
+
+        private void OpenInventoryView()
         {
-            if (u == this.FocussedUnit)
+            if (!screenLoaded)
                 return;
             if (!inventoryBuild)
                 BuildInventory();
-            CloseInventoryView(); //Close the previous and different one (can be null)
-            this.FocussedUnit = u;
-           
+            UpdateInventoryFromGameLogicToUnity();
         }
 
-        public void BuildInventory()
-        {
+        private bool screenLoaded = false;
 
+        public void InitializeAfterScreenLoaded()
+        {
+            screenLoaded = true;
+            if (this.FocussedUnit != null)
+                BuildInventory();
+            UpdateInventoryFromGameLogicToUnity();
+        }
+
+        private void BuildInventory()
+        {
             GameObject Canvas = null;
             GameObject inventory = new GameObject();
             inventory.name = "Inventories";
-            Canvas = (GameObject)Instantiate(Resources.Load("Prefabs/Canvas - Inventory") as GameObject);
+            Canvas = (GameObject)gObjManager.LoadViaResources("Prefabs/Canvas - Inventory");
             Canvas.transform.SetParent(inventory.transform, true);
-            GameObject panel = (GameObject)Instantiate(Resources.Load("Prefabs/Panel - Inventory") as GameObject);
+            GameObject panel = (GameObject)gObjManager.LoadViaResources("Prefabs/Panel - Inventory");
             panel.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0, 0f);
             panel.transform.SetParent(Canvas.transform, true);
-            GameObject draggingItem = (GameObject)Instantiate(Resources.Load("Prefabs/DraggingItem") as GameObject);
+            GameObject draggingItem = (GameObject)gObjManager.LoadViaResources("Prefabs/DraggingItem");
             draggingItem.transform.SetParent(Canvas.transform, true);
             Inventory inv = panel.AddComponent<Inventory>();
-            inv.getPrefabs();
-            inv.setAsMain();
-            inv.updateSlotAmount(12, 1);
             inv.width = 12;
             inv.height = 1;
             inv.paddingTop = 5;
             inv.paddingBottom = 5;
-            var slotSize = Screen.width / 50;
+            inv.paddingLeft = 5;
+            inv.paddingRight = 5;
+            var slotSize = Screen.width / 20;
+            var iconSize = (slotSize > 2) ? (slotSize - 2) : 1;
+            inv.slotSize = slotSize;
+            inv.iconSize = iconSize;
+            inv.positionNumberX = slotSize / 3;
+            inv.positionNumberY = slotSize / 3;
+            inv.SetDatabase(database);
+            inv.getPrefabs();
+            inv.setAsMain();
+            inv.updateSlotAmount(12, 1);
             inv.updateSlotSize(slotSize);
+            inv.updateIconSize(iconSize);
+            inv.updatePadding(Screen.width / 200, Screen.width / 200);
+            inv.adjustInventorySize();
+            panel.transform.localPosition = new Vector3(0, -Screen.height / 2 + slotSize, 0);
+            inv.openInventory();
+            //inv.updateSlotSize(slotSize);
             inv.updateIconSize((slotSize > 2) ? (slotSize - 2) : 1);
             inv.updatePadding(Screen.width / 200, Screen.width / 200);
             inv.adjustInventorySize();
-            inv.updateSlotSize();
-            panel.transform.localPosition = new Vector3(0, -Screen.height / 2 + slotSize, 0);
+            inv.addItemToInventory(1, 3);
+            inv.stackable = true;
             inventoryBuild = true;
-            inv.addItemToInventory(4);
-            inv.openInventory();
+            inv.addAllItemsToInventory();
+            this.unityInventory = inv;
+            inv.EItemListChanged += UpdateInventoryFromUnity;
         }
 
-        private void CloseInventoryView()
+        private void UpdateInventoryFromUnity()
         {
-            this.FocussedUnit = null;
-          
+            if (FocussedUnit == null)
+                return;
+            FocussedUnit.InventoryController.ReceiveView(UnityToGame(unityInventory.ItemsInInventory));
         }
 
-       
+        public void UpdateInventoryFromGameLogicToUnity()
+        {
+            var Inventory = this.FocussedUnit.InventoryController.Inventory;
+            if (unityInventory == null)
+                return;
+            unityInventory.SetNewItemsList(GameToUnity(Inventory));
+        }
+
+        public void FocusOn(IslandElement element)
+        {
+            if (element == null)
+            {
+                if (FocussedUnit == null)
+                    return;
+                this.FocussedUnit.InventoryController.SetActiveToInventoryView(null);
+                this.FocussedUnit = null;
+                return;
+            }
+            if (this.FocussedUnit != null)
+            {
+                this.FocussedUnit.InventoryController.SetActiveToInventoryView(null);
+                this.FocussedUnit = null;
+            }
+            this.FocussedUnit = element;
+            this.FocussedUnit.InventoryController.SetActiveToInventoryView(this);
+            OpenInventoryView();
+
+
+        }
+        private List<Item> GameToUnity(List<InventoryItem> items)
+        {
+            var ret = new List<Item>();
+            foreach (var item in items)
+            {
+                ret.Add(DIInventoryDatabase.FromInventoryItem(item));
+            }
+            return ret;
+        }
+        private List<InventoryItem> UnityToGame(List<Item> items)
+        {
+            var ret = new List<InventoryItem>();
+            foreach (var item in items)
+            {
+                ret.Add(database.ToInventoryItem(item));
+            }
+            return ret;
+        }
+
     }
 }

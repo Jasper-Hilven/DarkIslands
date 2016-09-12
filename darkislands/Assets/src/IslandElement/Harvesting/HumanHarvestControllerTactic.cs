@@ -19,7 +19,8 @@ namespace DarkIslands
         void IHarvestControllerTactic.Harvest(float harvestEffort, IslandElement harvested)
         {
             var resources = harvested.HarvestController.GetHarvested(harvestEffort);
-            element.InventoryController.AddResource(resources);
+            if(!resources.Empty)
+                element.InventoryController.AddResources(resources);
         }
     }
 }

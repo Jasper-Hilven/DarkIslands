@@ -32,7 +32,7 @@ namespace DarkIslands.World
             var minsQ = 4*4;
             var sizeBiCub = (size -1)* (size - 1) * size * size;
             var min = 4 * 4 * 4 * 4;
-            var nbTrees = size * size / 10+ rand.Next(0, size * size / 20);
+            var nbTrees = (size * size / 10+ rand.Next(0, size * size / 20))/4;
             for (int i = 0; i < nbTrees; i++)
             {
                 var radiusForTree = Mathf.Sqrt(rand.Next(minsQ, sizeSq/4)+Mathf.Sqrt(rand.Next(min, sizeBiCub))/2);

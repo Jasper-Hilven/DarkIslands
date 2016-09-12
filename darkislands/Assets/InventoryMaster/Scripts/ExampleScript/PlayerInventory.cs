@@ -85,7 +85,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (mainInventory == null)
                     mainInventory = inventory.GetComponent<Inventory>();
-                mainInventory.sortItems();
                 if (item.itemAttributes[i].attributeName == "Slots")
                     changeInventorySize(item.itemAttributes[i].attributeValue);
             }
