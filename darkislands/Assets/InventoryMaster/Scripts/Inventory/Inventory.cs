@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DarkIslands;
+using System;
 
 public class Inventory : MonoBehaviour
 {
@@ -23,9 +24,6 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private GameObject prefabPanel;
 
-    //Itemdatabase
-    [SerializeField]
-    private ItemDataBaseList itemDatabase;
 
     //GameObjects which are alive
     [SerializeField]
@@ -88,7 +86,6 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     public int positionNumberY;
 
-    InputManager inputManagerDatabase;
     private DIInventoryDatabase diDatabase;
 
     //event delegates for consuming, gearing
@@ -106,9 +103,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-
         updateItemList();
-        inputManagerDatabase = (InputManager)Resources.Load("InputManager");
     }
 
 
@@ -136,7 +131,7 @@ public class Inventory : MonoBehaviour
     {
         updateItemList();
     }
-
+    public InventoryViewFacade gameView { get; set; }
     public void SetNewItemsList(List<Item> items)
     {
         for (int i = 0; i < items.Count; i++)
@@ -148,6 +143,16 @@ public class Inventory : MonoBehaviour
         ItemsInInventory = items;
         addAllItemsToInventory();
     }
+    public void ConsumeItemAt(int index)
+    {
+        this.gameView.ConsumeItemAt(index);
+    }
+
+    public int GetItemIndex(Item item)
+    {
+        return this.ItemsInInventory.IndexOf(item);
+    }
+
 
     /// <summary>
     /// /END REGION USEFUL
@@ -166,6 +171,7 @@ public class Inventory : MonoBehaviour
         if (InventoryOpen != null)
             InventoryOpen();
     }
+
 
     public void checkIfAllInventoryClosed()
     {
@@ -190,15 +196,6 @@ public class Inventory : MonoBehaviour
 
 
         }
-    }
-
-
-
-
-    public void ConsumeItem(Item item)
-    {
-        if (ItemConsumed != null)
-            ItemConsumed(item);
     }
 
     public void EquiptItem(Item item)
@@ -271,8 +268,6 @@ public class Inventory : MonoBehaviour
             prefabSlotContainer = Resources.Load("Prefabs/Slots - Inventory") as GameObject;
         if (prefabItem == null)
             prefabItem = Resources.Load("Prefabs/Item") as GameObject;
-        if (itemDatabase == null)
-            itemDatabase = (ItemDataBaseList)Resources.Load("ItemDatabase");
         if (prefabDraggingItemContainer == null)
             prefabDraggingItemContainer = Resources.Load("Prefabs/DraggingItem") as GameObject;
         if (prefabPanel == null)
@@ -304,74 +299,22 @@ public class Inventory : MonoBehaviour
 
     public bool characterSystem()
     {
-        if (GetComponent<EquipmentSystem>() != null)
-            return true;
-        else
+       
             return false;
     }
 
 
     public void setDefaultSettings()
     {
-        if (GetComponent<EquipmentSystem>() == null && GetComponent<Hotbar>() == null && GetComponent<CraftSystem>() == null)
-        {
             height = 5;
             width = 5;
-
             slotSize = 50;
             iconSize = 45;
-
             paddingBetweenX = 5;
             paddingBetweenY = 5;
             paddingTop = 35;
             paddingBottom = 10;
             paddingLeft = 10;
-            paddingRight = 10;
-        }
-        else if (GetComponent<Hotbar>() != null)
-        {
-            height = 1;
-            width = 9;
-
-            slotSize = 50;
-            iconSize = 45;
-
-            paddingBetweenX = 5;
-            paddingBetweenY = 5;
-            paddingTop = 10;
-            paddingBottom = 10;
-            paddingLeft = 10;
-            paddingRight = 10;
-        }
-        else if (GetComponent<CraftSystem>() != null)
-        {
-            height = 3;
-            width = 3;
-            slotSize = 55;
-            iconSize = 45;
-
-            paddingBetweenX = 5;
-            paddingBetweenY = 5;
-            paddingTop = 35;
-            paddingBottom = 95;
-            paddingLeft = 25;
-            paddingRight = 25;
-        }
-        else
-        {
-            height = 4;
-            width = 2;
-
-            slotSize = 50;
-            iconSize = 45;
-
-            paddingBetweenX = 100;
-            paddingBetweenY = 20;
-            paddingTop = 35;
-            paddingBottom = 10;
-            paddingLeft = 10;
-            paddingRight = 10;
-        }
     }
 
     public void adjustInventorySize()
@@ -433,13 +376,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        if (itemsToMove != null && ItemsInInventory.Count < width * height)
-        {
-            foreach (Item i in itemsToMove)
-            {
-                addItemToInventory(i.itemID);
-            }
-        }
+       
 
         setImportantVariables();
     }
@@ -493,15 +430,6 @@ public class Inventory : MonoBehaviour
                 slotList.Add(Slot);
             }
         }
-
-        if (itemsToMove != null && ItemsInInventory.Count < width * height)
-        {
-            foreach (Item i in itemsToMove)
-            {
-                addItemToInventory(i.itemID);
-            }
-        }
-
         setImportantVariables();
     }
 
@@ -568,81 +496,6 @@ public class Inventory : MonoBehaviour
         stackableSettings();
     }
 
-
-    public bool checkIfItemAllreadyExist(int itemID, int itemValue)
-    {
-        updateItemList();
-        int stack;
-        for (int i = 0; i < ItemsInInventory.Count; i++)
-        {
-            if (ItemsInInventory[i] == null)
-                continue;
-            if (ItemsInInventory[i].itemID == itemID)
-            {
-                stack = ItemsInInventory[i].itemValue + itemValue;
-                if (stack <= ItemsInInventory[i].maxStack)
-                {
-                    ItemsInInventory[i].itemValue = stack;
-                    GameObject temp = getItemGameObject(ItemsInInventory[i]);
-                    if (temp != null && temp.GetComponent<ConsumeItem>().duplication != null)
-                        temp.GetComponent<ConsumeItem>().duplication.GetComponent<ItemOnObject>().item.itemValue = stack;
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void addItemToInventory(int id)
-    {
-        for (int i = 0; i < SlotContainer.transform.childCount; i++)
-        {
-            if (SlotContainer.transform.GetChild(i).childCount == 0)
-            {
-                GameObject item = (GameObject)Instantiate(prefabItem);
-                item.GetComponent<ItemOnObject>().item = diDatabase.getItemByID(id);
-                item.transform.SetParent(SlotContainer.transform.GetChild(i));
-                item.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                item.transform.GetChild(0).GetComponent<Image>().sprite = item.GetComponent<ItemOnObject>().item.itemIcon;
-                item.GetComponent<ItemOnObject>().item.indexItemInList = ItemsInInventory.Count - 1;
-                break;
-            }
-        }
-
-        stackableSettings();
-        updateItemList();
-
-    }
-
-    public GameObject addItemToInventory(int id, int value)
-    {
-        for (int i = 0; i < SlotContainer.transform.childCount; i++)
-        {
-            if (SlotContainer.transform.GetChild(i).childCount == 0)
-            {
-                GameObject item = (GameObject)Instantiate(prefabItem);
-                ItemOnObject itemOnObject = item.GetComponent<ItemOnObject>();
-                itemOnObject.item = diDatabase.getItemByID(id);
-                if (itemOnObject.item.itemValue <= itemOnObject.item.maxStack && value <= itemOnObject.item.maxStack)
-                    itemOnObject.item.itemValue = value;
-                else
-                    itemOnObject.item.itemValue = 1;
-                item.transform.SetParent(SlotContainer.transform.GetChild(i));
-                item.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                item.transform.GetChild(0).GetComponent<Image>().sprite = itemOnObject.item.itemIcon;
-                itemOnObject.item.indexItemInList = ItemsInInventory.Count - 1;
-                if (inputManagerDatabase == null)
-                    inputManagerDatabase = (InputManager)Resources.Load("InputManager");
-                return item;
-            }
-        }
-
-        stackableSettings();
-        updateItemList();
-        return null;
-
-    }
-
     public void addItemToInventoryStorage(int itemID, int value)
     {
 
@@ -660,8 +513,6 @@ public class Inventory : MonoBehaviour
                 item.transform.SetParent(SlotContainer.transform.GetChild(i));
                 item.GetComponent<RectTransform>().localPosition = Vector3.zero;
                 itemOnObject.item.indexItemInList = 999;
-                if (inputManagerDatabase == null)
-                    inputManagerDatabase = (InputManager)Resources.Load("InputManager");
                 updateItemSize();
                 stackableSettings();
                 break;
@@ -826,39 +677,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void deleteItemFromInventory(Item item)
-    {
-        for (int i = 0; i < ItemsInInventory.Count; i++)
-        {
-            if (item.Equals(ItemsInInventory[i]))
-                ItemsInInventory.RemoveAt(i);
-        }
-    }
+   
 
-    public void deleteItemFromInventoryWithGameObject(Item item)
-    {
-        for (int i = 0; i < ItemsInInventory.Count; i++)
-        {
-            if (item.Equals(ItemsInInventory[i]))
-            {
-                ItemsInInventory.RemoveAt(i);
-            }
-        }
-
-        for (int k = 0; k < SlotContainer.transform.childCount; k++)
-        {
-            if (SlotContainer.transform.GetChild(k).childCount != 0)
-            {
-                GameObject itemGameObject = SlotContainer.transform.GetChild(k).GetChild(0).gameObject;
-                Item itemObject = itemGameObject.GetComponent<ItemOnObject>().item;
-                if (itemObject.Equals(item))
-                {
-                    Destroy(itemGameObject);
-                    break;
-                }
-            }
-        }
-    }
+   
 
     public int getPositionOfItem(Item item)
     {
@@ -872,32 +693,6 @@ public class Inventory : MonoBehaviour
             }
         }
         return -1;
-    }
-
-    public void addItemToInventory(int ignoreSlot, int itemID, int itemValue)
-    {
-
-        for (int i = 0; i < SlotContainer.transform.childCount; i++)
-        {
-            if (SlotContainer.transform.GetChild(i).childCount == 0 && i != ignoreSlot)
-            {
-                GameObject item = (GameObject)Instantiate(prefabItem);
-                ItemOnObject itemOnObject = item.GetComponent<ItemOnObject>();
-                itemOnObject.item = diDatabase.getItemByID(itemID);
-                if (itemOnObject.item.itemValue < itemOnObject.item.maxStack && itemValue <= itemOnObject.item.maxStack)
-                    itemOnObject.item.itemValue = itemValue;
-                else
-                    itemOnObject.item.itemValue = 1;
-                item.transform.SetParent(SlotContainer.transform.GetChild(i));
-                item.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                itemOnObject.item.indexItemInList = 999;
-                updateItemSize();
-                stackableSettings();
-                break;
-            }
-        }
-        stackableSettings();
-        updateItemList();
     }
 
     public void updateItemIndex()

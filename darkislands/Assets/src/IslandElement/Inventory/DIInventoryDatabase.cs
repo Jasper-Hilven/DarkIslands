@@ -16,7 +16,7 @@ namespace DarkIslands
         {
             if (!iconsLoaded)
                 LoadIcons();
-            return new Item(iType.Name, iType.UnityId, iType.Description, iType.Icon, null, iType.maxStack, ItemType.None, "sendmessagetext", new List<ItemAttribute>());
+            return new Item(iType.Name, iType.UnityId, iType.Description, iType.Icon, null, iType.maxStack, "sendmessagetext");
         }
         public static Item FromInventoryItem(InventoryItem item)
         {
@@ -25,7 +25,7 @@ namespace DarkIslands
             if (!iconsLoaded)
                 LoadIcons();
             var iType = item.InventoryType;
-            var ret= new Item(iType.Name, iType.UnityId, iType.Description, iType.Icon, null, iType.maxStack, ItemType.None, "sendmessagetext", new List<ItemAttribute>());
+            var ret= new Item(iType.Name, iType.UnityId, iType.Description, iType.Icon, null, iType.maxStack,  "sendmessagetext");
             ret.itemValue = item.Amount;
             return ret;
         }

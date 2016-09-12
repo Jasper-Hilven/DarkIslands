@@ -74,19 +74,29 @@ namespace DarkIslands
             inv.updateIconSize(iconSize);
             inv.updatePadding(Screen.width / 200, Screen.width / 200);
             inv.adjustInventorySize();
-            panel.transform.localPosition = new Vector3(0, -Screen.height / 2 + slotSize, 0);
+            panel.transform.localPosition = new Vector3(0, -Screen.height / 2 + slotSize/2, 0);
             inv.openInventory();
             //inv.updateSlotSize(slotSize);
             inv.updateIconSize((slotSize > 2) ? (slotSize - 2) : 1);
             inv.updatePadding(Screen.width / 200, Screen.width / 200);
             inv.adjustInventorySize();
-            inv.addItemToInventory(1, 3);
             inv.stackable = true;
             inventoryBuild = true;
             inv.addAllItemsToInventory();
             this.unityInventory = inv;
+            inv.gameView = this;
             inv.EItemListChanged += UpdateInventoryFromUnity;
         }
+
+        
+        public void UpdateInventoryFromGameLogicToUnity()
+        {
+            var Inventory = this.FocussedUnit.InventoryController.Inventory;
+            if (unityInventory == null)
+                return;
+            unityInventory.SetNewItemsList(GameToUnity(Inventory));
+        }
+        #region FromUnityToGame
 
         private void UpdateInventoryFromUnity()
         {
@@ -95,13 +105,21 @@ namespace DarkIslands
             FocussedUnit.InventoryController.ReceiveView(UnityToGame(unityInventory.ItemsInInventory));
         }
 
-        public void UpdateInventoryFromGameLogicToUnity()
+        public void ConsumeItemAt(int index)
         {
-            var Inventory = this.FocussedUnit.InventoryController.Inventory;
-            if (unityInventory == null)
-                return;
-            unityInventory.SetNewItemsList(GameToUnity(Inventory));
+            var myItem = this.FocussedUnit.InventoryController.Inventory[index];
+            this.FocussedUnit.InventoryController.ConsumeItem(myItem);
         }
+        private List<InventoryItem> UnityToGame(List<Item> items)
+        {
+            var ret = new List<InventoryItem>();
+            foreach (var item in items)
+            {
+                ret.Add(database.ToInventoryItem(item));
+            }
+            return ret;
+        }
+        #endregion
 
         public void FocusOn(IslandElement element)
         {
@@ -124,6 +142,7 @@ namespace DarkIslands
 
 
         }
+
         private List<Item> GameToUnity(List<InventoryItem> items)
         {
             var ret = new List<Item>();
@@ -133,15 +152,7 @@ namespace DarkIslands
             }
             return ret;
         }
-        private List<InventoryItem> UnityToGame(List<Item> items)
-        {
-            var ret = new List<InventoryItem>();
-            foreach (var item in items)
-            {
-                ret.Add(database.ToInventoryItem(item));
-            }
-            return ret;
-        }
+     
 
     }
 }

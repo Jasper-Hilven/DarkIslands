@@ -120,7 +120,13 @@ namespace DarkIslands
             UpdateView();
         }
 
+        public void ConsumeItem(InventoryItem myItem)
+        {
+            myItem.Amount--;
+            if (myItem.Amount == 0)
+                Inventory.Remove(myItem);
+            UpdateView();
 
-
+        }
     }
 }

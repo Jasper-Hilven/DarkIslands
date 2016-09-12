@@ -15,10 +15,15 @@ public class ShowTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Tooltip") != null)
+        TrySettingTooltip();
+    }
+    void TrySettingTooltip()
+    {
+        var tooltipObject = GameObject.FindGameObjectWithTag("Tooltip");
+        if (tooltipObject != null)
         {
-            tooltip = GameObject.FindGameObjectWithTag("Tooltip").GetComponent<Tooltip>();
-            tooltipGameObject = GameObject.FindGameObjectWithTag("Tooltip");
+            tooltip = tooltipObject.GetComponent<Tooltip>();
+            tooltipGameObject = tooltipObject;
             tooltipRectTransform = tooltipGameObject.GetComponent<RectTransform>() as RectTransform;
         }
         canvasRectTransform = GameObject.FindGameObjectWithTag("Canvas").GetComponent<RectTransform>() as RectTransform;
@@ -26,9 +31,9 @@ public class ShowTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 
 
-
     public void OnPointerEnter(PointerEventData data)                               //if you hit a item in the slot
     {
+        TrySettingTooltip();
         if (tooltip != null)
         {
             item = GetComponent<ItemOnObject>().item;                   //we get the item
@@ -44,7 +49,7 @@ public class ShowTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             Vector2 localPointerPosition;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, slotCorners[3], data.pressEventCamera, out localPointerPosition))   // and set the localposition of the tooltip...
             {
-                if (transform.parent.parent.parent.GetComponent<Hotbar>() == null)
+                if (true)
                     tooltipRectTransform.localPosition = localPointerPosition;          //at the right bottom side of the slot
                 else
                     tooltipRectTransform.localPosition = new Vector3(localPointerPosition.x, localPointerPosition.y + tooltip.tooltipHeight);
