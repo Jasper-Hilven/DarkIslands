@@ -23,13 +23,13 @@ public class FirstPersonController : MonoBehaviour
     GameObject craftSystem;
     GameObject characterSystem;
 
-    //Camera firstPersonCamera;
+    Camera firstPersonCamera;
 
     CharacterController characterController;
     // Use this for initialization
     void Start()
     {
-        //firstPersonCamera = Camera.main.GetComponent<Camera>();
+        firstPersonCamera = Camera.main.GetComponent<Camera>();
         characterController = GetComponent<CharacterController>();
 
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -56,7 +56,7 @@ public class FirstPersonController : MonoBehaviour
 
             verticalRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
             verticalRotation = Mathf.Clamp(verticalRotation, -verticalAngleLimit, verticalAngleLimit);
-            //firstPersonCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+            firstPersonCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
             //Movement
             float forwardSpeed = Input.GetAxis("Vertical") * movementspeed;

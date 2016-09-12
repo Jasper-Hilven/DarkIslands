@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DarkIslands.Player
 {
@@ -8,8 +10,8 @@ namespace DarkIslands.Player
     {
         public IslandElement unit;
         private ModelToEntity mToEntity;
-
-        public Mover(IslandElement unit, ModelToEntity mToEntity)
+        private EventSystem evSys;
+        public Mover(IslandElement unit, ModelToEntity mToEntity,EventSystem eventSystem)
         {
             this.unit = unit;
             this.mToEntity = mToEntity;
@@ -39,9 +41,12 @@ namespace DarkIslands.Player
         }
         public void MoveUnitToMouseHit()
         {
+            if (HitCanvas())
+                return;
+            Ray ray;
             RaycastHit hit;
             var camera = Camera.allCameras.First();
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            ray = camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 var hitPoint = hit.point;
@@ -63,6 +68,18 @@ namespace DarkIslands.Player
 
 
             }
+        }
+
+        private bool HitCanvas()
+        {
+            int count = 0;
+          
+            PointerEventData cursor = new PointerEventData(EventSystem.current);                            // This section prepares a list for all objects hit with the raycast
+            cursor.position = Input.mousePosition;
+            List<RaycastResult> objectsHit = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(cursor, objectsHit);
+            count = objectsHit.Count;
+            return count > 0;
         }
     }
 }

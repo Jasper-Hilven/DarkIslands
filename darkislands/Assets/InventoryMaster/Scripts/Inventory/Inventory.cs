@@ -95,11 +95,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        if (transform.GetComponent<Hotbar>() == null)
-            this.gameObject.SetActive(false);
-
         updateItemList();
-
         inputManagerDatabase = (InputManager)Resources.Load("InputManager");
     }
 
@@ -210,7 +206,7 @@ public class Inventory : MonoBehaviour
     public static void menuItemCreateInventory()       //create the inventory at start
     {
         GameObject Canvas = null;
-        if (GameObject.FindGameObjectWithTag("Canvas") == null)
+        if (true)
         {
             GameObject inventory = new GameObject();
             inventory.name = "Inventories";
@@ -786,8 +782,6 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-
-
     public void changeInventoryPanelDesign(Image image)
     {
         Image inventoryDesign = transform.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -806,8 +800,6 @@ public class Inventory : MonoBehaviour
                 ItemsInInventory.RemoveAt(item.indexItemInList);
         }
     }
-
-    
 
     public void deleteItemFromInventory(Item item)
     {
@@ -882,9 +874,6 @@ public class Inventory : MonoBehaviour
         stackableSettings();
         updateItemList();
     }
-
-
-
 
     public void updateItemIndex()
     {

@@ -2,10 +2,10 @@
 
 namespace DarkIslands
 {
-    public class Inventory
+    public class InventoryIslandElement
     {
         public List<ResourceAmount> resources { get; private set; }
-        public Inventory(List<ResourceAmount> resources)
+        public InventoryIslandElement(List<ResourceAmount> resources)
         {
             this.resources = resources;
         }

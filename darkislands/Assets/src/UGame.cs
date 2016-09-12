@@ -6,6 +6,7 @@ using System.Linq;
 using DarkIslands;
 using DarkIslands.Player;
 using DarkIslands.World;
+using UnityEngine.EventSystems;
 
 public class UGame : MonoBehaviour
 {
@@ -16,8 +17,12 @@ public class UGame : MonoBehaviour
     private FollowCamera cam;
     private Mover m;
     private List<IslandElement> units = new List<IslandElement>();
+    private InventoryView inventoryView;
+    private EventSystem eventSystem;
     void Start()
     {
+        var evSystemObj= Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
+        eventSystem = evSystemObj.GetComponent<EventSystem>();
         var rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
@@ -33,6 +38,7 @@ public class UGame : MonoBehaviour
             units.Add(GetUnit(fP.IslandElementFactory, eType, onIsland, position,rand));
         }
         FocusOnUnit(units[0]);
+
     }
 
     private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos,System.Random r)
@@ -69,43 +75,36 @@ public class UGame : MonoBehaviour
     private void FocusOnUnit(IslandElement u)
     {
         cam = cam ?? new FollowCamera(u);
-        m = m ?? new Mover(u, fP.ModelToEntity);
+        m = m ?? new Mover(u, fP.ModelToEntity,eventSystem);
+        inventoryView = inventoryView ?? new InventoryView();
+        inventoryView.FocusOnUnit(u);
         cam.toFollow = u;
         m.unit = u;
     }
+
+    
+
     // Update is called once per frame
     void Update()
     {
+        nbFrames++;
+        if (nbFrames < 2)
+            return;  //Wait till screen is fully loaded.
         UpdateFocussedUnit();
-        if (false)
-        {
-            if (islands[0].Speed.sqrMagnitude < 2)
-                islands[0].MovementController.AddImpuls(new Vector3(islands[0].Mass*Time.deltaTime, 0, 0));
-            if (islands[1].Speed.sqrMagnitude < 2)
-                islands[1].MovementController.AddImpuls(new Vector3(-islands[1].Mass*Time.deltaTime, 0,
-                    islands[1].Mass*Time.deltaTime));
-        }
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         fP.IslandElementHydrationControllerFactory.Update(Time.deltaTime);
         cam.update();
         m.Update();
+      
     }
-
-
-    void UpdateFocussedUnit()
+    bool inventoryBuild = false;
+    int nbFrames;
+   void UpdateFocussedUnit()
     {
-        var force = islands[1].Mass * Time.deltaTime;
-   /*     if (Input.GetKey(KeyCode.DownArrow))
-            islands[1].MovementController.AddImpuls(new Vector3(force,0,0));
-        if (Input.GetKey(KeyCode.UpArrow))
-            islands[1].MovementController.AddImpuls(new Vector3(-force, 0, 0));
-        if (Input.GetKey(KeyCode.LeftArrow))
-            islands[1].MovementController.AddImpuls(new Vector3(0, 0, -force));
-        if (Input.GetKey(KeyCode.RightArrow))
-            islands[1].MovementController.AddImpuls(new Vector3(0, 0 , force));
-     */   if (Input.GetKeyDown(KeyCode.A))
+       var force = islands[1].Mass * Time.deltaTime;
+       if (Input.GetKeyDown(KeyCode.A))
             FocusOnUnit(units[0]);
         if (Input.GetKeyDown(KeyCode.Z))
             FocusOnUnit(units[1]);
