@@ -32,6 +32,7 @@ namespace DarkIslands
     public IslandSelectionControllerFactory IslandSelectionControllerFactory;
     public IslandElementUnityStatsViewFactory IslandElementUnityStatsViewFactory;
     public IslandElementFightingControllerFactory IslandElementFightingControllerFactory;
+    public IslandElementTeamControllerFactory IslandElementTeamControllerFactory;
 public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
       this.IslandFactory= new IslandFactory();
@@ -64,6 +65,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       this.IslandSelectionControllerFactory= new IslandSelectionControllerFactory();
       this.IslandElementUnityStatsViewFactory= new IslandElementUnityStatsViewFactory();
       this.IslandElementFightingControllerFactory= new IslandElementFightingControllerFactory();
+      this.IslandElementTeamControllerFactory= new IslandElementTeamControllerFactory();
       IslandFactory.SubFactories.Add(IslandSizeControllerFactory);
       IslandFactory.SubFactories.Add(IslandMovementControllerFactory);
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
@@ -92,6 +94,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       IslandElementFactory.SubFactories.Add(IslandSelectionControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementUnityStatsViewFactory);
       IslandElementFactory.SubFactories.Add(IslandElementFightingControllerFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementTeamControllerFactory);
     }
   }
 }

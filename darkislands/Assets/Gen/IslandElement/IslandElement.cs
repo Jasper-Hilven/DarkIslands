@@ -51,6 +51,7 @@ namespace DarkIslands
   public List<IIslandElementGivesHoverInformationChanged> ChangeGivesHoverInformationListeners= new List<IIslandElementGivesHoverInformationChanged>();
   public List<IIslandElementCanBeSelectedChanged> ChangeCanBeSelectedListeners= new List<IIslandElementCanBeSelectedChanged>();
   public List<IIslandElementFightingControllerChanged> ChangeFightingControllerListeners= new List<IIslandElementFightingControllerChanged>();
+  public List<IIslandElementTeamControllerChanged> ChangeTeamControllerListeners= new List<IIslandElementTeamControllerChanged>();
     public IslandElementFactory Factory
     {
       get{
@@ -662,5 +663,18 @@ namespace DarkIslands
       }
     }
       private IslandElementFightingController _FightingController{get;set;}
+    public IslandElementTeamController TeamController
+    {
+      get{
+        return _TeamController;
+      }
+      set
+      {
+        this._TeamController= value;
+        foreach( var vIslandElementTeamControllerChanged in ChangeTeamControllerListeners)
+          vIslandElementTeamControllerChanged.TeamControllerChanged();
+      }
+    }
+      private IslandElementTeamController _TeamController{get;set;}
   }
 }

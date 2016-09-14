@@ -212,11 +212,15 @@ namespace DarkIslandGen
             }
             });
 
-            properties.Add(new Property("FightingController", "IslandElementFightingController"));
             //FightingController
+            properties.Add(new Property("FightingController", "IslandElementFightingController"));
             islandElementParts.Add(new ModelClass("IslandElementFightingController", islandElement)
             { });
 
+            //TeamController
+            properties.Add(new Property("TeamController", "IslandElementTeamController"));
+            islandElementParts.Add(new ModelClass("IslandElementTeamController", islandElement)
+            { });
 
 
             islandElement.properties = properties;
