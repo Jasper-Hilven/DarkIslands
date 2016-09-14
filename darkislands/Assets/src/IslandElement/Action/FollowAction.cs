@@ -4,7 +4,7 @@
     {
         private readonly IslandElement followed;
         private GoToRelativePositionAction gotoPos;
-        public FollowAction(IslandElement actor, IslandElement followed)
+        public FollowAction(IslandElement followed)
         {
             this.gotoPos = new GoToRelativePositionAction(followed.RelativeToContainerPosition, followed.Island, 1f);
             this.followed = followed;
