@@ -21,7 +21,6 @@ namespace DarkIslands.World
             wizzard.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
             wizzard.HarvestController.harvestTactic = new HumanHarvestControllerTactic(wizzard);
             wizzard.hasElementalView = true;
-
             wizzard.MaxSpeed = 2f;
             wizzard.LifePoints = r.Next(1, 100);
             wizzard.MaxLifePoints = r.Next(wizzard.LifePoints, 120);
@@ -32,6 +31,9 @@ namespace DarkIslands.World
             wizzard.CanDehydrate = true;
             wizzard.MaxHydrationPoints = r.Next(wizzard.HydrationPoints, 120);
             wizzard.InventoryController.HasInventory = true;
+            wizzard.FightingController.CanAttack = true;
+            wizzard.FightingController.AttackValue = 3;
+            wizzard.FightingController.AttackRange = 6;
             return wizzard;
         }
 
@@ -39,10 +41,11 @@ namespace DarkIslands.World
         {
             var skeleton = GetDefaultUnit(visIsland, pos, r, team);
             skeleton.hasLight = false;
-            skeleton.MaxSpeed = 2f;
+            skeleton.MaxSpeed = 1f;
             skeleton.LifePoints = 50;
             skeleton.MaxLifePoints = 50;
             skeleton.FightingController.CanAttack = true;
+            skeleton.FightingController.AttackValue = 4;
             skeleton.FightingController.AttackRange = 25;
             skeleton.IslandElementViewSettings = new IslandElementViewSettings() { IsSkeleton = true, HasLifeStatVisualization = true };
             return skeleton;
