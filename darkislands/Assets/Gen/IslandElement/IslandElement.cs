@@ -50,6 +50,7 @@ namespace DarkIslands
   public List<IIslandElementIsAnimatedChanged> ChangeIsAnimatedListeners= new List<IIslandElementIsAnimatedChanged>();
   public List<IIslandElementGivesHoverInformationChanged> ChangeGivesHoverInformationListeners= new List<IIslandElementGivesHoverInformationChanged>();
   public List<IIslandElementCanBeSelectedChanged> ChangeCanBeSelectedListeners= new List<IIslandElementCanBeSelectedChanged>();
+  public List<IIslandElementFightingControllerChanged> ChangeFightingControllerListeners= new List<IIslandElementFightingControllerChanged>();
     public IslandElementFactory Factory
     {
       get{
@@ -648,5 +649,18 @@ namespace DarkIslands
       }
     }
       private bool _CanBeSelected{get;set;}
+    public IslandElementFightingController FightingController
+    {
+      get{
+        return _FightingController;
+      }
+      set
+      {
+        this._FightingController= value;
+        foreach( var vIslandElementFightingControllerChanged in ChangeFightingControllerListeners)
+          vIslandElementFightingControllerChanged.FightingControllerChanged();
+      }
+    }
+      private IslandElementFightingController _FightingController{get;set;}
   }
 }

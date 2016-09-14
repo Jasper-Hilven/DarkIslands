@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Object = System.Object;
 
 namespace DarkIslands
 {
@@ -37,7 +38,7 @@ namespace DarkIslands
             return new IntVector2(a.x * b, a.y * b);
         }
 
-        public override bool Equals(System.Object obj)
+        public override bool Equals(Object obj)
         {
             return obj is IntVector2 && this == (IntVector2)obj;
         }

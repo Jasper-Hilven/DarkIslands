@@ -6,90 +6,16 @@ namespace DarkIslands
 {
     public class TopDownCircleSpaceIndex
     {
-        public Dictionary<IntVector2, List<ICircleElement>> BaseElements =
-            new Dictionary<IntVector2, List<ICircleElement>>();
-        public Dictionary<ICircleElement, IntVector2> CurrentPositions = new Dictionary<ICircleElement, IntVector2>();
+        private readonly SpaceIndex decoSpaceIndex;
 
-        private float resolution;
 
         public TopDownCircleSpaceIndex(float cellSize)
         {
-            this.resolution = 1/ cellSize;
-        }
-
-        public void Add(ICircleElement element)
-        {
-            AddElement(element,GetBasePosition(element.CollisionPosition));
-        }
-
-        public void Remove(ICircleElement element)
-        {
-            RemoveElement(element, GetBasePosition(element.CollisionPosition));
-        }
-
-        private IntVector2 GetBasePosition(Vector3 position)
-        {
-            return new IntVector2(Mathf.RoundToInt(position.x * resolution), Mathf.RoundToInt(position.z * resolution));
-        }
-
-        private List<ICircleElement> GetElements(IntVector2 chunk)
-        {
-            List<ICircleElement> ret;
-            if (BaseElements.TryGetValue(chunk, out ret))
-                return ret;
-            ret = new List<ICircleElement>();
-            BaseElements.Add(chunk,ret);
-            return ret;
-        }
-
-        private void MoveElementBetweenChunks(ICircleElement element, IntVector2 oldPosition, IntVector2 newPosition)
-        {
-            RemoveElement(element, oldPosition);
-            AddElement(element, newPosition);
-        }
-
-        private void AddElement(ICircleElement element, IntVector2 newPosition)
-        {
-            CurrentPositions[element] = newPosition;
-            GetElements(new IntVector2(newPosition.x - 1, newPosition.y - 1)).Add(element);
-            GetElements(new IntVector2(newPosition.x - 1, newPosition.y)).Add(element);
-            GetElements(new IntVector2(newPosition.x - 1, newPosition.y + 1)).Add(element);
-            GetElements(new IntVector2(newPosition.x, newPosition.y - 1)).Add(element);
-            GetElements(new IntVector2(newPosition.x, newPosition.y)).Add(element);
-            GetElements(new IntVector2(newPosition.x, newPosition.y + 1)).Add(element);
-            GetElements(new IntVector2(newPosition.x + 1, newPosition.y - 1)).Add(element);
-            GetElements(new IntVector2(newPosition.x + 1, newPosition.y)).Add(element);
-            GetElements(new IntVector2(newPosition.x + 1, newPosition.y + 1)).Add(element);
-        }
-
-        private void RemoveElement(ICircleElement element, IntVector2 oldPosition)
-        {
-            CurrentPositions.Remove(element);
-            GetElements(oldPosition).Remove(element);
-            GetElements(new IntVector2(oldPosition.x - 1, oldPosition.y - 1)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x - 1, oldPosition.y)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x - 1, oldPosition.y + 1)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x, oldPosition.y - 1)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x, oldPosition.y)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x, oldPosition.y + 1)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x + 1, oldPosition.y - 1)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x + 1, oldPosition.y)).Remove(element);
-            GetElements(new IntVector2(oldPosition.x + 1, oldPosition.y + 1)).Remove(element);
-        }
-
-        public void Move(ICircleElement element, Vector3 Position)
-        {
-            var oldBasePosition = CurrentPositions[element];
-            var newBasePosition = GetBasePosition(Position);
-            if (oldBasePosition == newBasePosition)
-                return;
-            MoveElementBetweenChunks(element,oldBasePosition,newBasePosition);
-
-
+            decoSpaceIndex = new SpaceIndex(cellSize);
         }
 
 
-        private bool collide(ICircleElement a, ICircleElement b,Vector3 bPosition)
+        private bool collide(ICircleElement a, ICircleElement b, Vector3 bPosition)
         {
             if (a == b)
                 return false;
@@ -97,47 +23,57 @@ namespace DarkIslands
                 return false;
             if (b.CircleElementProperties == null)
                 return false;
-            return (a.CollisionPosition - bPosition).sqrMagnitude < (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius)*(a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
+            return (a.IndexPosition - bPosition).sqrMagnitude < (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius) * (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
         }
         public bool CanMoveWithoutCollision(ICircleElement element, Vector3 Position)
         {
-            var basePos = this.GetBasePosition(Position);
-            return !GetElements(basePos).Any(e => collide(e, element,Position));
+            return !decoSpaceIndex.GetElements(Position).Any(e => collide((ICircleElement)e, element, Position));
         }
 
         public bool MoveDetectCollision(ICircleElement element, Vector3 previousPosition, Vector3 Position)
         {
-            var oldBasePosition = GetBasePosition(previousPosition);
-            var newBasePosition = GetBasePosition(Position);
-            if (oldBasePosition != newBasePosition) { 
-                MoveElementBetweenChunks(element, oldBasePosition, newBasePosition);
+            var oldBasePosition = decoSpaceIndex.GetBasePosition(previousPosition);
+            var newBasePosition = decoSpaceIndex.GetBasePosition(Position);
+            if (oldBasePosition != newBasePosition)
+            {
+                decoSpaceIndex.MoveElementBetweenChunks(element, oldBasePosition, newBasePosition);
             }
-            return GetElements(newBasePosition).Any(e => collide(e, element, Position));
+            return decoSpaceIndex.GetElements(Position).Any(e => collide((ICircleElement)e, element, Position));
         }
 
         public List<ICircleElement> GetColliders(ICircleElement element, Vector3 Position)
         {
-            var basePosition = GetBasePosition(Position);
-            return GetElements(basePosition).Where(e => collide(e, element, Position)).ToList();
+            return decoSpaceIndex.GetElements(Position).Where(e => collide((ICircleElement)e, element, Position)).Select(e => (ICircleElement)e).ToList();
         }
         public Vector3 GetElementPositionWithoutColliding(ICircleElement element, Vector3 oldPosition, Vector3 newPosition)
         {
-            var newBasePosition = GetBasePosition(newPosition);
-            var allButMe = GetElements(newBasePosition).Where(e => e!= element).ToList();
-            newPosition = allButMe.Aggregate(newPosition, (current, circleElement) => PushPositionAway(current, element.CircleElementProperties.Radius, circleElement));
+            var allButMe = decoSpaceIndex.GetElements(newPosition).Where(e => e != element).ToList();
+            newPosition = allButMe.Aggregate(newPosition, (current, circleElement) => PushPositionAway(current, element.CircleElementProperties.Radius, (ICircleElement)circleElement));
             return !CanMoveWithoutCollision(element, newPosition) ? oldPosition : newPosition; //If still collision after correction => Don't move
         }
 
         public Vector3 PushPositionAway(Vector3 Position, float radius, ICircleElement other)
         {
             var otherRad = other.CircleElementProperties.Radius;
-            var distance = Position - other.CollisionPosition;
+            var distance = Position - other.IndexPosition;
             var sqrMagnitude = distance.sqrMagnitude;
-            var totalRadius = otherRad+radius;
-            if (sqrMagnitude > totalRadius* totalRadius)
+            var totalRadius = otherRad + radius;
+            if (sqrMagnitude > totalRadius * totalRadius)
                 return Position;
-            return other.CollisionPosition + (totalRadius+0.01f)*distance.normalized;
+            return other.IndexPosition + (totalRadius + 0.01f) * distance.normalized;
+        }
+        public void Add(IIndexedElement element)
+        {
+            decoSpaceIndex.Add(element);
         }
 
+        public void Remove(IIndexedElement element)
+        {
+            decoSpaceIndex.Remove(element);
+        }
+        public void Move(ICircleElement element, Vector3 Position)
+        {
+            decoSpaceIndex.Move(element, Position);
+        }
     }
 }

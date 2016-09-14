@@ -4,6 +4,6 @@ namespace DarkIslands
 {
     public partial class Island: ICircleElement
     {
-        public Vector3 CollisionPosition { get { return this.Position; } }
+        public Vector3 IndexPosition { get { return this.Position; } }
     }
 }

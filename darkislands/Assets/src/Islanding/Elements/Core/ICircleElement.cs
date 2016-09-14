@@ -2,10 +2,15 @@
 
 namespace DarkIslands
 {
-    public interface ICircleElement
+
+    public interface IIndexedElement
+    {
+        Vector3 IndexPosition { get; }
+    }
+
+    public interface ICircleElement: IIndexedElement
     {
         CircleElementProperties CircleElementProperties { get; }
-        Vector3 CollisionPosition { get; }
     }
 
     public class CircleElementProperties

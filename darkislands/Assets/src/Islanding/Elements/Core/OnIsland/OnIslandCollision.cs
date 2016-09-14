@@ -12,16 +12,16 @@ namespace DarkIslands
 
         public void AddElement(IslandElement element)
         {
-            this.spaceIndex.Add(element);
+            spaceIndex.Add(element);
         }
         public void RemoveElement(IslandElement element)
         {
-            this.spaceIndex.Remove(element);
+            spaceIndex.Remove(element);
         }
 
         public void MoveElement(IslandElement element, Vector3 newPosition)
         {
-            this.spaceIndex.Move(element,newPosition);
+            spaceIndex.Move(element,newPosition);
         }
         public bool CanMoveTowards(IslandElement mover, Vector3 oldPosition, Vector3 newPosition)
         {

@@ -4,33 +4,33 @@ namespace DarkIslandGen
 {
     public class IslandElementBuilder
     {
-        public static List<ModelClass> GetIslandElementParts(Property position, Property circleProps,TVariable modelToEntity)
+        public static List<ModelClass> GetIslandElementParts(Property position, Property circleProps, TVariable modelToEntity)
         {
-            var properties= new List<Property>();
+            var properties = new List<Property>();
             var parts = new List<ModelClass>();
             var islandElement = new ModelClass
             {
                 Name = "IslandElement",
             };
-            var islandElementParts = new List<ModelClass>() { islandElement};
-            
+            var islandElementParts = new List<ModelClass>() { islandElement };
+
 
             //Factory
-            properties.Add(new Property("Factory","IslandElementFactory"));
+            properties.Add(new Property("Factory", "IslandElementFactory"));
 
             //Inventory
             properties.Add(new Property("Inventory", "Inventory"));
             properties.Add(new Property("HasInventory", "bool"));
             properties.Add(new Property("InventoryController", "InventoryController"));
-            islandElementParts.Add(new ModelClass() {Name = "InventoryController", ParentRelation = islandElement});
+            islandElementParts.Add(new ModelClass() { Name = "InventoryController", ParentRelation = islandElement });
 
             //PositionInfo
-            var islandPosition = new Property("IslandPosition","Vector3" );
+            var islandPosition = new Property("IslandPosition", "Vector3");
             properties.Add(islandPosition);
             var relativeToContainerPosition = new Property("RelativeToContainerPosition", "Vector3");
             properties.Add(relativeToContainerPosition);
             properties.Add(position);
-            
+
             //Island
             var island = new Property("Island", new GType() { name = "Island" });
             properties.Add(island);
@@ -38,10 +38,20 @@ namespace DarkIslandGen
             properties.Add(islandToEnter);
             properties.Add(circleProps);
             properties.Add(new Property("IslandManager", "IslandElementContainerManager"));
-            islandElementParts.Add(new ModelClass() { Name = "IslandElementContainerManager", ParentRelation = islandElement,
-                UseFromParent = new List<Property>() { islandToEnter, islandPosition, relativeToContainerPosition}});
+            islandElementParts.Add(new ModelClass()
+            {
+                Name = "IslandElementContainerManager",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property>() { islandToEnter, islandPosition, relativeToContainerPosition }
+            });
 
-
+            //NearOthersController
+            islandElementParts.Add(new ModelClass
+            {
+                Name = "NearOthersController",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property>() { relativeToContainerPosition }
+            });
 
             //Movement
             properties.Add(new Property("MaxSpeed", new GType { name = "float" }));
@@ -50,31 +60,43 @@ namespace DarkIslandGen
             properties.Add(relGoalPosition);
             var hasRelGoalPosition = new Property("HasRelativeGoalPosition", "bool");
             properties.Add(hasRelGoalPosition);
-            islandElementParts.Add(new ModelClass { Name = "IslandElementMovementController", ParentRelation = islandElement,
-                UseFromParent = new List<Property>() { relativeToContainerPosition, relGoalPosition, hasRelGoalPosition, islandPosition,island }
+            islandElementParts.Add(new ModelClass
+            {
+                Name = "IslandElementMovementController",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property>() { relativeToContainerPosition, relGoalPosition, hasRelGoalPosition, islandPosition, island }
             });
-            
+
             //Actions
             var curCommand = new Property("CurrentCommand", "IIslandElementCommand");
-            properties.Add(curCommand);     
+            properties.Add(curCommand);
             var curAction = new Property("CurrentAction", "IIslandElementAction");
             properties.Add(curAction);
             var curlifeAction = new Property("CurrentLifeAction", "IIslandElementAction");
             properties.Add(curlifeAction);
             properties.Add(new Property("ActionHandler", "IslandElementActionHandler"));
-            islandElementParts.Add(new ModelClass() { Name = "IslandElementActionHandler", ParentRelation = islandElement,UseFromParent = new List<Property>() {curCommand,curAction,curlifeAction}});
-            
+            islandElementParts.Add(new ModelClass() { Name = "IslandElementActionHandler", ParentRelation = islandElement, UseFromParent = new List<Property>() { curCommand, curAction, curlifeAction } });
+
             //Light
             var hasLight = new Property("hasLight", "bool");
             properties.Add(hasLight);
-            islandElementParts.Add(new ModelClass() { Name = "IslandElementLightController", ParentRelation = islandElement,
-                UseFromParent = new List<Property>() { hasLight,position} });
+            islandElementParts.Add(new ModelClass()
+            {
+                Name = "IslandElementLightController",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property>() { hasLight, position }
+            });
 
             //Resources
             var harvestController = new Property("HarvestController", "HarvestController");
             properties.Add(harvestController);
-            islandElementParts.Add(new ModelClass() { Name = "HarvestController", ParentRelation = islandElement
-                , UseFromParent = new List<Property>() {harvestController}});
+            islandElementParts.Add(new ModelClass()
+            {
+                Name = "HarvestController",
+                ParentRelation = islandElement
+                ,
+                UseFromParent = new List<Property>() { harvestController }
+            });
             var harvestInfo = new Property("HarvestInfo", "HarvestInfo");
             properties.Add(harvestInfo);
 
@@ -87,7 +109,7 @@ namespace DarkIslandGen
             {
                 Name = "IslandElementSizeController",
                 ParentRelation = islandElement,
-                UseFromParent = new List<Property>() {harvestInfo, SizeController}
+                UseFromParent = new List<Property>() { harvestInfo, SizeController }
             });
 
             //Collision
@@ -97,7 +119,7 @@ namespace DarkIslandGen
             //DropOffController
             var islandDropOffController = new Property("DropOffController", "IslandElementDropOffController");
             properties.Add(islandDropOffController);
-            islandElementParts.Add(new ModelClass() {Name= "IslandElementDropOffController",ParentRelation = islandElement});
+            islandElementParts.Add(new ModelClass() { Name = "IslandElementDropOffController", ParentRelation = islandElement });
 
 
 
@@ -111,8 +133,13 @@ namespace DarkIslandGen
             properties.Add(elementalInfo);
             var elementalType = new Property("ElementalType", new GType { name = "IElementalType" });
             properties.Add(elementalType);
-            islandElementParts.Add(new ModelClass() { Name = "IslandElementElementalView", ParentRelation = islandElement 
-                ,UseFromParent = new List<Property>() { isElementalColored,hasElementalView,elementalInfo, elementalType} });
+            islandElementParts.Add(new ModelClass()
+            {
+                Name = "IslandElementElementalView",
+                ParentRelation = islandElement
+                ,
+                UseFromParent = new List<Property>() { isElementalColored, hasElementalView, elementalInfo, elementalType }
+            });
 
             //Mana
             var manaPoints = new Property("ManaPoints", "int");
@@ -130,14 +157,20 @@ namespace DarkIslandGen
             var maxHydrationPoints = new Property("MaxHydrationPoints", "int");
             properties.Add(maxHydrationPoints);
             properties.Add(new Property("DehydrationRate", "int"));
-            islandElementParts.Add(new ModelClass(){Name = "IslandElementHydrationController", ParentRelation = islandElement 
-            ,UseFromParent = new List<Property>() { candehydrate}});
+            islandElementParts.Add(new ModelClass()
+            {
+                Name = "IslandElementHydrationController",
+                ParentRelation = islandElement
+            ,
+                UseFromParent = new List<Property>() { candehydrate }
+            });
 
 
             //LifePoints
             var lifePoints = new Property("LifePoints", "int");
             properties.Add(lifePoints);
-            properties.Add(new Property("LifeController", "IslandElementLifeController"));
+            var lifeController = new Property("LifeController", "IslandElementLifeController");
+            properties.Add(lifeController);
             var maxLifePoints = new Property("MaxLifePoints", "int");
             properties.Add(maxLifePoints);
             properties.Add(new Property("IsAlive", new GType { name = "bool" }));
@@ -150,26 +183,39 @@ namespace DarkIslandGen
             //BaseVisualization
             var viewSettings = new Property("IslandElementViewSettings", "IslandElementViewSettings");
             properties.Add(viewSettings);
-            islandElementParts.Add(new ModelClass { Name = "IslandElementUnityView", ParentRelation = islandElement, ConstructionInjected = new List<TVariable> { modelToEntity },
-                UseFromParent = new List<Property>() { viewSettings,isElementalColored,elementalType,position,size }});
-            
+            islandElementParts.Add(new ModelClass
+            {
+                Name = "IslandElementUnityView",
+                ParentRelation = islandElement,
+                ConstructionInjected = new List<TVariable> { modelToEntity },
+                UseFromParent = new List<Property>() { viewSettings, isElementalColored, elementalType, position, size }
+            });
+
             //AnimationVisualization
             islandElementParts.Add(new ModelClass { Name = "IslandElementUnityAnimationController", ParentRelation = islandElement, ConstructionInjected = new List<TVariable> { modelToEntity } });
             properties.Add(new Property("IsAnimated", "bool"));
 
             //HoverVisualization
-            islandElementParts.Add(new ModelClass() {Name= "IslandElementHoverController",ParentRelation = islandElement});
-            properties.Add(new Property("GivesHoverInformation","bool"));
+            islandElementParts.Add(new ModelClass() { Name = "IslandElementHoverController", ParentRelation = islandElement });
+            properties.Add(new Property("GivesHoverInformation", "bool"));
 
             //SelectController
             islandElementParts.Add(new ModelClass() { Name = "IslandSelectionController", ParentRelation = islandElement });
             properties.Add(new Property("CanBeSelected", "bool"));
 
             //Stats visualization
-            islandElementParts.Add(new ModelClass("IslandElementUnityStatsView", islandElement) {UseFromParent = new List<Property>()
+            islandElementParts.Add(new ModelClass("IslandElementUnityStatsView", islandElement)
+            {
+                UseFromParent = new List<Property>()
             {
                 position,lifePoints,maxLifePoints,hydrationPoints,maxHydrationPoints,manaPoints,maxManaPoints,viewSettings
-            } });
+            }
+            });
+
+            properties.Add(new Property("FightingController", "IslandElementFightingController"));
+            //FightingController
+            islandElementParts.Add(new ModelClass("IslandElementFightingController", islandElement)
+            { });
 
 
 

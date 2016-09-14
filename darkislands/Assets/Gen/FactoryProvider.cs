@@ -14,6 +14,7 @@ namespace DarkIslands
     public IslandElementFactory IslandElementFactory;
     public InventoryControllerFactory InventoryControllerFactory;
     public IslandElementContainerManagerFactory IslandElementContainerManagerFactory;
+    public NearOthersControllerFactory NearOthersControllerFactory;
     public IslandElementMovementControllerFactory IslandElementMovementControllerFactory;
     public IslandElementActionHandlerFactory IslandElementActionHandlerFactory;
     public IslandElementLightControllerFactory IslandElementLightControllerFactory;
@@ -30,6 +31,7 @@ namespace DarkIslands
     public IslandElementHoverControllerFactory IslandElementHoverControllerFactory;
     public IslandSelectionControllerFactory IslandSelectionControllerFactory;
     public IslandElementUnityStatsViewFactory IslandElementUnityStatsViewFactory;
+    public IslandElementFightingControllerFactory IslandElementFightingControllerFactory;
 public ModelToEntity ModelToEntity= new ModelToEntity();
     public void Initialize(){
       this.IslandFactory= new IslandFactory();
@@ -44,6 +46,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       this.IslandElementFactory= new IslandElementFactory();
       this.InventoryControllerFactory= new InventoryControllerFactory();
       this.IslandElementContainerManagerFactory= new IslandElementContainerManagerFactory();
+      this.NearOthersControllerFactory= new NearOthersControllerFactory();
       this.IslandElementMovementControllerFactory= new IslandElementMovementControllerFactory();
       this.IslandElementActionHandlerFactory= new IslandElementActionHandlerFactory();
       this.IslandElementLightControllerFactory= new IslandElementLightControllerFactory();
@@ -60,6 +63,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       this.IslandElementHoverControllerFactory= new IslandElementHoverControllerFactory();
       this.IslandSelectionControllerFactory= new IslandSelectionControllerFactory();
       this.IslandElementUnityStatsViewFactory= new IslandElementUnityStatsViewFactory();
+      this.IslandElementFightingControllerFactory= new IslandElementFightingControllerFactory();
       IslandFactory.SubFactories.Add(IslandSizeControllerFactory);
       IslandFactory.SubFactories.Add(IslandMovementControllerFactory);
       IslandFactory.SubFactories.Add(ContainerControllerIslandFactory);
@@ -70,6 +74,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       IslandFactory.SubFactories.Add(IslandManaControllerFactory);
       IslandElementFactory.SubFactories.Add(InventoryControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementContainerManagerFactory);
+      IslandElementFactory.SubFactories.Add(NearOthersControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementMovementControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementActionHandlerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementLightControllerFactory);
@@ -86,6 +91,7 @@ public ModelToEntity ModelToEntity= new ModelToEntity();
       IslandElementFactory.SubFactories.Add(IslandElementHoverControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandSelectionControllerFactory);
       IslandElementFactory.SubFactories.Add(IslandElementUnityStatsViewFactory);
+      IslandElementFactory.SubFactories.Add(IslandElementFightingControllerFactory);
     }
   }
 }
