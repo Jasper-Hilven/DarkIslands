@@ -44,9 +44,9 @@ namespace DarkIslands
             drawLifeStats = true;
             if (elem.MaxLifePoints != 0)
                 lifeStats = fac.GetLifeVisualization(elem.LifePoints, elem.MaxLifePoints);
-            if (elem.MaxManaPoints != 0)
+            if (elem.MaxManaPoints != 0 && elem.CanUseMana)
                 manaStats = fac.GetManaVisualization(elem.ManaPoints, elem.MaxManaPoints);
-            if (elem.MaxHydrationPoints != 0)
+            if (elem.MaxHydrationPoints != 0 && elem.CanDehydrate)
                 hydrationStats = fac.GetHydrationVisualization(elem.HydrationPoints, elem.MaxHydrationPoints);
             SetLifeStatsCorrectPosition();
         }

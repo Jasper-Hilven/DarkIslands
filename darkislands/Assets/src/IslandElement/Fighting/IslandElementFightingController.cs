@@ -46,7 +46,7 @@ namespace DarkIslands
             var otherRadius=  other.CircleElementProperties.Radius;
             var myRadius = IslandElement.CircleElementProperties.Radius;
 
-            var maxRange = otherRadius + myRadius + AttackRange + 0.1f;
+            var maxRange = otherRadius + myRadius + AttackRange*0.1f + 0.1f;
             return maxRange*maxRange > (other.Position - IslandElement.Position).sqrMagnitude;
         }
 

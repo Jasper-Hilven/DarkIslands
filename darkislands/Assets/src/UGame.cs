@@ -20,8 +20,13 @@ public class UGame : MonoBehaviour
     private InventoryViewFacade inventoryView = null;
     private DIInventoryDatabase inventoryDatabase = new DIInventoryDatabase();
     private EventSystem eventSystem;
+    private UnitBuilder unitBuilder;
     void Start()
     {
+        var goodTeam = new Team();
+        var undeadTeam = new Team();
+        goodTeam.Enemies.Add(undeadTeam);
+        undeadTeam.Enemies.Add(goodTeam);
         var evSystemObj = Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
         eventSystem = evSystemObj.GetComponent<EventSystem>();
         var rand = new System.Random(1);
@@ -31,48 +36,18 @@ public class UGame : MonoBehaviour
         worldBuilder.BuildWorld(fP);
         islands = fP.IslandFactory.elements;
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
-
-        foreach (var eType in elementTypes.Skip(0))
+        unitBuilder = new UnitBuilder(fP.IslandElementFactory);
+        foreach (var eType in elementTypes.Skip(4))
         {
-            var onIsland = islands[(eType.IsLightning || eType.IsToxic) ? 0 : 1];
+            var onIsland = islands[0];
             var position = new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2);
-            units.Add(GetUnit(fP.IslandElementFactory, eType, onIsland, position, rand));
+            units.Add(unitBuilder.GetWizzard(eType, onIsland, position, rand, goodTeam));
         }
         FocusOnUnit(units[0]);
+        var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(7, 0, 7), rand, undeadTeam);
+        skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
     }
 
-    private IslandElement GetUnit(IslandElementFactory fac, IElementalType eType, Island visIsland, Vector3 pos, System.Random r)
-    {
-        var u = fac.Create();
-        visIsland.ContainerControllerIsland.AddElement(u);
-        u.RelativeToContainerPosition = pos;
-        u.Factory = fac;
-        u.IslandElementViewSettings = new IslandElementViewSettings() { IsUnit = true, HasLifeStatVisualization = true };
-        u.hasLight = true;
-        u.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
-        u.ElementalType = eType;
-        u.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
-        u.HarvestController.harvestTactic = new HumanHarvestControllerTactic(u);
-        u.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
-        u.hasElementalView = true;
-
-        u.MaxSpeed = 2f;
-
-        u.LifePoints = r.Next(1, 100);
-        u.MaxLifePoints = r.Next(u.LifePoints, 120);
-
-        u.ManaPoints = r.Next(0, 100);
-        u.MaxManaPoints = r.Next(u.ManaPoints, 120);
-
-        u.HydrationPoints = r.Next(60, 100);
-        u.DehydrationRate = 60;
-        u.CanDehydrate = true;
-        u.MaxHydrationPoints = r.Next(u.HydrationPoints, 120);
-
-        u.InventoryController.HasInventory = true;
-
-        return u;
-    }
 
     private void FocusOnUnit(IslandElement u)
     {
@@ -103,7 +78,7 @@ public class UGame : MonoBehaviour
         cam.update();
         m.Update();
         nbFrames++;
-        if(nbFrames == 10)
+        if (nbFrames == 10)
             afterScreenLoaded();
     }
 

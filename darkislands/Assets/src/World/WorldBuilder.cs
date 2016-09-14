@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DarkIslands.World
+namespace DarkIslands
 {
     public class WorldBuilder
     {

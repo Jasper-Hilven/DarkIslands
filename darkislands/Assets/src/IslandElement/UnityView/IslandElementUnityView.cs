@@ -52,6 +52,14 @@ namespace DarkIslands
                 UpdatePosition();
                 return;
             }
+            if (IslandElement.IslandElementViewSettings.IsSkeleton)
+            {
+                var seed = IslandElement.IslandElementViewSettings.Seed;
+                UIUnit = UnitUnityViewFactory.GetSkeletonVisualization(IslandElement);//TODO this dependent code out to specific interface
+                UpdateSize();
+                UpdatePosition();
+                return;
+            }
             UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
             UpdateSize();
             UpdatePosition();

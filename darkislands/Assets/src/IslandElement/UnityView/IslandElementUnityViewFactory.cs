@@ -39,5 +39,11 @@ namespace DarkIslands
         }
 
 
+        public GameObject GetSkeletonVisualization(IslandElement islandElement)
+        {
+            var go = gB.LoadViaResources("Skeleton");
+            this.ModelToEntity.modelToEntity.Add(go, islandElement);
+            return go;
+        }
     }
 }
