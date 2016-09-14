@@ -28,7 +28,6 @@ namespace DarkIslands
             base.Init(IslandElement, InventoryControllerFactory);
             this.IslandElement = IslandElement;
             this.IslandElement.InventoryController = this;
-
             UpdateView();
         }
 
@@ -105,8 +104,17 @@ namespace DarkIslands
             }
         }
        
+
+
         public void AddResources(ResourceAmount resHarvested)
         {
+            //Temporary wizzard logic
+            if (resHarvested.Amount.ContainsKey(ResourceType.Stone))
+                IslandElement.LifeController.Heal(resHarvested.Amount[ResourceType.Stone]*10);
+            if (resHarvested.Amount.ContainsKey(ResourceType.Wood))
+                IslandElement.HydrationController.Hydrate(resHarvested.Amount[ResourceType.Wood] * 10);
+            //End temporary wizzard logic
+            return;
             EnsureListSize();
             if (resHarvested.Empty)
                 return;

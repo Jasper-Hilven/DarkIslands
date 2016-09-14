@@ -157,6 +157,7 @@ namespace DarkIslandGen
             var maxHydrationPoints = new Property("MaxHydrationPoints", "int");
             properties.Add(maxHydrationPoints);
             properties.Add(new Property("DehydrationRate", "int"));
+            properties.Add(new Property("HydrationController", "IslandElementHydrationController"));
             islandElementParts.Add(new ModelClass()
             {
                 Name = "IslandElementHydrationController",

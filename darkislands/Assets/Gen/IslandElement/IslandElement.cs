@@ -40,6 +40,7 @@ namespace DarkIslands
   public List<IIslandElementHydrationPointsChanged> ChangeHydrationPointsListeners= new List<IIslandElementHydrationPointsChanged>();
   public List<IIslandElementMaxHydrationPointsChanged> ChangeMaxHydrationPointsListeners= new List<IIslandElementMaxHydrationPointsChanged>();
   public List<IIslandElementDehydrationRateChanged> ChangeDehydrationRateListeners= new List<IIslandElementDehydrationRateChanged>();
+  public List<IIslandElementHydrationControllerChanged> ChangeHydrationControllerListeners= new List<IIslandElementHydrationControllerChanged>();
   public List<IIslandElementLifePointsChanged> ChangeLifePointsListeners= new List<IIslandElementLifePointsChanged>();
   public List<IIslandElementLifeControllerChanged> ChangeLifeControllerListeners= new List<IIslandElementLifeControllerChanged>();
   public List<IIslandElementMaxLifePointsChanged> ChangeMaxLifePointsListeners= new List<IIslandElementMaxLifePointsChanged>();
@@ -520,6 +521,19 @@ namespace DarkIslands
       }
     }
       private int _DehydrationRate{get;set;}
+    public IslandElementHydrationController HydrationController
+    {
+      get{
+        return _HydrationController;
+      }
+      set
+      {
+        this._HydrationController= value;
+        foreach( var vIslandElementHydrationControllerChanged in ChangeHydrationControllerListeners)
+          vIslandElementHydrationControllerChanged.HydrationControllerChanged();
+      }
+    }
+      private IslandElementHydrationController _HydrationController{get;set;}
     public int LifePoints
     {
       get{

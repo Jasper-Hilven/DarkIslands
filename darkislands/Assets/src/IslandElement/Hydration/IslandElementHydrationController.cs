@@ -1,4 +1,6 @@
-﻿namespace DarkIslands
+﻿using System;
+
+namespace DarkIslands
 {
     public partial class IslandElementHydrationController
     {
@@ -8,6 +10,7 @@
 
         public override void Init(IslandElement IslandElement, IslandElementHydrationControllerFactory IslandElementHydrationControllerFactory)
         {
+            IslandElement.HydrationController = this;
             this.elem = IslandElement;
             this.fac = IslandElementHydrationControllerFactory;
             base.Init(IslandElement, IslandElementHydrationControllerFactory);
@@ -40,6 +43,11 @@
         public override void Destroy()
         {
             fac.Dehydrators.Remove(this);
+        }
+
+        public void Hydrate(int i)
+        {
+            elem.HydrationPoints = Math.Max(elem.MaxHydrationPoints, elem.HydrationPoints + i);
         }
     }
 }

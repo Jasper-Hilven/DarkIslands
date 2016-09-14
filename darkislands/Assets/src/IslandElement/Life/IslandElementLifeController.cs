@@ -41,6 +41,14 @@ namespace DarkIslands
             CheckDie();
         }
 
+        public void Heal(int lifePoints)
+        {
+            var oldLifePoints = this.elem.LifePoints;
+            var newLifePoints = Math.Min((oldLifePoints + lifePoints), elem.MaxLifePoints);
+            this.elem.LifePoints = newLifePoints;
+        }
+
+
         public void HurtDueToDeHydration(int i)
         {
             Hurt(i);
