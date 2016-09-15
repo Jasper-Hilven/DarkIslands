@@ -30,5 +30,12 @@ namespace DarkIslands
                 return;
             IslandElement.Island.ContainerControllerIsland.MoveElement(IslandElement,IslandElement.RelativeToContainerPosition);
         }
+
+        public override void Destroy()
+        {
+            if (IslandElement.Island != null)
+                IslandElement.Island.ContainerControllerIsland.RemoveElement(IslandElement);
+            IslandElement.Island = null;
+        }
     }
 }

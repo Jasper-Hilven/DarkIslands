@@ -42,8 +42,8 @@ namespace DarkIslands.World
             var skeleton = GetDefaultUnit(visIsland, pos, r, team);
             skeleton.hasLight = false;
             skeleton.MaxSpeed = 1f;
-            skeleton.LifePoints = 50;
-            skeleton.MaxLifePoints = 50;
+            skeleton.LifePoints = 5;
+            skeleton.MaxLifePoints = 5;
             skeleton.FightingController.CanAttack = true;
             skeleton.FightingController.AttackValue = 4;
             skeleton.FightingController.AttackRange = 25;

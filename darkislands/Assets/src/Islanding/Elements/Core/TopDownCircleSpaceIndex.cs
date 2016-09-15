@@ -23,6 +23,8 @@ namespace DarkIslands
                 return false;
             if (b.CircleElementProperties == null)
                 return false;
+            if (a.CircleElementProperties.Radius == 0f || b.CircleElementProperties.Radius == 0f)
+                return false;
             return (a.IndexPosition - bPosition).sqrMagnitude < (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius) * (a.CircleElementProperties.Radius + b.CircleElementProperties.Radius);
         }
         public bool CanMoveWithoutCollision(ICircleElement element, Vector3 Position)
@@ -54,6 +56,8 @@ namespace DarkIslands
 
         public Vector3 PushPositionAway(Vector3 Position, float radius, ICircleElement other)
         {
+            if (radius == 0f || other.CircleElementProperties.Radius == 0f)
+                return Position;
             var otherRad = other.CircleElementProperties.Radius;
             var distance = Position - other.IndexPosition;
             var sqrMagnitude = distance.sqrMagnitude;
