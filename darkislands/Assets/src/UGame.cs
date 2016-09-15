@@ -21,15 +21,17 @@ public class UGame : MonoBehaviour
     private DIInventoryDatabase inventoryDatabase = new DIInventoryDatabase();
     private EventSystem eventSystem;
     private UnitBuilder unitBuilder;
+    private Team undeadTeam;
+    private System.Random rand;
     void Start()
     {
         var goodTeam = new Team();
-        var undeadTeam = new Team();
+        undeadTeam = new Team();
         goodTeam.Enemies.Add(undeadTeam);
         undeadTeam.Enemies.Add(goodTeam);
         var evSystemObj = Instantiate(Resources.Load("Prefabs/EventSystem") as GameObject);
         eventSystem = evSystemObj.GetComponent<EventSystem>();
-        var rand = new System.Random(1);
+        rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
         var worldBuilder = new WorldBuilder();
@@ -44,10 +46,22 @@ public class UGame : MonoBehaviour
             units.Add(unitBuilder.GetWizzard(eType, onIsland, position, rand, goodTeam));
         }
         FocusOnUnit(units[0]);
-        var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(7, 0, 7), rand, undeadTeam);
-        skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
     }
 
+
+
+    private int nbSkeletonsSpawned = 0;
+    private void PutASkeleton(Team undeadTeam, System.Random rand)
+    {
+        if (Time.fixedTime > nbSkeletonsSpawned * 8)
+        {
+            var ang = rand.Next(0, 360);
+            var r = 30;
+            var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), rand, undeadTeam);
+            skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
+            nbSkeletonsSpawned++;
+        }
+    }
 
     private void FocusOnUnit(IslandElement u)
     {
@@ -78,14 +92,15 @@ public class UGame : MonoBehaviour
         cam.update();
         m.Update();
         nbFrames++;
+        PutASkeleton(undeadTeam, rand);
         if (nbFrames == 10)
             afterScreenLoaded();
     }
 
     int nbFrames;
+
     void UpdateFocussedUnit()
     {
-        var force = islands[1].Mass * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.A))
             FocusOnUnit(units[0]);
         if (Input.GetKeyDown(KeyCode.Z))

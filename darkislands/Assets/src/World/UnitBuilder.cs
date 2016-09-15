@@ -45,7 +45,7 @@ namespace DarkIslands.World
             skeleton.LifePoints = 5;
             skeleton.MaxLifePoints = 5;
             skeleton.FightingController.CanAttack = true;
-            skeleton.FightingController.AttackValue = 4;
+            skeleton.FightingController.AttackValue = 2;
             skeleton.FightingController.AttackRange = 25;
             skeleton.IslandElementViewSettings = new IslandElementViewSettings() { IsSkeleton = true, HasLifeStatVisualization = true };
             return skeleton;

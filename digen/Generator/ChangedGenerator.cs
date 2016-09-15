@@ -17,8 +17,8 @@ namespace DarkIslandGen
         {
             if (!mClass.IsParent)
                 return null;
-            var content = new List<string>()
-                          {
+            var content = new List<string>
+            {
                               "public interface "+GetInterfaceChangedName(mClass, prop),
                               "{"
 

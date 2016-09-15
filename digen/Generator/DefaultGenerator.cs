@@ -9,19 +9,19 @@ namespace DarkIslandGen
 
         public DefaultGenerator()
         {
-            this.codeGenerator = new CodeGenerator();
+            codeGenerator = new CodeGenerator();
         }
 
         public CodeFile GenerateModelClassFile(ModelClass mClass)
         {
             if (!mClass.IsChild)
                 return null;
-        var content = new List<string>()
-                          {"namespace DarkIslands{",
+        var content = new List<string>
+        {"namespace DarkIslands{",
                               "  public class " + mClass.Name+ "Default" + GetChangedInterfaceExtension(mClass),
                 "  {",
                 "    public virtual void Destroy(){",
-                "    }",
+                "    }"
                 
                           };
             if(mClass.IsChild)
@@ -55,8 +55,8 @@ namespace DarkIslandGen
             var parentName = mClass.ParentRelation.Name;
             var factoryName = mClass.Name + "Factory";
 
-            return new List<string>()
-                   {
+            return new List<string>
+            {
                        "    public virtual void Init("+parentName + " "+ parentName+ ", "+ factoryName + " "+ factoryName+ "){",
                        "    }"
                    };

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DarkIslandGen.Generator
 {
@@ -18,8 +15,8 @@ namespace DarkIslandGen.Generator
             var codeFiles = modelClasses
                 .SelectMany(mC =>
                             {
-                                var files = new List<CodeFile>()
-                                            {
+                                var files = new List<CodeFile>
+                                {
                                                 fGenerator.GenerateFactory(mC),
                                                 mClassGenerator.GenerateModelClassFile(mC),
                                                 dGenerator.GenerateModelClassFile(mC)

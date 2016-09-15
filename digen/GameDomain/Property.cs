@@ -4,13 +4,13 @@
     {
         public Property(string name, GType type)
         {
-            this.Name = name;
-            this.Type = type;
+            Name = name;
+            Type = type;
         }
         public Property(string name, string type)
         {
-            this.Name = name;
-            this.Type = new GType() { name = type };
+            Name = name;
+            Type = new GType { name = type };
         }
         public string Name { get; private set; }
         public GType Type { get; private set; }

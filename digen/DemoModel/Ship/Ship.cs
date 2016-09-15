@@ -9,7 +9,7 @@ namespace DarkIslandGen.DemoModel
         
     }
 
-    public partial class Ship
+    public class Ship
     {
         public MyType Position
         {
@@ -19,7 +19,7 @@ namespace DarkIslandGen.DemoModel
             }
             set
             {
-                this._Position = value;
+                _Position = value;
                 foreach (var shipChanged in ChangeListeners)
                 {
                     shipChanged.PositionChanged();

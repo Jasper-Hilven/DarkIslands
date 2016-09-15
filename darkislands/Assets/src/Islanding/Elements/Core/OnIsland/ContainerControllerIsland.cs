@@ -57,11 +57,5 @@ namespace DarkIslands
                 unit.IslandPosition = Island.Position;
             }
         }
-
-        public void SetDestination(Vector3 pos)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

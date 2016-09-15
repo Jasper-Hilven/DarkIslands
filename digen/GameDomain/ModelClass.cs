@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DarkIslandGen
 {
@@ -47,7 +43,7 @@ namespace DarkIslandGen
 
         public ModelClass(string Name,ModelClass parent) : this(Name)
         {
-            this.ParentRelation = parent;
+            ParentRelation = parent;
         }
 
         public ModelClass ParentRelation
@@ -55,7 +51,7 @@ namespace DarkIslandGen
             get { return _ParentRelation; }
             set
             {
-                this.SetMeAsChildOfParent(value);
+                SetMeAsChildOfParent(value);
                 _ParentRelation = value;
             }
         }

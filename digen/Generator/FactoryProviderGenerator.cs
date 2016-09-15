@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 
 namespace DarkIslandGen.Generator
@@ -24,7 +23,7 @@ namespace DarkIslandGen.Generator
                     "namespace DarkIslands",
                     "{",
                     "  public class FactoryProvider",
-                    "  {",
+                    "  {"
 
                   };
 
@@ -33,7 +32,7 @@ namespace DarkIslandGen.Generator
             content.AddRange(BuildInitialize(mClassList,dependencies));
             content.Add("  }");
             content.Add("}");
-            return new CodeFile() { Content = content, FileName = "FactoryProvider.cs" };
+            return new CodeFile { Content = content, FileName = "FactoryProvider.cs" };
         }
 
         private List<string> BuildInitialize(List<ModelClass> mClassList,List<string> dependencies)

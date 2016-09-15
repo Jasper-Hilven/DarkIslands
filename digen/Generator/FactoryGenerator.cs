@@ -10,7 +10,7 @@ namespace DarkIslandGen
 
         private List<string> GetElementFactoryInterface(ModelClass mClass)
         {
-            var content = new List<string> { "    public interface" + this.GetSubFactoryType(mClass) };
+            var content = new List<string> { "    public interface" + GetSubFactoryType(mClass) };
             content.Add("  {");
             content.Add("    void Extend" + mClass.Name + "(" + mClass.Name + " " + mClass.Name + ");");
             content.Add("    void RemoveExtension" + "(" + mClass.Name + " " + mClass.Name + ");");
@@ -103,7 +103,7 @@ namespace DarkIslandGen
         //ParentOnly
         private List<string> GenerateCreate(ModelClass mClass)
         {
-            var ret = new List<string>() { };
+            var ret = new List<string>();
             var parentLines = new List<string>
             {
                 "foreach (var subFactory in SubFactories)",
@@ -111,7 +111,7 @@ namespace DarkIslandGen
             };
             var content = new List<string>
             {   "var ret= new " + mClass.Name + "();",
-                "elements.Add(ret);",
+                "elements.Add(ret);"
             };
             var retLine = "return ret;";
             ret.AddRange(content);
@@ -125,7 +125,7 @@ namespace DarkIslandGen
         {
             var name = "Destroy" + mClass.Name;
             var paramz = new List<TVariable> { TVariable.FromMClass(mClass) };
-            var ret = new List<string>() { };
+            var ret = new List<string>();
             var parentLines = new List<string>
             {
                 "foreach (var subFactory in SubFactories)",
@@ -133,7 +133,7 @@ namespace DarkIslandGen
             };
             var content = new List<string>
             {
-                "elements.Remove("+mClass.Name+");",
+                "elements.Remove("+mClass.Name+");"
             };
             ret.AddRange(content);
             if (mClass.IsParent)

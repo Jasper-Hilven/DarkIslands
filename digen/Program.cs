@@ -1,10 +1,5 @@
 ﻿
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DarkIslandGen
 {
@@ -24,8 +19,8 @@ namespace DarkIslandGen
                 const string relativeFilePath = @"../../../darkislands/Assets/Gen/";
                 var path = relativeFilePath + codeFile.FileName;
                 var directory = Path.GetDirectoryName(path);
-                System.IO.Directory.CreateDirectory(directory);
-                System.IO.File.WriteAllLines(path, codeFile.Content);
+                Directory.CreateDirectory(directory);
+                File.WriteAllLines(path, codeFile.Content);
             }
             //Factory
             //View controllers
