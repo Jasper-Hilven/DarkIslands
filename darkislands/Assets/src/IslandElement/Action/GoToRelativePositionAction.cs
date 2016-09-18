@@ -31,7 +31,10 @@ namespace DarkIslands
                 unit.HasRelativeGoalPosition = true;
             }
             unit.MovementController.Update(deltaTime, arrivedDistance);
-            return this.Island == unit.Island && !unit.HasRelativeGoalPosition;
+            var onsame = this.Island == unit.Island;
+            if (onsame)
+                return onsame && !unit.HasRelativeGoalPosition;
+            return onsame && !unit.HasRelativeGoalPosition;
         }
 
         private void SetGoalPositionTowardsOtherIsland(IslandElement unit)
@@ -44,10 +47,10 @@ namespace DarkIslands
                 unit.IslandManager.EnterIsland(Island);
                 return;
             }
-            
+
             var currentIslandRelativeGoalPosition = RelativePosition + Island.Position - unit.IslandPosition;
-            var curIslandRelGoalPosLimit = (currentIslandRelativeGoalPosition.sqrMagnitude > unit.Island.Size*unit.Island.Size)
-                ? currentIslandRelativeGoalPosition.normalized*unit.Island.Size
+            var curIslandRelGoalPosLimit = (currentIslandRelativeGoalPosition.sqrMagnitude > unit.Island.Size * unit.Island.Size)
+                ? currentIslandRelativeGoalPosition.normalized * unit.Island.Size
                 : currentIslandRelativeGoalPosition;
             CurrentIslandRelativeGoalPosition = curIslandRelGoalPosLimit;
         }
