@@ -30,19 +30,21 @@ namespace DarkIslands
             {
                 var collisionDirection = (collider.Position - Island.Position).normalized; //Towards collider
                 var collisionSpeedDiff = collider.Speed - Island.Speed;
-                var SpeedDiffTowardsCollider = -Vector3.Project(collisionSpeedDiff, collisionDirection);
+                if (0 < Vector3.Dot(collisionSpeedDiff, collisionDirection)) //Already moving away from each other.
+                    continue;
+                var speedDiffTowardsCollider = -Vector3.Project(collisionSpeedDiff, collisionDirection);
                 var elasticity = 0.3f;
-                var minMass = Mathf.Min(collider.Mass, Island.Mass);
                 //More correct but minMass IS valid approximation (see comments below).
-                var impulsMassCofficient = (float) 1f / ((1f / collider.Mass) + (1f / Island.Mass));
+                var impulsMassCofficient = (float)1f / ((1f / collider.Mass) + (1f / Island.Mass));
                 var impulsMass = (1f + elasticity) * impulsMassCofficient;
                 var plasticBurnImpuls = (1 - elasticity) * impulsMassCofficient;
-                var impulsTowardsCollider = SpeedDiffTowardsCollider * impulsMass;
-                var impulsTowardsIsland = -SpeedDiffTowardsCollider * impulsMass;
+                var impulsTowardsCollider = speedDiffTowardsCollider * impulsMass;
+                var impulsTowardsIsland = -impulsTowardsCollider;
                 collider.MovementController.AddImpuls(impulsTowardsCollider);
                 Island.MovementController.AddImpuls(impulsTowardsIsland);
-                collider.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
-                Island.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
+                var lostSurface = speedDiffTowardsCollider.magnitude * plasticBurnImpuls;
+                collider.SizeController.RemoveByCollision(lostSurface);
+                Island.SizeController.RemoveByCollision(lostSurface);
             }
         }
         //Ask Jasper why (1/(1/A + 1/B)) <= min(a,b) <= 2*(1/(1/A + 1/B)) which means that 

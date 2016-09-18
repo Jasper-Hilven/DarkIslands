@@ -22,8 +22,10 @@ namespace DarkIslands
             if (totalActionTime < 1f)
                 return false;
             islandElement.MagicController.RemoveMana(3);
+            var islandSizeFactor = islandElement.Island.Size* islandElement.Island.Size;
             var force = 10 * 1000 * (islandElement.ElementalInfo.PsychicLevel + 1);
-            var impuls = ImpulsDirection * force;
+            var correctedForce = Mathf.Min(force, 10000*islandSizeFactor);
+            var impuls = ImpulsDirection * correctedForce;
             islandElement.Island.MovementController.AddImpuls(impuls);
             return true;
         }

@@ -2,13 +2,13 @@
 
 namespace DarkIslands
 {
-    public class GoToRelativePositionAction: IIslandElementAction
+    public class GoToRelativePositionAction : IIslandElementAction
     {
         public Vector3 RelativePosition { get; set; }
         public Island Island { get; set; }
-        private Vector3 CurrentIslandRelativeGoalPosition { get; set;}
+        private Vector3 CurrentIslandRelativeGoalPosition { get; set; }
         private float arrivedDistance;
-        public GoToRelativePositionAction(Vector3 relativePosition,Island island,float arrivedDistance)
+        public GoToRelativePositionAction(Vector3 relativePosition, Island island, float arrivedDistance)
         {
             this.arrivedDistance = arrivedDistance;
             this.RelativePosition = relativePosition;
@@ -30,21 +30,26 @@ namespace DarkIslands
                 unit.RelativeGoalPosition = CurrentIslandRelativeGoalPosition;
                 unit.HasRelativeGoalPosition = true;
             }
-            unit.MovementController.Update(deltaTime,arrivedDistance);
+            unit.MovementController.Update(deltaTime, arrivedDistance);
             return this.Island == unit.Island && !unit.HasRelativeGoalPosition;
         }
 
         private void SetGoalPositionTowardsOtherIsland(IslandElement unit)
         {
-            var jumpDistance = unit.MaxSpeed/2;
-            var maxDistance = (Island.Size+jumpDistance);
-            var canJump = (unit.Position - Island.Position).sqrMagnitude < maxDistance*maxDistance;
+            var jumpDistance = unit.MaxSpeed / 2;
+            var maxDistance = (Island.Size + jumpDistance);
+            var canJump = (unit.Position - Island.Position).sqrMagnitude < maxDistance * maxDistance;
             if (canJump)
             {
                 unit.IslandManager.EnterIsland(Island);
                 return;
             }
-            CurrentIslandRelativeGoalPosition= RelativePosition+Island.Position - unit.IslandPosition;
+            
+            var currentIslandRelativeGoalPosition = RelativePosition + Island.Position - unit.IslandPosition;
+            var curIslandRelGoalPosLimit = (currentIslandRelativeGoalPosition.sqrMagnitude > unit.Island.Size*unit.Island.Size)
+                ? currentIslandRelativeGoalPosition.normalized*unit.Island.Size
+                : currentIslandRelativeGoalPosition;
+            CurrentIslandRelativeGoalPosition = curIslandRelGoalPosLimit;
         }
     }
 }

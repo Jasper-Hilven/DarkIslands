@@ -2,6 +2,13 @@
 {
     public class HarvestIslandMana:ISpell
     {
+        private bool harvest;
+
+        public HarvestIslandMana(bool harvest=true)
+        {
+            this.harvest = harvest;
+        }
+
         public bool CanSee(IslandElement elem)
         {
             return true;
@@ -16,7 +23,7 @@
 
         public IIslandElementAction Do(IslandElement elem)
         {
-            return new HarvestIslandManaAction(elem.ElementalInfo.MagmaLevel);
+            return new HarvestIslandManaAction(elem.ElementalInfo.MagmaLevel, harvest);
         }
     }
 }

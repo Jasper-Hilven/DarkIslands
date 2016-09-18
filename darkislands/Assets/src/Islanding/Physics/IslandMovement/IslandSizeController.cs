@@ -58,5 +58,13 @@ namespace DarkIslands
             var newSurface = oldSurface - i * 100;
             SetSize(Mathf.Sqrt(newSurface < 0 ? 0 : newSurface));
         }
+
+        public void GiveByMagic(int i)
+        {
+            var oldSize = Island.Size;
+            var oldSurface = oldSize * oldSize;
+            var newSurface = oldSurface + i * 100;
+            SetSize(Mathf.Sqrt(newSurface < 0 ? 0 : newSurface));
+        }
     }
 }
