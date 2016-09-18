@@ -16,7 +16,7 @@ namespace DarkIslands
             var wizard = GetDefaultUnit(visIsland, pos, r, team);
             wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizzard = true, HasLifeStatVisualization = true };
             wizard.hasLight = true;
-            wizard.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
+            wizard.ElementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
             wizard.ElementalType = eType;
             wizard.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
             wizard.HarvestController.harvestTactic = new HumanHarvestControllerTactic(wizard);

@@ -83,20 +83,6 @@ public class UGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        var force = islands[0].Mass/20;
-        if (Input.GetKey(KeyCode.I))
-            islands[0].MovementController.AddImpuls(new Vector3(force,0,0));
-        if (Input.GetKey(KeyCode.K))
-            islands[0].MovementController.AddImpuls(new Vector3(-force, 0, 0));
-        if (Input.GetKey(KeyCode.J))
-            islands[0].MovementController.AddImpuls(new Vector3(0, 0, force));
-        if (Input.GetKey(KeyCode.L))
-            islands[0].MovementController.AddImpuls(new Vector3( 0, 0, -force));
-
-
-
-
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);

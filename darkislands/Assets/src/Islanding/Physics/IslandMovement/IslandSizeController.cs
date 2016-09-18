@@ -4,7 +4,7 @@ namespace DarkIslands
 {
     public partial class IslandSizeController
     {
-        private static float _minimumSize = 1f;
+        private static float _minimumSize = 3f;
         public override void Init(Island Island, IslandSizeControllerFactory IslandSizeControllerFactory)
         {
             Island.SizeController = this;
@@ -21,10 +21,15 @@ namespace DarkIslands
 
         private void SetSize(float size)
         {
-            size = (size < 1f) ? 1f : size;
+            var dropOff = size < this.Island.Size;
+            size = (size < _minimumSize) ? _minimumSize : size;
             this.Island.Size = size;
             var islandSize = Island.Size;
             this.Island.Mass = GetMass(islandSize);
+            if (!dropOff)
+                return;
+            foreach (var islandElement in Island.ContainerControllerIsland.IslandElements)
+                islandElement.DropOffController.DoDropOffIfOffIsland();
         }
 
         private static float GetMass(float islandSize)

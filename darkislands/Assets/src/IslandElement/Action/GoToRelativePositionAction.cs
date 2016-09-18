@@ -8,7 +8,6 @@ namespace DarkIslands
         public Island Island { get; set; }
         private Vector3 CurrentIslandRelativeGoalPosition { get; set;}
         private float arrivedDistance;
-        private const float jumpDistance = 1f;
         public GoToRelativePositionAction(Vector3 relativePosition,Island island,float arrivedDistance)
         {
             this.arrivedDistance = arrivedDistance;
@@ -19,6 +18,8 @@ namespace DarkIslands
 
         public bool Update(IslandElement unit, float deltaTime)
         {
+            if (unit.Island == null)
+                return true;
             CurrentIslandRelativeGoalPosition = RelativePosition;
             if (this.Island != unit.Island)
             {
@@ -35,6 +36,7 @@ namespace DarkIslands
 
         private void SetGoalPositionTowardsOtherIsland(IslandElement unit)
         {
+            var jumpDistance = unit.MaxSpeed/2;
             var maxDistance = (Island.Size+jumpDistance);
             var canJump = (unit.Position - Island.Position).sqrMagnitude < maxDistance*maxDistance;
             if (canJump)

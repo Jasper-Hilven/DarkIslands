@@ -32,11 +32,7 @@ namespace DarkIslands
         private void UpdateView()
         {
             
-            foreach (var ballz in ElementBalls.Where(eB => eB != null))
-            {
-                this.UnitElementViewFactory.DestroyElementView(ballz);
-            }
-            this.ElementBalls = new List<GameObject>();
+            DestroyBalls();
             var elementInfo = this.IslandElement.ElementalInfo;
             this.UnitElementViewFactory.DeActivate(this);
             if (!this.IslandElement.hasElementalView)
@@ -53,6 +49,15 @@ namespace DarkIslands
                     : this.UnitElementViewFactory.GetElementView(elementInfo.GetLevelOrder[i], size));
             }
             UpdateBallPosition();
+        }
+
+        private void DestroyBalls()
+        {
+            foreach (var ballz in ElementBalls.Where(eB => eB != null))
+            {
+                this.UnitElementViewFactory.DestroyElementView(ballz);
+            }
+            this.ElementBalls = new List<GameObject>();
         }
 
         private void UpdateBallPosition()
@@ -72,6 +77,12 @@ namespace DarkIslands
         {
             rotationTime += deltaTime;
             UpdateBallPosition();
+        }
+
+        public override void Destroy()
+        {
+            DestroyBalls();
+            this.IslandElement.hasElementalView = false;
         }
     }
 }

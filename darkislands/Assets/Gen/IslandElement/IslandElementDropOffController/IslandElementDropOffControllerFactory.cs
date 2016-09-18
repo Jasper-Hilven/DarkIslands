@@ -14,6 +14,7 @@ public Dictionary<IslandElement,IslandElementDropOffController> Elements= new Di
     public void ExtendIslandElement(IslandElement IslandElement){
       var element =new IslandElementDropOffController(IslandElement, this);
       Elements.Add(IslandElement,element);
+      IslandElement.ChangeRelativeToContainerPositionListeners.Add(element);
     }
   }
 }

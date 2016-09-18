@@ -48,6 +48,8 @@ namespace DarkIslands
   public List<IIslandElementIsAliveChanged> ChangeIsAliveListeners= new List<IIslandElementIsAliveChanged>();
   public List<IIslandElementIsSpawnedChanged> ChangeIsSpawnedListeners= new List<IIslandElementIsSpawnedChanged>();
   public List<IIslandElementSpawnParentChanged> ChangeSpawnParentListeners= new List<IIslandElementSpawnParentChanged>();
+  public List<IIslandElementSpawnTimeToLifeChanged> ChangeSpawnTimeToLifeListeners= new List<IIslandElementSpawnTimeToLifeChanged>();
+  public List<IIslandElementSpawnControllerChanged> ChangeSpawnControllerListeners= new List<IIslandElementSpawnControllerChanged>();
   public List<IIslandElementIslandElementViewSettingsChanged> ChangeIslandElementViewSettingsListeners= new List<IIslandElementIslandElementViewSettingsChanged>();
   public List<IIslandElementIsAnimatedChanged> ChangeIsAnimatedListeners= new List<IIslandElementIsAnimatedChanged>();
   public List<IIslandElementGivesHoverInformationChanged> ChangeGivesHoverInformationListeners= new List<IIslandElementGivesHoverInformationChanged>();
@@ -626,6 +628,32 @@ namespace DarkIslands
       }
     }
       private IslandElement _SpawnParent{get;set;}
+    public float SpawnTimeToLife
+    {
+      get{
+        return _SpawnTimeToLife;
+      }
+      set
+      {
+        this._SpawnTimeToLife= value;
+        foreach( var vIslandElementSpawnTimeToLifeChanged in ChangeSpawnTimeToLifeListeners)
+          vIslandElementSpawnTimeToLifeChanged.SpawnTimeToLifeChanged();
+      }
+    }
+      private float _SpawnTimeToLife{get;set;}
+    public IslandElementSpawnController SpawnController
+    {
+      get{
+        return _SpawnController;
+      }
+      set
+      {
+        this._SpawnController= value;
+        foreach( var vIslandElementSpawnControllerChanged in ChangeSpawnControllerListeners)
+          vIslandElementSpawnControllerChanged.SpawnControllerChanged();
+      }
+    }
+      private IslandElementSpawnController _SpawnController{get;set;}
     public IslandElementViewSettings IslandElementViewSettings
     {
       get{

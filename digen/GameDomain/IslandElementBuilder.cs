@@ -119,7 +119,7 @@ namespace DarkIslandGen
             //DropOffController
             var islandDropOffController = new Property("DropOffController", "IslandElementDropOffController");
             properties.Add(islandDropOffController);
-            islandElementParts.Add(new ModelClass { Name = "IslandElementDropOffController", ParentRelation = islandElement });
+            islandElementParts.Add(new ModelClass { Name = "IslandElementDropOffController", ParentRelation = islandElement,UseFromParent = new List<Property>() {relativeToContainerPosition} });
 
 
 
@@ -136,8 +136,7 @@ namespace DarkIslandGen
             islandElementParts.Add(new ModelClass
             {
                 Name = "IslandElementElementalView",
-                ParentRelation = islandElement
-                ,
+                ParentRelation = islandElement,
                 UseFromParent = new List<Property> { isElementalColored, hasElementalView, elementalInfo, elementalType }
             });
 
@@ -147,7 +146,6 @@ namespace DarkIslandGen
             var maxManaPoints = new Property("MaxManaPoints", "int");
             properties.Add(maxManaPoints);
             properties.Add(new Property("CanUseMana", "bool"));
-            islandElementParts.Add(new ModelClass { Name = "IslandElementSpawnController", ParentRelation = islandElement });
             islandElementParts.Add(new ModelClass
             {
                 Name = "IslandElementMagicController",
@@ -187,6 +185,9 @@ namespace DarkIslandGen
             //Spawning
             properties.Add(new Property("IsSpawned", "bool"));
             properties.Add(new Property("SpawnParent", "IslandElement"));
+            properties.Add(new Property("SpawnTimeToLife", "float"));
+            properties.Add(new Property("SpawnController", "IslandElementSpawnController"));
+            islandElementParts.Add(new ModelClass() {Name= "IslandElementSpawnController",ParentRelation =islandElement});
 
             //BaseVisualization
             var viewSettings = new Property("IslandElementViewSettings", "IslandElementViewSettings");

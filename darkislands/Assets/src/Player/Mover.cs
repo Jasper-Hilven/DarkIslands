@@ -34,13 +34,19 @@ namespace DarkIslands
             if (direction.sqrMagnitude > 0.00001f)
                 MoveUnitIntoDirection(direction);
             if (Input.GetKeyDown(KeyCode.S))
-                DoSpell();
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new HarvestIslandMana()));
+            if (Input.GetKeyDown(KeyCode.D))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new SpawnTower()));
+            if (Input.GetKeyDown(KeyCode.I))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new MoveIslandTowards(new Vector3(1, 0, 0))));
+            if (Input.GetKeyDown(KeyCode.K))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new MoveIslandTowards(new Vector3(-1, 0, 0))));
+            if (Input.GetKeyDown(KeyCode.J))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new MoveIslandTowards(new Vector3(0, 0, 1))));
+            if (Input.GetKeyDown(KeyCode.L))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new MoveIslandTowards(new Vector3(0, 0, -1))));
         }
 
-        public void DoSpell()
-        {
-            unit.ActionHandler.SetNextCommand(new SpellCommand(new HarvestIslandMana()));
-        }
 
         public void MoveUnitIntoDirection(Vector3 direction)
         {

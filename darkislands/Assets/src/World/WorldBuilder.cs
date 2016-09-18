@@ -9,7 +9,7 @@ namespace DarkIslands
         public void BuildWorld(FactoryProvider provider)
         {
             BuildIsland(provider, new Vector3(200, 0, 0), 100f, 2);
-            BuildIsland(provider, new Vector3(0, 0, 0), 72f, 2);
+            BuildIsland(provider, new Vector3(0, 0, 0), 30f, 2);
         }
 
         public Island BuildIsland(FactoryProvider provider, Vector3 Position, float size, int seed)

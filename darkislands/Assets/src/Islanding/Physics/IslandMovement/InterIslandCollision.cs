@@ -43,10 +43,6 @@ namespace DarkIslands
                 Island.MovementController.AddImpuls(impulsTowardsIsland);
                 collider.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
                 Island.SizeController.RemoveByCollision(SpeedDiffTowardsCollider.magnitude * plasticBurnImpuls);
-                foreach (var islandElement in Island.ContainerControllerIsland.IslandElements)
-                    islandElement.DropOffController.DoDropOffIfOffIsland();
-                foreach (var islandElement in collider.ContainerControllerIsland.IslandElements)
-                    islandElement.DropOffController.DoDropOffIfOffIsland();
             }
         }
         //Ask Jasper why (1/(1/A + 1/B)) <= min(a,b) <= 2*(1/(1/A + 1/B)) which means that 
