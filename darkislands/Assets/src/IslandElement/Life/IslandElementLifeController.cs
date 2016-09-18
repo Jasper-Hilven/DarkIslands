@@ -14,8 +14,14 @@ namespace DarkIslands
             this.elem.LifePoints = 10;
             this.elem.MaxLifePoints = 10;
             this.elem.LifeController = this;
+            this.elem.IsAlive = true;
         }
 
+        public void SetLifePoints(int lifePoints, int maxLifePoints)
+        {
+            elem.MaxLifePoints = maxLifePoints;
+            elem.LifePoints = lifePoints;
+        }
         public void DieDueToFalling()
         {
             Die();

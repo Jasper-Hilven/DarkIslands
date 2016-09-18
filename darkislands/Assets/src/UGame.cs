@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DarkIslands;
 using DarkIslands.Player;
-using DarkIslands.World;
 using UnityEngine.EventSystems;
 
 public class UGame : MonoBehaviour
@@ -53,7 +52,7 @@ public class UGame : MonoBehaviour
     private int nbSkeletonsSpawned = 0;
     private void PutASkeleton(Team undeadTeam, System.Random rand)
     {
-        if (Time.fixedTime > nbSkeletonsSpawned * 8)
+        if (Time.fixedTime > nbSkeletonsSpawned * 11)
         {
             var ang = rand.Next(0, 360);
             var r = 30;
@@ -84,6 +83,20 @@ public class UGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        var force = islands[0].Mass/20;
+        if (Input.GetKey(KeyCode.I))
+            islands[0].MovementController.AddImpuls(new Vector3(force,0,0));
+        if (Input.GetKey(KeyCode.K))
+            islands[0].MovementController.AddImpuls(new Vector3(-force, 0, 0));
+        if (Input.GetKey(KeyCode.J))
+            islands[0].MovementController.AddImpuls(new Vector3(0, 0, force));
+        if (Input.GetKey(KeyCode.L))
+            islands[0].MovementController.AddImpuls(new Vector3( 0, 0, -force));
+
+
+
+
         fP.IslandElementActionHandlerFactory.Update(Time.deltaTime);
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);

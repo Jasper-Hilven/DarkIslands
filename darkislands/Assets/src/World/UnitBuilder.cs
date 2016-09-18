@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DarkIslands.World
+namespace DarkIslands
 {
     public class UnitBuilder
     {
@@ -13,40 +13,31 @@ namespace DarkIslands.World
         }
         public IslandElement GetWizzard(IElementalType eType, Island visIsland, Vector3 pos, System.Random r, Team team)
         {
-            var wizzard = GetDefaultUnit(visIsland, pos, r, team);
-            wizzard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizzard = true, HasLifeStatVisualization = true };
-            wizzard.hasLight = true;
-            wizzard.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
-            wizzard.ElementalType = eType;
-            wizzard.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
-            wizzard.HarvestController.harvestTactic = new HumanHarvestControllerTactic(wizzard);
-            wizzard.hasElementalView = true;
-            wizzard.MaxSpeed = 2f;
-            wizzard.LifePoints = r.Next(1, 100);
-            wizzard.MaxLifePoints = r.Next(wizzard.LifePoints, 120);
-            wizzard.ManaPoints = r.Next(0, 100);
-            wizzard.MaxManaPoints = r.Next(wizzard.ManaPoints, 120);
-            wizzard.HydrationPoints = r.Next(60, 100);
-            wizzard.DehydrationRate = 60;
-            wizzard.CanDehydrate = true;
-            wizzard.MaxHydrationPoints = r.Next(wizzard.HydrationPoints, 120);
-            wizzard.InventoryController.HasInventory = true;
-            wizzard.FightingController.CanAttack = true;
-            wizzard.FightingController.AttackValue = 3;
-            wizzard.FightingController.AttackRange = 6;
-            return wizzard;
+            var wizard = GetDefaultUnit(visIsland, pos, r, team);
+            wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizzard = true, HasLifeStatVisualization = true };
+            wizard.hasLight = true;
+            wizard.ElementalInfo = eType.IsLightning ? new ElementalInfo(3, 3, 6, 11, 1) : new ElementalInfo(eType, 2);
+            wizard.ElementalType = eType;
+            wizard.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
+            wizard.HarvestController.harvestTactic = new HumanHarvestControllerTactic(wizard);
+            wizard.hasElementalView = true;
+            wizard.MaxSpeed = 2f;
+            wizard.LifeController.SetLifePoints(50,50);
+            wizard.MagicController.EnableMagic(70,100);
+            wizard.HydrationController.EnableHydrating(60,70,80);
+            wizard.FightingController.EnableAttack(3, 6);
+            wizard.InventoryController.HasInventory = true;
+            return wizard;
         }
 
         public IslandElement GetSkeleton(Island visIsland, Vector3 pos, System.Random r, Team team)
         {
             var skeleton = GetDefaultUnit(visIsland, pos, r, team);
             skeleton.hasLight = false;
-            skeleton.MaxSpeed = 1f;
-            skeleton.LifePoints = 5;
-            skeleton.MaxLifePoints = 5;
-            skeleton.FightingController.CanAttack = true;
-            skeleton.FightingController.AttackValue = 2;
-            skeleton.FightingController.AttackRange = 25;
+            skeleton.MaxSpeed = 1f+0.1f*r.Next(0,5);
+            skeleton.LifeController.SetLifePoints(5,5);
+            skeleton.FightingController.EnableAttack(2,25);
+            skeleton.FightingController.EnableCanBeAttacked(1);
             skeleton.IslandElementViewSettings = new IslandElementViewSettings() { IsSkeleton = true, HasLifeStatVisualization = true };
             return skeleton;
         }
@@ -66,19 +57,12 @@ namespace DarkIslands.World
             u.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
             u.hasElementalView = false;
             u.MaxSpeed = 1f;
-            u.LifePoints = 30;
-            u.MaxLifePoints = 30;
-            u.IsAlive = true;
-
-            u.FightingController.CanBeAttacked = true;
-            u.FightingController.CanAttack = false;
-
-            u.ManaPoints = 0;
-            u.MaxManaPoints = 0;
-            u.HydrationPoints = 100;
-            u.DehydrationRate = 0;
-            u.CanDehydrate = false;
-            u.MaxHydrationPoints = 100;
+            u.LifeController.SetLifePoints(30,30);
+            u.LifeController.SetLifePoints(10,10);
+            u.FightingController.EnableCanBeAttacked(1);
+            u.FightingController.DisableAttack();
+            u.MagicController.DisableMagic();
+            u.HydrationController.disableDehydration();
             u.InventoryController.HasInventory = false;
             u.TeamController.SetTeam(team);
             return u;

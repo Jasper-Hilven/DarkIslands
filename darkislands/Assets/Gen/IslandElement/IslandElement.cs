@@ -36,6 +36,7 @@ namespace DarkIslands
   public List<IIslandElementManaPointsChanged> ChangeManaPointsListeners= new List<IIslandElementManaPointsChanged>();
   public List<IIslandElementMaxManaPointsChanged> ChangeMaxManaPointsListeners= new List<IIslandElementMaxManaPointsChanged>();
   public List<IIslandElementCanUseManaChanged> ChangeCanUseManaListeners= new List<IIslandElementCanUseManaChanged>();
+  public List<IIslandElementMagicControllerChanged> ChangeMagicControllerListeners= new List<IIslandElementMagicControllerChanged>();
   public List<IIslandElementCanDehydrateChanged> ChangeCanDehydrateListeners= new List<IIslandElementCanDehydrateChanged>();
   public List<IIslandElementHydrationPointsChanged> ChangeHydrationPointsListeners= new List<IIslandElementHydrationPointsChanged>();
   public List<IIslandElementMaxHydrationPointsChanged> ChangeMaxHydrationPointsListeners= new List<IIslandElementMaxHydrationPointsChanged>();
@@ -469,6 +470,19 @@ namespace DarkIslands
       }
     }
       private bool _CanUseMana{get;set;}
+    public IslandElementMagicController MagicController
+    {
+      get{
+        return _MagicController;
+      }
+      set
+      {
+        this._MagicController= value;
+        foreach( var vIslandElementMagicControllerChanged in ChangeMagicControllerListeners)
+          vIslandElementMagicControllerChanged.MagicControllerChanged();
+      }
+    }
+      private IslandElementMagicController _MagicController{get;set;}
     public bool CanDehydrate
     {
       get{

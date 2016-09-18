@@ -16,6 +16,19 @@ namespace DarkIslands
             base.Init(IslandElement, IslandElementHydrationControllerFactory);
         }
 
+        public void EnableHydrating(int dehydrationRate, int hydrationPoints, int maxHydrationPoints)
+        {
+            this.elem.DehydrationRate = dehydrationRate;
+            this.elem.CanDehydrate = true;
+            this.elem.HydrationPoints = hydrationPoints;
+            this.elem.MaxHydrationPoints = maxHydrationPoints;
+        }
+
+        public void disableDehydration()
+        {
+            this.elem.CanDehydrate = false;
+        }
+
         public override void CanDehydrateChanged()
         {
             if(elem.CanDehydrate && !fac.Dehydrators.Contains(this))

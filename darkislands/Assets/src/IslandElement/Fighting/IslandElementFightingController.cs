@@ -8,15 +8,37 @@ namespace DarkIslands
         {
             IslandElement.FightingController = this;
             DefenseValue = 1;
-            AttackValue = 1;
-            AttackRange = 0;
-            CanAttack = false;
+            this.DisableAttack();
             CanBeAttacked = false;
             this.IslandElement = IslandElement;
             base.Init(IslandElement, IslandElementFightingControllerFactory);
         }
 
-        public IslandElement IslandElement { get; private set;}
+        public void EnableCanBeAttacked(int defenseValue)
+        {
+            this.DefenseValue = defenseValue;
+            this.CanBeAttacked = true;
+
+        }
+
+        public void DisableCanBeAttacked()
+        {
+            this.CanBeAttacked = false;
+        }
+
+        public void EnableAttack(int attackValue, int attackRange)
+        {
+            this.CanAttack = true;
+            this.AttackValue = attackValue;
+            this.AttackRange = attackRange;
+        }
+
+        public void DisableAttack()
+        {
+            this.CanAttack = false;
+        }
+
+        public IslandElement IslandElement { get; private set; }
 
         public int DefenseValue { get; set; }
         public int AttackValue { get; set; }
@@ -43,11 +65,11 @@ namespace DarkIslands
         }
         public bool IsCloseEnoughToAttack(IslandElement other)
         {
-            var otherRadius=  other.CircleElementProperties.Radius;
+            var otherRadius = other.CircleElementProperties.Radius;
             var myRadius = IslandElement.CircleElementProperties.Radius;
 
-            var maxRange = otherRadius + myRadius + AttackRange*0.1f + 0.1f;
-            return maxRange*maxRange > (other.Position - IslandElement.Position).sqrMagnitude;
+            var maxRange = otherRadius + myRadius + AttackRange * 0.1f + 0.1f;
+            return maxRange * maxRange > (other.Position - IslandElement.Position).sqrMagnitude;
         }
 
         public bool CanAttackOther(IslandElement other)

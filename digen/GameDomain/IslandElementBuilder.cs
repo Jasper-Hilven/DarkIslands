@@ -141,13 +141,20 @@ namespace DarkIslandGen
                 UseFromParent = new List<Property> { isElementalColored, hasElementalView, elementalInfo, elementalType }
             });
 
-            //Mana
+            //Magic
             var manaPoints = new Property("ManaPoints", "int");
             properties.Add(manaPoints);
             var maxManaPoints = new Property("MaxManaPoints", "int");
             properties.Add(maxManaPoints);
             properties.Add(new Property("CanUseMana", "bool"));
             islandElementParts.Add(new ModelClass { Name = "IslandElementSpawnController", ParentRelation = islandElement });
+            islandElementParts.Add(new ModelClass
+            {
+                Name = "IslandElementMagicController",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property> {}
+            });
+            properties.Add(new Property("MagicController", "IslandElementMagicController"));
 
             //Hydration
             var candehydrate = new Property("CanDehydrate", "bool");

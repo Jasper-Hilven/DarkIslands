@@ -12,6 +12,11 @@
             IslandElement.ActionHandler = this;
         }
 
+        public void SetNextCommand(IIslandElementCommand command)
+        {
+            Unit.CurrentCommand = command;
+        }
+
         public override void CurrentCommandChanged()
         {
             if (this.Unit.CurrentCommand == null)

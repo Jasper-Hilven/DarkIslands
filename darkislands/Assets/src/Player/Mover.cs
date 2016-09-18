@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DarkIslands.Player
+namespace DarkIslands
 {
     public class Mover
     {
@@ -33,12 +33,21 @@ namespace DarkIslands.Player
             direction *= 0.1f;
             if (direction.sqrMagnitude > 0.00001f)
                 MoveUnitIntoDirection(direction);
+            if (Input.GetKeyDown(KeyCode.S))
+                DoSpell();
         }
+
+        public void DoSpell()
+        {
+            unit.ActionHandler.SetNextCommand(new SpellCommand(new HarvestIslandMana()));
+        }
+
         public void MoveUnitIntoDirection(Vector3 direction)
         {
             unit.CurrentCommand = new GoToIslandPositionCommand(unit, unit.Position + direction, unit.Island);
 
         }
+
         public void MoveUnitToMouseHit()
         {
             if (HitCanvas())

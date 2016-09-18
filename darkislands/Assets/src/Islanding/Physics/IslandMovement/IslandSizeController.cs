@@ -4,6 +4,7 @@ namespace DarkIslands
 {
     public partial class IslandSizeController
     {
+        private static float _minimumSize = 1f;
         public override void Init(Island Island, IslandSizeControllerFactory IslandSizeControllerFactory)
         {
             Island.SizeController = this;
@@ -36,8 +37,21 @@ namespace DarkIslands
             var oldSize = Island.Size;
             var oldSurface = oldSize * oldSize;
             var newSurface = oldSurface - f / 10000;
-            var newSize = Mathf.Sqrt(newSurface < 0? 0: newSurface);
+            var newSize = Mathf.Sqrt(newSurface < 0 ? 0 : newSurface);
             SetSize(newSize);
+        }
+
+        public bool CanRemoveByMagic()
+        {
+            return _minimumSize <  Island.Size;
+        }
+
+        public void RemoveByMagic(int i)
+        {
+            var oldSize = Island.Size;
+            var oldSurface = oldSize * oldSize;
+            var newSurface = oldSurface - i * 100;
+            SetSize(Mathf.Sqrt(newSurface < 0 ? 0 : newSurface));
         }
     }
 }
