@@ -60,6 +60,14 @@ namespace DarkIslands
                 UpdatePosition();
                 return;
             }
+            if (IslandElement.IslandElementViewSettings.IsFighter)
+            {
+                var seed = IslandElement.IslandElementViewSettings.Seed;
+                UIUnit = UnitUnityViewFactory.GetFighterVisualization(IslandElement);//TODO this dependent code out to specific interface
+                UpdateSize();
+                UpdatePosition();
+                return;
+            }
             UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
             UpdateSize();
             UpdatePosition();

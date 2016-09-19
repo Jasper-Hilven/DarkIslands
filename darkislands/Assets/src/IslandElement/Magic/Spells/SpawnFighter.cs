@@ -2,7 +2,7 @@
 
 namespace DarkIslands
 {
-    public class SpawnTower : ISpell
+    public class SpawnFighter : ISpell
     {
         public bool CanSee(IslandElement elem)
         {
@@ -16,7 +16,7 @@ namespace DarkIslands
 
         public IIslandElementAction Do(IslandElement elem)
         {
-            return new SpawnTowerAction();
+            return new SpawnFigherAction();
 
         }
     }

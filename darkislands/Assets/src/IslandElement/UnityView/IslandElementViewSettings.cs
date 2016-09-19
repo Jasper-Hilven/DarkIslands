@@ -9,6 +9,7 @@
         public bool IsWizzard { get; set; }
         public bool IsTree { get; set; }
         public bool IsSkeleton { get; set; }
+        public bool IsFighter { get; set; }
     }
     public class RockInfo
     {

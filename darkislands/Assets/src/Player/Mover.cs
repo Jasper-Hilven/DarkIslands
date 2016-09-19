@@ -37,6 +37,8 @@ namespace DarkIslands
                 unit.ActionHandler.SetNextCommand(new SpellCommand(new HarvestIslandMana()));
             if (Input.GetKeyDown(KeyCode.D))
                 unit.ActionHandler.SetNextCommand(new SpellCommand(new HarvestIslandMana(false)));
+            if (Input.GetKeyDown(KeyCode.F))
+                unit.ActionHandler.SetNextCommand(new SpellCommand(new SpawnFighter()));
             if (Input.GetKeyDown(KeyCode.I))
                 unit.ActionHandler.SetNextCommand(new SpellCommand(new MoveIslandTowards(new Vector3(1, 0, 0))));
             if (Input.GetKeyDown(KeyCode.K))

@@ -45,5 +45,12 @@ namespace DarkIslands
             this.ModelToEntity.modelToEntity.Add(go, islandElement);
             return go;
         }
+
+        public GameObject GetFighterVisualization(IslandElement islandElement)
+        {
+            var go = gB.LoadViaResources("Fighter");
+            this.ModelToEntity.modelToEntity.Add(go, islandElement);
+            return go;
+        }
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.src.World;
 using DarkIslands;
 using DarkIslands.Player;
 using UnityEngine.EventSystems;
@@ -33,16 +34,16 @@ public class UGame : MonoBehaviour
         rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
-        var worldBuilder = new WorldBuilder();
+        unitBuilder = new UnitBuilder(fP.IslandElementFactory,rand);
+        var worldBuilder = new WorldBuilder(unitBuilder,new BuildingBuilder());
         worldBuilder.BuildWorld(fP);
         islands = fP.IslandFactory.elements;
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
-        unitBuilder = new UnitBuilder(fP.IslandElementFactory);
         foreach (var eType in elementTypes.Skip(4))
         {
             var onIsland = islands[0];
             var position = new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2);
-            units.Add(unitBuilder.GetWizard(eType, onIsland, position, rand, goodTeam));
+            units.Add(unitBuilder.GetWizard(eType, onIsland, position, goodTeam));
         }
         FocusOnUnit(units[0]);
     }
@@ -52,14 +53,13 @@ public class UGame : MonoBehaviour
     private int nbSkeletonsSpawned = 0;
     private void PutASkeleton(Team undeadTeam, System.Random rand)
     {
-        if (Time.fixedTime > nbSkeletonsSpawned * 11)
-        {
-            var ang = rand.Next(0, 360);
-            var r = 30;
-            var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), rand, undeadTeam);
-            skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
-            nbSkeletonsSpawned++;
-        }
+        if (!(Time.fixedTime > nbSkeletonsSpawned*11))
+            return;
+        var ang = rand.Next(0, 360);
+        var r = 30;
+        var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), undeadTeam);
+        skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
+        nbSkeletonsSpawned++;
     }
 
     private void FocusOnUnit(IslandElement u)

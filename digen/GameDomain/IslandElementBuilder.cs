@@ -119,7 +119,7 @@ namespace DarkIslandGen
             //DropOffController
             var islandDropOffController = new Property("DropOffController", "IslandElementDropOffController");
             properties.Add(islandDropOffController);
-            islandElementParts.Add(new ModelClass { Name = "IslandElementDropOffController", ParentRelation = islandElement,UseFromParent = new List<Property>() {relativeToContainerPosition} });
+            islandElementParts.Add(new ModelClass { Name = "IslandElementDropOffController", ParentRelation = islandElement, UseFromParent = new List<Property>() { relativeToContainerPosition } });
 
 
 
@@ -138,9 +138,9 @@ namespace DarkIslandGen
             {
                 Name = "IslandElementElementalController",
                 ParentRelation = islandElement,
-                UseFromParent = new List<Property> {}
+                UseFromParent = new List<Property> { }
             });
-            properties.Add(new Property("ElementalController","IslandElementElementalController"));
+            properties.Add(new Property("ElementalController", "IslandElementElementalController"));
             islandElementParts.Add(new ModelClass
             {
                 Name = "IslandElementElementalView",
@@ -158,7 +158,7 @@ namespace DarkIslandGen
             {
                 Name = "IslandElementMagicController",
                 ParentRelation = islandElement,
-                UseFromParent = new List<Property> {}
+                UseFromParent = new List<Property> { }
             });
             properties.Add(new Property("MagicController", "IslandElementMagicController"));
 
@@ -195,7 +195,7 @@ namespace DarkIslandGen
             properties.Add(new Property("SpawnParent", "IslandElement"));
             properties.Add(new Property("SpawnTimeToLife", "float"));
             properties.Add(new Property("SpawnController", "IslandElementSpawnController"));
-            islandElementParts.Add(new ModelClass() {Name= "IslandElementSpawnController",ParentRelation =islandElement});
+            islandElementParts.Add(new ModelClass() { Name = "IslandElementSpawnController", ParentRelation = islandElement });
 
             //BaseVisualization
             var viewSettings = new Property("IslandElementViewSettings", "IslandElementViewSettings");
@@ -236,7 +236,6 @@ namespace DarkIslandGen
             //TeamController
             properties.Add(new Property("TeamController", "IslandElementTeamController"));
             islandElementParts.Add(new ModelClass("IslandElementTeamController", islandElement));
-
 
             islandElement.properties = properties;
             islandElementParts.AddRange(parts);
