@@ -42,7 +42,7 @@ public class UGame : MonoBehaviour
         {
             var onIsland = islands[0];
             var position = new Vector3(eType.GetName().Length - 6, 0, eType.DamageMultiplierAgainst(new Magma()) - 2);
-            units.Add(unitBuilder.GetWizzard(eType, onIsland, position, rand, goodTeam));
+            units.Add(unitBuilder.GetWizard(eType, onIsland, position, rand, goodTeam));
         }
         FocusOnUnit(units[0]);
     }

@@ -17,13 +17,13 @@ namespace DarkIslands
             var island = provider.IslandFactory.Create();
             island.SizeController.SetInitialSize(size);
             island.Position = Position;
-            SetTrees(provider,island,new System.Random(seed));
+            SetTreesAndRocks(provider,island,new System.Random(seed));
             return island;
             
         }
 
 
-        public void SetTrees(FactoryProvider provider, Island island, System.Random rand)
+        public void SetTreesAndRocks(FactoryProvider provider, Island island, System.Random rand)
         {
             var size = Mathf.RoundToInt(island.Size);
             if (size < 5)
