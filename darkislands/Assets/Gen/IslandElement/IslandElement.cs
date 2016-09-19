@@ -33,6 +33,7 @@ namespace DarkIslands
   public List<IIslandElementhasElementalViewChanged> ChangehasElementalViewListeners= new List<IIslandElementhasElementalViewChanged>();
   public List<IIslandElementElementalInfoChanged> ChangeElementalInfoListeners= new List<IIslandElementElementalInfoChanged>();
   public List<IIslandElementElementalTypeChanged> ChangeElementalTypeListeners= new List<IIslandElementElementalTypeChanged>();
+  public List<IIslandElementElementalControllerChanged> ChangeElementalControllerListeners= new List<IIslandElementElementalControllerChanged>();
   public List<IIslandElementManaPointsChanged> ChangeManaPointsListeners= new List<IIslandElementManaPointsChanged>();
   public List<IIslandElementMaxManaPointsChanged> ChangeMaxManaPointsListeners= new List<IIslandElementMaxManaPointsChanged>();
   public List<IIslandElementCanUseManaChanged> ChangeCanUseManaListeners= new List<IIslandElementCanUseManaChanged>();
@@ -433,6 +434,19 @@ namespace DarkIslands
       }
     }
       private IElementalType _ElementalType{get;set;}
+    public IslandElementElementalController ElementalController
+    {
+      get{
+        return _ElementalController;
+      }
+      set
+      {
+        this._ElementalController= value;
+        foreach( var vIslandElementElementalControllerChanged in ChangeElementalControllerListeners)
+          vIslandElementElementalControllerChanged.ElementalControllerChanged();
+      }
+    }
+      private IslandElementElementalController _ElementalController{get;set;}
     public int ManaPoints
     {
       get{

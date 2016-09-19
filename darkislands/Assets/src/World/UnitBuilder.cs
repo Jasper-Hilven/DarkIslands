@@ -11,20 +11,18 @@ namespace DarkIslands
         {
             this.fac = fac;
         }
-        public IslandElement GetWizzard(IElementalType eType, Island visIsland, Vector3 pos, System.Random r, Team team)
+        public IslandElement GetWizard(IElementalType eType, Island visIsland, Vector3 pos, System.Random r, Team team)
         {
             var wizard = GetDefaultUnit(visIsland, pos, r, team);
             wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizzard = true, HasLifeStatVisualization = true };
             wizard.hasLight = true;
-            wizard.ElementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
-            wizard.ElementalType = eType;
-            wizard.HarvestInfo = new HarvestInfo(false, false, null, null, true, true, true);
-            wizard.HarvestController.harvestTactic = new HumanHarvestControllerTactic(wizard);
-            wizard.hasElementalView = true;
+            var elementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
+            wizard.ElementalController.SetInfo(elementalInfo,eType,true);
+            wizard.HarvestController.SetHarvestSettings(new HumanHarvestControllerTactic(wizard), new HarvestInfo(false, false, null, null, true, true, true));
             wizard.MaxSpeed = 2f;
             wizard.LifeController.SetLifePoints(50,50);
             wizard.MagicController.EnableMagic(70,100);
-            wizard.HydrationController.EnableHydrating(60,70,80);
+            wizard.HydrationController.EnableDehydrating(6,80,80);
             wizard.FightingController.EnableAttack(3, 6);
             wizard.InventoryController.HasInventory = true;
             return wizard;
@@ -46,26 +44,24 @@ namespace DarkIslands
 
         public IslandElement GetDefaultUnit(Island visIsland, Vector3 pos, System.Random r, Team team)
         {
-            var u = fac.Create();
-            visIsland.ContainerControllerIsland.AddElement(u);
-            u.RelativeToContainerPosition = pos;
-            u.Factory = fac;
-            u.IslandElementViewSettings = new IslandElementViewSettings() { HasLifeStatVisualization = true };
-            u.hasLight = false;
-            u.ElementalInfo = new ElementalInfo(0, 0, 0, 0, 0);
-            u.HarvestInfo = new HarvestInfo(false, false, null, null, false, false, false);
-            u.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
-            u.hasElementalView = false;
-            u.MaxSpeed = 1f;
-            u.LifeController.SetLifePoints(30,30);
-            u.LifeController.SetLifePoints(10,10);
-            u.FightingController.EnableCanBeAttacked(1);
-            u.FightingController.DisableAttack();
-            u.MagicController.DisableMagic();
-            u.HydrationController.disableDehydration();
-            u.InventoryController.HasInventory = false;
-            u.TeamController.SetTeam(team);
-            return u;
+            var unit = fac.Create();
+            visIsland.ContainerControllerIsland.AddElement(unit);
+            unit.RelativeToContainerPosition = pos;
+            unit.Factory = fac;
+            unit.IslandElementViewSettings = new IslandElementViewSettings() { HasLifeStatVisualization = true };
+            unit.hasLight = false;
+            unit.ElementalController.SetInfo(new ElementalInfo(0, 0, 0, 0, 0));
+            unit.HarvestInfo = new HarvestInfo(false, false, null, null, false, false, false);
+            unit.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
+            unit.MaxSpeed = 1f;
+            unit.LifeController.SetLifePoints(30,30);
+            unit.FightingController.EnableCanBeAttacked(1);
+            unit.FightingController.DisableAttack();
+            unit.MagicController.DisableMagic();
+            unit.HydrationController.disableDehydration();
+            unit.InventoryController.HasInventory = false;
+            unit.TeamController.SetTeam(team);
+            return unit;
         }
     }
 }

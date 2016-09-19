@@ -133,6 +133,14 @@ namespace DarkIslandGen
             properties.Add(elementalInfo);
             var elementalType = new Property("ElementalType", new GType { name = "IElementalType" });
             properties.Add(elementalType);
+
+            islandElementParts.Add(new ModelClass
+            {
+                Name = "IslandElementElementalController",
+                ParentRelation = islandElement,
+                UseFromParent = new List<Property> {}
+            });
+            properties.Add(new Property("ElementalController","IslandElementElementalController"));
             islandElementParts.Add(new ModelClass
             {
                 Name = "IslandElementElementalView",

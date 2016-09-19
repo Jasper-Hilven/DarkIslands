@@ -17,6 +17,11 @@ namespace DarkIslands
             base.Init(IslandElement, HarvestControllerFactory);
         }
 
+        public void SetHarvestSettings(IHarvestControllerTactic tactic, HarvestInfo info)
+        {
+            this.harvestTactic = tactic;
+            this.IslandElement.HarvestInfo = info;
+        }
 
         public ResourceAmount GetHarvested(float effort)
         {
