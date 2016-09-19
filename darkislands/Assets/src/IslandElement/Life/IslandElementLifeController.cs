@@ -30,6 +30,7 @@ namespace DarkIslands
         public void Die()
         {
             elem.IsAlive = false;
+            elem.LifePoints = 0;
             elem.Factory.DestroyIslandElement(elem);
         }
 
@@ -58,6 +59,11 @@ namespace DarkIslands
         public void HurtDueToDeHydration(int i)
         {
             Hurt(i);
+        }
+
+        public void DieDueToSpawnTimeUp()
+        {
+            Die();
         }
     }
 }
