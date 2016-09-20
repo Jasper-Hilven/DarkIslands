@@ -15,6 +15,7 @@ namespace DarkIslands
   public List<IIslandElementIslandToEnterChanged> ChangeIslandToEnterListeners= new List<IIslandElementIslandToEnterChanged>();
   public List<IIslandElementCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandElementCircleElementPropertiesChanged>();
   public List<IIslandElementIslandManagerChanged> ChangeIslandManagerListeners= new List<IIslandElementIslandManagerChanged>();
+  public List<IIslandElementNearOthersControllerChanged> ChangeNearOthersControllerListeners= new List<IIslandElementNearOthersControllerChanged>();
   public List<IIslandElementMaxSpeedChanged> ChangeMaxSpeedListeners= new List<IIslandElementMaxSpeedChanged>();
   public List<IIslandElementMovementControllerChanged> ChangeMovementControllerListeners= new List<IIslandElementMovementControllerChanged>();
   public List<IIslandElementRelativeGoalPositionChanged> ChangeRelativeGoalPositionListeners= new List<IIslandElementRelativeGoalPositionChanged>();
@@ -200,6 +201,19 @@ namespace DarkIslands
       }
     }
       private IslandElementContainerManager _IslandManager{get;set;}
+    public NearOthersController NearOthersController
+    {
+      get{
+        return _NearOthersController;
+      }
+      set
+      {
+        this._NearOthersController= value;
+        foreach( var vIslandElementNearOthersControllerChanged in ChangeNearOthersControllerListeners)
+          vIslandElementNearOthersControllerChanged.NearOthersControllerChanged();
+      }
+    }
+      private NearOthersController _NearOthersController{get;set;}
     public float MaxSpeed
     {
       get{

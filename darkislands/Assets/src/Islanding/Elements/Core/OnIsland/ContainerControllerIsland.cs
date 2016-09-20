@@ -26,6 +26,7 @@ namespace DarkIslands
                 return;
             IslandElements.Add(unit);
             Island.IslandCollision.AddElement(unit);
+            Island.NearityController.AddIslandElement(unit);
             unit.Island = Island;
         }
 
@@ -35,12 +36,14 @@ namespace DarkIslands
                 return;
             unit.Island = null;
             Island.IslandCollision.RemoveElement(unit);
+            Island.NearityController.RemoveIslandElement(unit);
             IslandElements.Remove(unit);
         }
 
         public void MoveElement(IslandElement islandElement, Vector3 newPosition)
         {
             Island.IslandCollision.MoveElement(islandElement,newPosition);
+            Island.NearityController.MoveElement(islandElement, newPosition);
         }
 
         public List<IslandElement> GetContainingUnits

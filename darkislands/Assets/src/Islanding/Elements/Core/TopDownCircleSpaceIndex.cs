@@ -32,6 +32,7 @@ namespace DarkIslands
             return !decoSpaceIndex.GetElements(Position).Any(e => collide((ICircleElement)e, element, Position));
         }
 
+
         public bool MoveDetectCollision(ICircleElement element, Vector3 previousPosition, Vector3 Position)
         {
             var oldBasePosition = decoSpaceIndex.GetBasePosition(previousPosition);

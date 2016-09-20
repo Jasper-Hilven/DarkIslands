@@ -42,6 +42,17 @@ namespace DarkIslandGen
                 UseFromParent = new List<Property> {position} });
             islandParts.Add(new ModelClass { Name = "IslandCollisionSizeManager", ParentRelation = island, UseFromParent = new List<Property> { size } });
 
+            ///Nearity
+
+            properties.Add(new Property("NearityController", "OnIslandNearityController")); //Elements
+            islandParts.Add(new ModelClass
+            {
+                Name = "OnIslandNearityController",
+                ParentRelation = island
+            });
+
+
+
             //View
             islandParts.Add(new ModelClass
             {Name = "IslandUnityView",ParentRelation = island,

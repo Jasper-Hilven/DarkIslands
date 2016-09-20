@@ -13,6 +13,7 @@ namespace DarkIslands
   public List<IIslandContainerControllerIslandChanged> ChangeContainerControllerIslandListeners= new List<IIslandContainerControllerIslandChanged>();
   public List<IIslandIslandCollisionChanged> ChangeIslandCollisionListeners= new List<IIslandIslandCollisionChanged>();
   public List<IIslandCircleElementPropertiesChanged> ChangeCircleElementPropertiesListeners= new List<IIslandCircleElementPropertiesChanged>();
+  public List<IIslandNearityControllerChanged> ChangeNearityControllerListeners= new List<IIslandNearityControllerChanged>();
     public float Size
     {
       get{
@@ -130,5 +131,18 @@ namespace DarkIslands
       }
     }
       private CircleElementProperties _CircleElementProperties{get;set;}
+    public OnIslandNearityController NearityController
+    {
+      get{
+        return _NearityController;
+      }
+      set
+      {
+        this._NearityController= value;
+        foreach( var vIslandNearityControllerChanged in ChangeNearityControllerListeners)
+          vIslandNearityControllerChanged.NearityControllerChanged();
+      }
+    }
+      private OnIslandNearityController _NearityController{get;set;}
   }
 }

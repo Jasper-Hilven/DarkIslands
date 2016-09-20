@@ -46,6 +46,7 @@ namespace DarkIslandGen
             });
 
             //NearOthersController
+            properties.Add(new Property("NearOthersController", "NearOthersController"));
             islandElementParts.Add(new ModelClass
             {
                 Name = "NearOthersController",
