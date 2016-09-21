@@ -51,6 +51,7 @@ namespace DarkIslands
   public List<IIslandElementIsSpawnedChanged> ChangeIsSpawnedListeners= new List<IIslandElementIsSpawnedChanged>();
   public List<IIslandElementSpawnParentChanged> ChangeSpawnParentListeners= new List<IIslandElementSpawnParentChanged>();
   public List<IIslandElementSpawnTimeToLifeChanged> ChangeSpawnTimeToLifeListeners= new List<IIslandElementSpawnTimeToLifeChanged>();
+  public List<IIslandElementMaxSpawnTimeToLifeChanged> ChangeMaxSpawnTimeToLifeListeners= new List<IIslandElementMaxSpawnTimeToLifeChanged>();
   public List<IIslandElementSpawnControllerChanged> ChangeSpawnControllerListeners= new List<IIslandElementSpawnControllerChanged>();
   public List<IIslandElementIslandElementViewSettingsChanged> ChangeIslandElementViewSettingsListeners= new List<IIslandElementIslandElementViewSettingsChanged>();
   public List<IIslandElementIsAnimatedChanged> ChangeIsAnimatedListeners= new List<IIslandElementIsAnimatedChanged>();
@@ -656,7 +657,7 @@ namespace DarkIslands
       }
     }
       private IslandElement _SpawnParent{get;set;}
-    public float SpawnTimeToLife
+    public int SpawnTimeToLife
     {
       get{
         return _SpawnTimeToLife;
@@ -668,7 +669,20 @@ namespace DarkIslands
           vIslandElementSpawnTimeToLifeChanged.SpawnTimeToLifeChanged();
       }
     }
-      private float _SpawnTimeToLife{get;set;}
+      private int _SpawnTimeToLife{get;set;}
+    public int MaxSpawnTimeToLife
+    {
+      get{
+        return _MaxSpawnTimeToLife;
+      }
+      set
+      {
+        this._MaxSpawnTimeToLife= value;
+        foreach( var vIslandElementMaxSpawnTimeToLifeChanged in ChangeMaxSpawnTimeToLifeListeners)
+          vIslandElementMaxSpawnTimeToLifeChanged.MaxSpawnTimeToLifeChanged();
+      }
+    }
+      private int _MaxSpawnTimeToLife{get;set;}
     public IslandElementSpawnController SpawnController
     {
       get{

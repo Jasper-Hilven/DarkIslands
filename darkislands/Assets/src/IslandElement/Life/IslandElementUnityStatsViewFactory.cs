@@ -45,5 +45,10 @@ namespace DarkIslands
         {
             gB.DestroyObj(gO);
         }
+
+        public GameObject GetSpawnVisualization(int spawnTimeToLife, int maxSpawnTimeToLife)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

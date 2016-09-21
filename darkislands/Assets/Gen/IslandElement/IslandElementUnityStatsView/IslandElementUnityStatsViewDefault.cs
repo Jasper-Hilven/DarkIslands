@@ -1,5 +1,5 @@
 namespace DarkIslands{
-  public class IslandElementUnityStatsViewDefault: IIslandElementPositionChanged, IIslandElementLifePointsChanged, IIslandElementMaxLifePointsChanged, IIslandElementHydrationPointsChanged, IIslandElementMaxHydrationPointsChanged, IIslandElementManaPointsChanged, IIslandElementMaxManaPointsChanged, IIslandElementIslandElementViewSettingsChanged
+  public class IslandElementUnityStatsViewDefault: IIslandElementPositionChanged, IIslandElementLifePointsChanged, IIslandElementMaxLifePointsChanged, IIslandElementHydrationPointsChanged, IIslandElementMaxHydrationPointsChanged, IIslandElementManaPointsChanged, IIslandElementMaxManaPointsChanged, IIslandElementIslandElementViewSettingsChanged, IIslandElementSpawnTimeToLifeChanged, IIslandElementMaxSpawnTimeToLifeChanged
   {
     public virtual void Destroy(){
     }
@@ -13,5 +13,7 @@ namespace DarkIslands{
     public virtual void ManaPointsChanged(){}
     public virtual void MaxManaPointsChanged(){}
     public virtual void IslandElementViewSettingsChanged(){}
+    public virtual void SpawnTimeToLifeChanged(){}
+    public virtual void MaxSpawnTimeToLifeChanged(){}
   }
 }

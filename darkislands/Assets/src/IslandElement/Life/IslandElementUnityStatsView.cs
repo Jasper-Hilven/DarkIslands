@@ -9,6 +9,7 @@ namespace DarkIslands
         private GameObject lifeStats;
         private GameObject manaStats;
         private GameObject hydrationStats;
+        private GameObject spawnStats;
         private IslandElementUnityStatsViewFactory fac;
 
         public override void Init(IslandElement IslandElement, IslandElementUnityStatsViewFactory IslandElementUnityStatsViewFactory)
@@ -32,6 +33,7 @@ namespace DarkIslands
                 fac.DestroyGO(lifeStats);
                 fac.DestroyGO(manaStats);
                 fac.DestroyGO(hydrationStats);
+                fac.DestroyGO(spawnStats);
             }
 
         }
@@ -48,16 +50,20 @@ namespace DarkIslands
                 manaStats = fac.GetManaVisualization(elem.ManaPoints, elem.MaxManaPoints);
             if (elem.MaxHydrationPoints != 0 && elem.CanDehydrate)
                 hydrationStats = fac.GetHydrationVisualization(elem.HydrationPoints, elem.MaxHydrationPoints);
+            if (elem.SpawnController.IsSpawned)
+                spawnStats = fac.GetSpawnVisualization(elem.SpawnTimeToLife, elem.MaxSpawnTimeToLife);
             SetLifeStatsCorrectPosition();
         }
         private void SetLifeStatsCorrectPosition()
         {
             if (lifeStats != null)
-              lifeStats.transform.localPosition = elem.Position + new Vector3(0, 3.2f, 0);
+                lifeStats.transform.localPosition = elem.Position + new Vector3(0, 3.2f, 0);
             if (manaStats != null)
                 manaStats.transform.localPosition = elem.Position + new Vector3(0, 2.8f, 0);
             if (hydrationStats != null)
                 hydrationStats.transform.localPosition = elem.Position + new Vector3(0, 2.4f, 0);
+            if (spawnStats != null)
+                spawnStats.transform.localPosition = elem.Position + new Vector3(0, 2f, 0);
         }
         public override void PositionChanged()
         {
@@ -90,6 +96,16 @@ namespace DarkIslands
         }
 
         public override void MaxHydrationPointsChanged()
+        {
+            DrawAllStats();
+        }
+
+        public override void MaxSpawnTimeToLifeChanged()
+        {
+            DrawAllStats();
+        }
+
+        public override void SpawnTimeToLifeChanged()
         {
             DrawAllStats();
         }

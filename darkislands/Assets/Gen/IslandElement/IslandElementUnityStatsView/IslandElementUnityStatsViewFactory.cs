@@ -22,6 +22,8 @@ public Dictionary<IslandElement,IslandElementUnityStatsView> Elements= new Dicti
       IslandElement.ChangeManaPointsListeners.Add(element);
       IslandElement.ChangeMaxManaPointsListeners.Add(element);
       IslandElement.ChangeIslandElementViewSettingsListeners.Add(element);
+      IslandElement.ChangeSpawnTimeToLifeListeners.Add(element);
+      IslandElement.ChangeMaxSpawnTimeToLifeListeners.Add(element);
     }
   }
 }

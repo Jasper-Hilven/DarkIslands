@@ -194,7 +194,10 @@ namespace DarkIslandGen
             //Spawning
             properties.Add(new Property("IsSpawned", "bool"));
             properties.Add(new Property("SpawnParent", "IslandElement"));
-            properties.Add(new Property("SpawnTimeToLife", "float"));
+            var spawnToLive = new Property("SpawnTimeToLife", "int");
+            properties.Add(spawnToLive);
+            var maxSpawnToLive = new Property("MaxSpawnTimeToLife", "int");
+            properties.Add(maxSpawnToLive);
             properties.Add(new Property("SpawnController", "IslandElementSpawnController"));
             islandElementParts.Add(new ModelClass() { Name = "IslandElementSpawnController", ParentRelation = islandElement });
 
@@ -226,7 +229,7 @@ namespace DarkIslandGen
             {
                 UseFromParent = new List<Property>
                 {
-                position,lifePoints,maxLifePoints,hydrationPoints,maxHydrationPoints,manaPoints,maxManaPoints,viewSettings
+                position,lifePoints,maxLifePoints,hydrationPoints,maxHydrationPoints,manaPoints,maxManaPoints,viewSettings,spawnToLive,maxSpawnToLive
             }
             });
 
