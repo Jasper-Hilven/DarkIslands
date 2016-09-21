@@ -113,6 +113,8 @@ namespace DarkIslands
                 IslandElement.LifeController.Heal(resHarvested.Amount[ResourceType.Stone]*10);
             if (resHarvested.Amount.ContainsKey(ResourceType.Wood))
                 IslandElement.HydrationController.Hydrate(resHarvested.Amount[ResourceType.Wood] * 10);
+            if (resHarvested.Amount.ContainsKey(ResourceType.BrownMushroom))
+                IslandElement.MagicController.AddMana(resHarvested.Amount[ResourceType.BrownMushroom] * 10);
             //End temporary wizzard logic
             return;
             EnsureListSize();
