@@ -11,6 +11,8 @@
         }
         public bool Update(IslandElement islandElement, float deltaTime)
         {
+            if (!spell.CanDo(islandElement))
+                return true;
             if (decoAction == null)
                 decoAction = spell.Do(islandElement);
             return decoAction.Update(islandElement, deltaTime);

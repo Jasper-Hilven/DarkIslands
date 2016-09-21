@@ -1,4 +1,6 @@
-﻿namespace DarkIslands
+﻿using System.Collections.Generic;
+
+namespace DarkIslands
 {
     public class HarvestIslandManaAction : IIslandElementAction
     {
@@ -10,9 +12,11 @@
         private float totalActionTime = 0;
         private int magmaLevel;
         private bool harvest;
-
+        private const int costMana = 1;
         public bool Update(IslandElement islandElement, float deltaTime)
         {
+            if (!harvest && islandElement.ManaPoints < costMana)
+                return true;
             if (!islandElement.CanUseMana)
                 return true;
             if (islandElement.Island == null)

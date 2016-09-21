@@ -58,7 +58,7 @@ public class UGame : MonoBehaviour
         var ang = rand.Next(0, 360);
         var r = 30;
         var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), undeadTeam);
-        skeleton.CurrentCommand = new OtherIslandElementCommand(skeleton, units[0]);
+        skeleton.ActionHandler.SetNextCommand(new FollowAndProtectCommand(units[0]));
         nbSkeletonsSpawned++;
     }
 

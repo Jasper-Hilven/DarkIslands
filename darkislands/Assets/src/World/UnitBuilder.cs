@@ -36,7 +36,7 @@ namespace DarkIslands
             var fighter = GetDefaultUnit(island, pos, team);
             fighter.LifeController.SetLifePoints(5, 5);
             fighter.FightingController.EnableAttack(2, 25);
-            fighter.FightingController.EnableCanBeAttacked(1);
+            fighter.FightingController.EnableCanBeAttacked(3);
             fighter.IslandElementViewSettings = new IslandElementViewSettings() { IsFighter = true, HasLifeStatVisualization = true };
             fighter.ActionHandler.SetNextCommand(new FollowAndProtectCommand(spawner));
             return fighter;
@@ -45,10 +45,10 @@ namespace DarkIslands
         public IslandElement GetSkeleton(Island visIsland, Vector3 pos, Team team)
         {
             var skeleton = GetDefaultUnit(visIsland, pos, team);
-            skeleton.MaxSpeed = 1f + 0.1f * r.Next(0, 5);
+            skeleton.MaxSpeed = 3f + 0.1f * r.Next(0, 5);
             skeleton.LifeController.SetLifePoints(5, 5);
             skeleton.FightingController.EnableAttack(2, 25);
-            skeleton.FightingController.EnableCanBeAttacked(1);
+            skeleton.FightingController.EnableCanBeAttacked(3);
             skeleton.IslandElementViewSettings = new IslandElementViewSettings() { IsSkeleton = true, HasLifeStatVisualization = true };
             return skeleton;
         }
@@ -74,6 +74,7 @@ namespace DarkIslands
             unit.HydrationController.disableDehydration();
             unit.InventoryController.HasInventory = false;
             unit.TeamController.SetTeam(team);
+            unit.NearOthersController.SetActive();
             return unit;
         }
 

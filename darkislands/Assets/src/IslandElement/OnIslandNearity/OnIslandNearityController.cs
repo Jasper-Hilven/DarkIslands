@@ -33,6 +33,8 @@ namespace DarkIslands
 
         public void MoveElement(IslandElement islandElement, Vector3 newPosition)
         {
+            if (!islandElement.NearOthersController.IsActive)
+                return;
             index.Move(islandElement, newPosition);
             var nearElements = GetElementsNear(islandElement);
             foreach (var nearElement in nearElements)

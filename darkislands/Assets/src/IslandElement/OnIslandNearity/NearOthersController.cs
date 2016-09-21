@@ -14,9 +14,9 @@ namespace DarkIslands
         public bool IsActive { get { return active; } }
         private bool active;
         private IslandElement elem;
-        private NearOthersNotifier notifier;
+        private INearOthersNotifier notifier;
 
-        public void SetNotifier(NearOthersNotifier notifier)
+        public void SetNotifier(INearOthersNotifier notifier)
         {
             this.notifier = notifier;
         }
@@ -41,6 +41,8 @@ namespace DarkIslands
 
         public void NotifyChanges()
         {
+            if (!active)
+                return;
             if (this.notifier == null)
                 return;
             notifier.NotifyChanges();
@@ -54,13 +56,5 @@ namespace DarkIslands
         } 
 
 
-    }
-
-    public class NearOthersNotifier
-    {
-        public void NotifyChanges()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

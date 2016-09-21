@@ -17,7 +17,7 @@ namespace DarkIslands
 
         public bool CanDo(IslandElement elem)
         {
-            return elem.CanUseMana && elem.ManaPoints > 1;
+            return elem.CanUseMana && elem.ManaPoints >= 1;
         }
 
         public IIslandElementAction Do(IslandElement elem)

@@ -18,7 +18,7 @@ namespace DarkIslands
 
         public bool Update(IslandElement unit, float deltaTime)
         {
-            if (unit.Island == null)
+            if (unit.Island == null|| Island == null)
                 return true;
             CurrentIslandRelativeGoalPosition = RelativePosition;
             if (this.Island != unit.Island)
