@@ -46,15 +46,13 @@ namespace DarkIslands
             }
             if (IslandElement.IslandElementViewSettings.IsRock)
             {
-                var seed = IslandElement.IslandElementViewSettings.Seed;
-                UIUnit = UnitUnityViewFactory.GetRockVisualization(IslandElement,IslandElement.IslandElementViewSettings.RockInfo.Big, seed);//TODO this dependent code out to specific interface
+                UIUnit = UnitUnityViewFactory.GetRockVisualization(IslandElement,IslandElement.IslandElementViewSettings.RockInfo.Big);//TODO this dependent code out to specific interface
                 UpdateSize();
                 UpdatePosition();
                 return;
             }
             if (IslandElement.IslandElementViewSettings.IsSkeleton)
             {
-                var seed = IslandElement.IslandElementViewSettings.Seed;
                 UIUnit = UnitUnityViewFactory.GetSkeletonVisualization(IslandElement);//TODO this dependent code out to specific interface
                 UpdateSize();
                 UpdatePosition();
@@ -62,8 +60,14 @@ namespace DarkIslands
             }
             if (IslandElement.IslandElementViewSettings.IsFighter)
             {
-                var seed = IslandElement.IslandElementViewSettings.Seed;
                 UIUnit = UnitUnityViewFactory.GetFighterVisualization(IslandElement);//TODO this dependent code out to specific interface
+                UpdateSize();
+                UpdatePosition();
+                return;
+            }
+            if (IslandElement.IslandElementViewSettings.IsGrass)
+            {
+                UIUnit = UnitUnityViewFactory.GetGrassVisualization(IslandElement);//TODO this dependent code out to specific interface
                 UpdateSize();
                 UpdatePosition();
                 return;

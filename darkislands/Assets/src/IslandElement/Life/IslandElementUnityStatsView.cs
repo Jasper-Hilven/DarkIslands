@@ -63,7 +63,7 @@ namespace DarkIslands
             if (hydrationStats != null)
                 hydrationStats.transform.localPosition = elem.Position + new Vector3(0, 2.4f, 0);
             if (spawnStats != null)
-                spawnStats.transform.localPosition = elem.Position + new Vector3(0, 2f, 0);
+                spawnStats.transform.localPosition = elem.Position + new Vector3(0, 2.8f, 0);
         }
         public override void PositionChanged()
         {

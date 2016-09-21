@@ -40,14 +40,13 @@ namespace DarkIslands
             var sizeSq = (size - 1) * (size - 1);
             var minsQ = 4 * 4;
             var sizeBiCub = (size - 1) * (size - 1) * size * size;
-            var min = 4 * 4 * 4 * 4;
             var nbTrees = (size * size / 10 + rand.Next(0, size * size / 20)) / 4;
             for (int i = 0; i < nbTrees; i++)
             {
-                var radiusForTree = Mathf.Sqrt(rand.Next(minsQ, sizeSq / 4) + Mathf.Sqrt(rand.Next(min, sizeBiCub)) / 2);
+                var radiusForTree = Mathf.Sqrt(rand.Next(minsQ, sizeSq));
                 var angle = (float)rand.NextDouble() * 360;
                 var pos = new Vector3(radiusForTree * Mathf.Cos(angle), 0, radiusForTree * Mathf.Sin(angle));
-                SetRockOrTree(provider, pos, island, rand);
+                SetANatureElement(provider, pos, island, rand);
             }
         }
 
@@ -55,19 +54,23 @@ namespace DarkIslands
         {
             var tree = GetBasicResource(provider, relPosition, island, rand);
             tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true, Seed = rand.Next(0, 100), HasLifeStatVisualization = false };
-            var resourceCount = new Dictionary<ResourceType, int> {};
+            var resourceCount = new Dictionary<ResourceType, int> { };
             resourceCount[ResourceType.Wood] = 5;
             tree.HarvestController.SetHarvestSettings(
                 new SimpleHarvestedControllerTactic(tree, resourceType: ResourceType.Wood), new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false));
             tree.SizeController = new ResourceAmountSizeController(ResourceType.Wood);
         }
 
-        public void SetRockOrTree(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
+        public void SetANatureElement(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
-            if (rand.Next(2) == 0)
+            var selected = rand.Next(3);
+            if (selected == 0)
                 SetARock(provider, relPosition, island, rand);
-            else
+            if (selected == 1)
                 SetATree(provider, relPosition, island, rand);
+            if (selected == 2)
+                SetGrass(provider, relPosition, island, rand);
+
 
         }
 
@@ -95,7 +98,13 @@ namespace DarkIslands
             rock.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false);
         }
 
-
+        public void SetGrass(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
+        {
+            var grass = GetBasicResource(provider, relPosition, island, rand);
+            grass.HarvestController.SetHarvestSettings(null, new HarvestInfo(false, false, null, null, false, false, false));
+            grass.IslandElementViewSettings = new IslandElementViewSettings() { IsGrass = true };
+            grass.CircleElementProperties = new CircleElementProperties(0, 0);
+        }
 
     }
 }

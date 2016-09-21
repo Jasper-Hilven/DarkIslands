@@ -16,7 +16,7 @@
         {
             Unit.CurrentCommand = command;
         }
-
+            
         public override void CurrentCommandChanged()
         {
             if (this.Unit.CurrentCommand == null)

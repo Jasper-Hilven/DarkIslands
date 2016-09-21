@@ -10,11 +10,11 @@ namespace DarkIslands
         {
             CanBeChopped = canBeChopped;
             CanBeMined = canBeMined;
-            ResourcesToHarvest = resourcesToHarvest;
+            ResourcesToHarvest = resourcesToHarvest ?? new Dictionary<ResourceType, int>();
             CanChop = canChop;
             CanMine = canMine;
             CanBeHarvestAttacked = canBeHarvestAttacked;
-            this.InitialResources = initialResources;
+            this.InitialResources = initialResources ?? new Dictionary<ResourceType, int>();
         }
 
 

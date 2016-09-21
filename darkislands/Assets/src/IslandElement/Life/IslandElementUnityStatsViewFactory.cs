@@ -48,7 +48,7 @@ namespace DarkIslands
 
         public GameObject GetSpawnVisualization(int spawnTimeToLife, int maxSpawnTimeToLife)
         {
-            throw new System.NotImplementedException();
+            return GetBarForStat(Color.blue, Color.gray, Color.red, spawnTimeToLife, maxSpawnTimeToLife);
         }
     }
 }

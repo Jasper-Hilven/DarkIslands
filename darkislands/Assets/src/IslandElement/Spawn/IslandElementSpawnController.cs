@@ -23,12 +23,12 @@ namespace DarkIslands
 
         public void SetSpawn(float maxTime)
         {
+            isSpawn = true;
             if (!fac.active.Contains(this))
                 fac.active.Add(this);
             this.maxTime = maxTime;
             this.remainingTime = maxTime;
             UpdateMaxSpawnTimeToLife(maxTime);  
-            isSpawn = true;
         }
 
       
@@ -39,7 +39,7 @@ namespace DarkIslands
             isSpawn = false;
         }
 
-        public bool IsSpawned { get; set; }
+        public bool IsSpawned { get {return isSpawn;} }
         public void Update(float deltaTime)
         {
             remainingTime -= deltaTime;
@@ -51,14 +51,12 @@ namespace DarkIslands
 
         private void UpdateSpawnToLife()
         {
-            return;
             var newSpawnToLife = Mathf.RoundToInt(remainingTime);
             if (newSpawnToLife != elem.SpawnTimeToLife)
                 elem.SpawnTimeToLife = newSpawnToLife;
         }
         private void UpdateMaxSpawnTimeToLife(float maxTime)
         {
-            return;
             this.elem.MaxSpawnTimeToLife = Mathf.RoundToInt(maxTime);
         }
         public override void Destroy()

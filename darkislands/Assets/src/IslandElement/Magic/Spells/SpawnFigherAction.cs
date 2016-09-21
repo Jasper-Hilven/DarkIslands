@@ -27,7 +27,7 @@ namespace DarkIslands
             var relativeToContainerPosition = islandElement.RelativeToContainerPosition + new Vector3(0.8f,0, 0.8f);
             var fighter = unitBuilder.GetSpawnedFighter(islandElement, island, relativeToContainerPosition, team,isArcher);
             fighter.ActionHandler.SetNextCommand(new FollowAndProtectCommand(islandElement));
-            fighter.SpawnController.SetSpawn(120);
+            fighter.SpawnController.SetSpawn(10);
             return true;
         }
 
