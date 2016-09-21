@@ -15,7 +15,12 @@
             if (followed == null || !followed.IsAlive)
                 return true;
             gotoPos.Island = followed.Island;
-            gotoPos.RelativePosition = followed.RelativeToContainerPosition;
+            var distance =
+                (islandElement.RelativeToContainerPosition - followed.RelativeToContainerPosition).magnitude;
+            var intendedPosition = distance > 1f + islandElement.CircleElementProperties.Radius + followed.CircleElementProperties.Radius ?
+                followed.RelativeToContainerPosition
+                : islandElement.RelativeToContainerPosition;
+            gotoPos.RelativePosition = intendedPosition;
             gotoPos.Update(islandElement, deltaTime);
             return false;
         }

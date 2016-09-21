@@ -4,6 +4,12 @@ namespace DarkIslands
 {
     public class SpawnFighter : ISpell
     {
+        private readonly bool isArcher;
+
+        public SpawnFighter(bool isArcher = false)
+        {
+            this.isArcher = isArcher;
+        }
         public bool CanSee(IslandElement elem)
         {
             return true;
@@ -16,7 +22,7 @@ namespace DarkIslands
 
         public IIslandElementAction Do(IslandElement elem)
         {
-            return new SpawnFigherAction();
+            return new SpawnFigherAction(isArcher);
 
         }
     }

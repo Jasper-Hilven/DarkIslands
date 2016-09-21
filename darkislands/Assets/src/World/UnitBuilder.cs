@@ -31,11 +31,13 @@ namespace DarkIslands
             return wizard;
         }
 
-        public IslandElement GetSpawnedFighter(IslandElement spawner, Island island, Vector3 pos, Team team)
+        public IslandElement GetSpawnedFighter(IslandElement spawner, Island island, Vector3 pos, Team team,bool isArcher)
         {
             var fighter = GetDefaultUnit(island, pos, team);
             fighter.LifeController.SetLifePoints(5, 5);
-            fighter.FightingController.EnableAttack(2, 25);
+            var attackRange = isArcher ? 70 : 25;
+            var attackDamage = isArcher ? 1 : 2;
+            fighter.FightingController.EnableAttack(attackDamage, attackRange);
             fighter.FightingController.EnableCanBeAttacked(3);
             fighter.IslandElementViewSettings = new IslandElementViewSettings() { IsFighter = true, HasLifeStatVisualization = true };
             fighter.ActionHandler.SetNextCommand(new FollowAndProtectCommand(spawner));

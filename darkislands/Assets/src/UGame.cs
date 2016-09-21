@@ -87,6 +87,7 @@ public class UGame : MonoBehaviour
         fP.IslandMovementControllerFactory.Update(Time.deltaTime);
         fP.IslandElementElementalViewFactory.Update(Time.deltaTime);
         fP.IslandElementHydrationControllerFactory.Update(Time.deltaTime);
+        fP.IslandElementSpawnControllerFactory.Update(Time.deltaTime);
         UpdateFocussedUnit();
         cam.update();
         m.Update();

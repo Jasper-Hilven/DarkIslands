@@ -4,7 +4,12 @@ namespace DarkIslands
 {
     public class SpawnFigherAction : IIslandElementAction
     {
+        public SpawnFigherAction(bool isArcher)
+        {
+            this.isArcher = isArcher;
+        }
         private float totalActionTime = 0f;
+        private bool isArcher;
 
         public bool Update(IslandElement islandElement, float deltaTime)
         {
@@ -20,7 +25,7 @@ namespace DarkIslands
             var team = islandElement.TeamController.Team;
             var unitBuilder = island.WorldBuilder.uBuilder;
             var relativeToContainerPosition = islandElement.RelativeToContainerPosition + new Vector3(0.8f,0, 0.8f);
-            var fighter = unitBuilder.GetSpawnedFighter(islandElement, island, relativeToContainerPosition, team);
+            var fighter = unitBuilder.GetSpawnedFighter(islandElement, island, relativeToContainerPosition, team,isArcher);
             fighter.ActionHandler.SetNextCommand(new FollowAndProtectCommand(islandElement));
             fighter.SpawnController.SetSpawn(120);
             return true;
