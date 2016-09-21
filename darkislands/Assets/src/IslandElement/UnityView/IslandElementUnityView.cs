@@ -72,6 +72,13 @@ namespace DarkIslands
                 UpdatePosition();
                 return;
             }
+            if (IslandElement.IslandElementViewSettings.IsBrownMushroom)
+            {
+                UIUnit = UnitUnityViewFactory.GetBrownMushroomVisualization(IslandElement);//TODO this dependent code out to specific interface
+                UpdateSize();
+                UpdatePosition();
+                return;
+            }
             UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
             UpdateSize();
             UpdatePosition();

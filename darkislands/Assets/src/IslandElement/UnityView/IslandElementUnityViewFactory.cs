@@ -42,6 +42,15 @@ namespace DarkIslands
             return gO;
         }
 
+        public GameObject GetBrownMushroomVisualization(IslandElement mushroom)
+        {
+            var nb = r.Next(0, 2);
+            var gO = gB.LoadViaResources("MushroomBrown" + nb);
+            gO.transform.Rotate(new Vector3(0, 1, 0), r.Next(360));
+            gO.transform.localScale = new Vector3(10, 10, 10);
+            this.ModelToEntity.modelToEntity.Add(gO, mushroom);
+            return gO;
+        }
 
 
 

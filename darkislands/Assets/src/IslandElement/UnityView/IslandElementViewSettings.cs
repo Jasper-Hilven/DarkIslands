@@ -10,6 +10,7 @@
         public bool IsTree { get; set; }
         public bool IsSkeleton { get; set; }
         public bool IsFighter { get; set; }
+        public bool IsBrownMushroom { get; set; }
         public bool IsGrass { get; set; }
     }
     public class RockInfo

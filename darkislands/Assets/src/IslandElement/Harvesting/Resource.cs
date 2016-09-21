@@ -19,6 +19,7 @@ namespace DarkIslands
     public class ResourceType{
         public static ResourceType Wood = new ResourceType("Wood");
         public static ResourceType Stone = new ResourceType("Stone");
+        public static ResourceType BrownMushroom = new ResourceType("BrownMushroom");
         public string Name { get; private set; }
 
         public ResourceType(string Name)

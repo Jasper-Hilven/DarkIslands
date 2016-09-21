@@ -6,10 +6,11 @@ namespace DarkIslands
 {
     public class HarvestInfo
     {
-        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<ResourceType, int> resourcesToHarvest, Dictionary<ResourceType, int> initialResources, bool canChop, bool canMine, bool canBeHarvestAttacked)
+        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<ResourceType, int> resourcesToHarvest, Dictionary<ResourceType, int> initialResources, bool canChop, bool canMine, bool canBeHarvestAttacked, bool canHarvestAttack)
         {
             CanBeChopped = canBeChopped;
             CanBeMined = canBeMined;
+            CanHarvestAttack = canHarvestAttack;
             ResourcesToHarvest = resourcesToHarvest ?? new Dictionary<ResourceType, int>();
             CanChop = canChop;
             CanMine = canMine;
@@ -26,7 +27,7 @@ namespace DarkIslands
             {
                 rToHarvest[change.Key] += add ? change.Value : -change.Value;
             }
-            return new HarvestInfo(CanBeChopped, CanBeMined, rToHarvest, initialResources, CanChop, CanMine, CanBeHarvestAttacked);
+            return new HarvestInfo(CanBeChopped, CanBeMined, rToHarvest, initialResources, CanChop, CanMine, CanBeHarvestAttacked,CanHarvestAttack);
         }
 
         public bool CanBeChopped { get; private set; }

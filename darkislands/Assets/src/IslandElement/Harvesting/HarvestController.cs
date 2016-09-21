@@ -37,10 +37,4 @@ namespace DarkIslands
             harvestTactic.Harvest(harvestEffort, other);
         }
     }
-
-    public interface IHarvestControllerTactic
-    {
-        void Harvest(float harvestEffort, IslandElement harvested);
-        ResourceAmount GetHarvested(float harvestEffort);
-    }
 }

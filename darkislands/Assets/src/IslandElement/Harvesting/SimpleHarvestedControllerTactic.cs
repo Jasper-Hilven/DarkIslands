@@ -5,18 +5,28 @@ namespace DarkIslands
 {
     public class SimpleHarvestedControllerTactic:IHarvestControllerTactic
     {
-        public SimpleHarvestedControllerTactic(IslandElement element, ResourceType resourceType)
+        public SimpleHarvestedControllerTactic(IslandElement element, ResourceType resourceType,bool dieOnEmpty=true)
         {
             this.resourceType = resourceType;
             this.element = element;
+            this.dieOnEmpty = dieOnEmpty;
         }
 
         private IslandElement element;
         private ResourceType resourceType;
+        private bool dieOnEmpty;
 
         public ResourceAmount GetHarvested(float harvestEffort)
         {
-            if(harvestEffort < 1f)
+            var ret= GetHarvestedResourcesCount(harvestEffort);
+            if(element.HarvestInfo.ResourcesToHarvest[resourceType] == 0)
+                element.LifeController.Die();
+            return ret;
+        }
+
+        private ResourceAmount GetHarvestedResourcesCount(float harvestEffort)
+        {
+            if (harvestEffort < 1f)
                 return new ResourceAmount(new Dictionary<ResourceType, int>());
 
             if (element.HarvestInfo.ResourcesToHarvest[resourceType] <= 0)
