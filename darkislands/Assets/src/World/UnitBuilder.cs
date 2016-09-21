@@ -14,10 +14,11 @@ namespace DarkIslands
             this.r = r;
             this.fac = fac;
         }
+
         public IslandElement GetWizard(IElementalType eType, Island visIsland, Vector3 pos, Team team)
         {
             var wizard = GetDefaultUnit(visIsland, pos, team);
-            wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizzard = true, HasLifeStatVisualization = true };
+            wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizard = true, HasLifeStatVisualization = true };
             wizard.hasLight = true;
             var elementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
             wizard.ElementalController.SetInfo(elementalInfo, eType, true);
@@ -55,8 +56,6 @@ namespace DarkIslands
             return skeleton;
         }
 
-
-
         public IslandElement GetDefaultUnit(Island visIsland, Vector3 pos, Team team)
         {
             var unit = fac.Create();
@@ -79,6 +78,5 @@ namespace DarkIslands
             unit.NearOthersController.SetActive();
             return unit;
         }
-
     }
 }

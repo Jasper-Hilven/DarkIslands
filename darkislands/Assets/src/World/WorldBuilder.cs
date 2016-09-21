@@ -26,13 +26,13 @@ namespace DarkIslands
             island.SizeController.SetInitialSize(size);
             island.Position = Position;
             island.WorldBuilder = this;
-            SetTreesAndRocks(provider, island, new System.Random(seed));
+            SetNatureElements(provider, island, new System.Random(seed));
             return island;
 
         }
 
 
-        public void SetTreesAndRocks(FactoryProvider provider, Island island, System.Random rand)
+        public void SetNatureElements(FactoryProvider provider, Island island, System.Random rand)
         {
             var size = Mathf.RoundToInt(island.Size);
             if (size < 5)
@@ -83,6 +83,7 @@ namespace DarkIslands
             resource.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
             island.ContainerControllerIsland.AddElement(resource);
             resource.RelativeToContainerPosition = relPosition;
+            resource.Size = 1;
             return resource;
 
         }
@@ -92,12 +93,11 @@ namespace DarkIslands
             rock.SizeController = new ResourceAmountSizeController(ResourceType.Stone);
             rock.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(rock, resourceType: ResourceType.Stone);
             var resourceCount = new Dictionary<ResourceType, int>();
-            bool isBig = rand.Next(0, 2) > 0;
+            var isBig = rand.Next(0, 2) > 0;
             rock.IslandElementViewSettings = new IslandElementViewSettings() { IsRock = true, RockInfo = new RockInfo { Big = true }, Seed = rand.Next(0, 100), HasLifeStatVisualization = false };
             resourceCount[ResourceType.Stone] = isBig ? 2 : 1;
             rock.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false,false);
         }
-
 
         public void SetAMushroom(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
@@ -110,8 +110,6 @@ namespace DarkIslands
             mushroom.CircleElementProperties.OriginalRadius = 0.2f;
             mushroom.Size = 3f;
         }
-
-
 
         public void SetGrass(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {

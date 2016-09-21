@@ -43,10 +43,10 @@ namespace DarkIslands
         public void Update(float deltaTime)
         {
             remainingTime -= deltaTime;
+            UpdateSpawnToLife();
             if (remainingTime > 0)
                 return;
             elem.LifeController.DieDueToSpawnTimeUp();
-            UpdateSpawnToLife();
         }
 
         private void UpdateSpawnToLife()
