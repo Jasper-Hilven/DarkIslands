@@ -8,7 +8,7 @@
         public AttackAction(IslandElement other)
         {
             this.other = other;
-            ifNotCloseEnough= new FollowAction(other);
+            ifNotCloseEnough= new FollowAction(other,0f);
             attackTime = 0f;
         }
 

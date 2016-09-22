@@ -53,7 +53,7 @@ public class UGame : MonoBehaviour
     private int nbSkeletonsSpawned = 0;
     private void PutASkeleton(Team undeadTeam, System.Random rand)
     {
-        if (!(Time.fixedTime > nbSkeletonsSpawned*11))
+        if (!(Time.fixedTime > nbSkeletonsSpawned*110))
             return;
         var ang = rand.Next(0, 360);
         var r = 30;

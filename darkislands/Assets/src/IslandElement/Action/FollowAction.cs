@@ -4,8 +4,11 @@
     {
         private readonly IslandElement followed;
         private GoToRelativePositionAction gotoPos;
-        public FollowAction(IslandElement followed)
+        private float followDistance;
+
+        public FollowAction(IslandElement followed, float followDistance= 1f)
         {
+            this.followDistance = followDistance;
             this.gotoPos = new GoToRelativePositionAction(followed.RelativeToContainerPosition, followed.Island, 1f);
             this.followed = followed;
         }
@@ -17,7 +20,7 @@
             gotoPos.Island = followed.Island;
             var distance =
                 (islandElement.RelativeToContainerPosition - followed.RelativeToContainerPosition).magnitude;
-            var intendedPosition = distance > 1f + islandElement.CircleElementProperties.Radius + followed.CircleElementProperties.Radius ?
+            var intendedPosition = distance > followDistance + islandElement.CircleElementProperties.Radius + followed.CircleElementProperties.Radius ?
                 followed.RelativeToContainerPosition
                 : islandElement.RelativeToContainerPosition;
             gotoPos.RelativePosition = intendedPosition;
