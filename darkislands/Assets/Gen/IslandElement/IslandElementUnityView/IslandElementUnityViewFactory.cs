@@ -24,6 +24,7 @@ public Dictionary<IslandElement,IslandElementUnityView> Elements= new Dictionary
       IslandElement.ChangeElementalTypeListeners.Add(element);
       IslandElement.ChangePositionListeners.Add(element);
       IslandElement.ChangeSizeListeners.Add(element);
+      IslandElement.ChangeRotationListeners.Add(element);
     }
   }
 }

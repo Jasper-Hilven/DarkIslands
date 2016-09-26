@@ -115,7 +115,7 @@ namespace DarkIslands
         {
             var grass = GetBasicResource(provider, relPosition, island, rand);
             grass.IslandElementViewSettings = new IslandElementViewSettings() { IsGrass = true };
-            grass.CircleElementProperties = new CircleElementProperties(0, 0);
+            grass.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
         }
 
     }

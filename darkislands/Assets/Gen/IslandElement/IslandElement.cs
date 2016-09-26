@@ -18,6 +18,7 @@ namespace DarkIslands
   public List<IIslandElementNearOthersControllerChanged> ChangeNearOthersControllerListeners= new List<IIslandElementNearOthersControllerChanged>();
   public List<IIslandElementMaxSpeedChanged> ChangeMaxSpeedListeners= new List<IIslandElementMaxSpeedChanged>();
   public List<IIslandElementMovementControllerChanged> ChangeMovementControllerListeners= new List<IIslandElementMovementControllerChanged>();
+  public List<IIslandElementRotationChanged> ChangeRotationListeners= new List<IIslandElementRotationChanged>();
   public List<IIslandElementRelativeGoalPositionChanged> ChangeRelativeGoalPositionListeners= new List<IIslandElementRelativeGoalPositionChanged>();
   public List<IIslandElementHasRelativeGoalPositionChanged> ChangeHasRelativeGoalPositionListeners= new List<IIslandElementHasRelativeGoalPositionChanged>();
   public List<IIslandElementCurrentCommandChanged> ChangeCurrentCommandListeners= new List<IIslandElementCurrentCommandChanged>();
@@ -241,6 +242,19 @@ namespace DarkIslands
       }
     }
       private IslandElementMovementController _MovementController{get;set;}
+    public float Rotation
+    {
+      get{
+        return _Rotation;
+      }
+      set
+      {
+        this._Rotation= value;
+        foreach( var vIslandElementRotationChanged in ChangeRotationListeners)
+          vIslandElementRotationChanged.RotationChanged();
+      }
+    }
+      private float _Rotation{get;set;}
     public Vector3 RelativeGoalPosition
     {
       get{

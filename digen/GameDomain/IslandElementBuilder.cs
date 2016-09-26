@@ -57,6 +57,8 @@ namespace DarkIslandGen
             //Movement
             properties.Add(new Property("MaxSpeed", new GType { name = "float" }));
             properties.Add(new Property("MovementController", "IslandElementMovementController"));
+            var rotation = new Property("Rotation", new GType() {name="float"});
+            properties.Add(rotation);
             var relGoalPosition = new Property("RelativeGoalPosition", new GType { name = "Vector3", dep = "UnityEngine" });
             properties.Add(relGoalPosition);
             var hasRelGoalPosition = new Property("HasRelativeGoalPosition", "bool");
@@ -209,7 +211,8 @@ namespace DarkIslandGen
                 Name = "IslandElementUnityView",
                 ParentRelation = islandElement,
                 ConstructionInjected = new List<TVariable> { modelToEntity },
-                UseFromParent = new List<Property> { viewSettings, isElementalColored, elementalType, position, size }
+                UseFromParent = new List<Property> { viewSettings, isElementalColored, elementalType, position, size, rotation},
+
             });
 
             //AnimationVisualization
@@ -230,7 +233,7 @@ namespace DarkIslandGen
                 UseFromParent = new List<Property>
                 {
                 position,lifePoints,maxLifePoints,hydrationPoints,maxHydrationPoints,manaPoints,maxManaPoints,viewSettings,spawnToLive,maxSpawnToLive
-            }
+                }
             });
 
             //FightingController

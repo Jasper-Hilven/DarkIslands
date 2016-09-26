@@ -108,6 +108,12 @@ namespace DarkIslands
                 this.UIUnit.transform.position = this.IslandElement.Position;
         }
 
+        public override void RotationChanged()
+        {
+            if (UIUnit != null)
+                UIUnit.transform.rotation = Quaternion.AngleAxis(this.IslandElement.Rotation, new Vector3(0, 1, 0));    
+        }
+
         public override void Destroy()
         {
             this.UnitUnityViewFactory.Destroy(UIUnit);

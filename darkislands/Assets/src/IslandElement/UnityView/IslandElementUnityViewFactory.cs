@@ -9,7 +9,7 @@ namespace DarkIslands
         private bool useSimpleObjects = true;
         public GameObject GetUnitVisualization(IslandElement unit)
         {
-            var go = gB.LoadViaResources("Unit");
+            var go = gB.LoadViaResources("Man");
             this.ModelToEntity.modelToEntity.Add(go, unit);
             return go;
         }
@@ -92,14 +92,14 @@ namespace DarkIslands
 
         public GameObject GetSkeletonVisualization(IslandElement islandElement)
         {
-            var go = gB.LoadViaResources("Skeleton");
+            var go = gB.LoadViaResources("Man");
             this.ModelToEntity.modelToEntity.Add(go, islandElement);
             return go;
         }
 
         public GameObject GetFighterVisualization(IslandElement islandElement)
         {
-            var go = gB.LoadViaResources("Fighter");
+            var go = gB.LoadViaResources("Man");
             this.ModelToEntity.modelToEntity.Add(go, islandElement);
             return go;
         }

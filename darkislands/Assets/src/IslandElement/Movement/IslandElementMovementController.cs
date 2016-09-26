@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DarkIslands
@@ -16,18 +17,28 @@ namespace DarkIslands
             IslandElement.MovementController = this;
         }
 
+        private float PrePreviousRotation;
+        private Vector3 PreviousRelativePosition;
+        private const float dagToRad = 360f/(2*Mathf.PI);
         public override void RelativeToContainerPositionChanged()
         {
-            FixPosition();
-        }
+            if (PreviousRelativePosition != null && IslandElement.RelativeToContainerPosition != null)
+            {
+                var xDiff = IslandElement.RelativeToContainerPosition.x - PreviousRelativePosition.x;
+                var zDiff = IslandElement.RelativeToContainerPosition.z - PreviousRelativePosition.z;
+                var intendedRotation = 180f + Mathf.Atan2(zDiff, -xDiff)*dagToRad;
+                if (intendedRotation > 360f)
+                    intendedRotation -= 360f;
+                if (PrePreviousRotation - intendedRotation > 180f)
+                    PrePreviousRotation -= 360f;
+                if (intendedRotation  - PrePreviousRotation> 180f)
+                    PrePreviousRotation += 360f;
 
-        private void CheckIfArrivedInContainer(float arrivalDistance)
-        {
-            if (!IslandElement.HasRelativeGoalPosition)
-                return;
-            var goalDistance = this.IslandElement.RelativeToContainerPosition - this.IslandElement.RelativeGoalPosition;
-            if (goalDistance.sqrMagnitude < arrivalDistance)
-                this.IslandElement.HasRelativeGoalPosition = false;
+                IslandElement.Rotation = (9*PrePreviousRotation +  intendedRotation)/10;
+                PrePreviousRotation = IslandElement.Rotation;
+            }
+            PreviousRelativePosition = IslandElement.RelativeToContainerPosition;
+            FixPosition();
         }
 
         public override void IslandChanged()
