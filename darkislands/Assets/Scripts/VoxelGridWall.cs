@@ -34,7 +34,7 @@ public class VoxelGridWall : MonoBehaviour {
 	
 	public void Apply () {
         mesh.vertices = vertices.Select(f => (Vector3)VoxelGridSurface.RotateX(f)).ToArray();
-        mesh.normals = normals.ToArray();
+        mesh.normals = normals.Select(f => (Vector3)VoxelGridSurface.RotateX(f)).ToArray();
 		mesh.triangles = triangles.ToArray();
 	}
 

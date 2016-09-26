@@ -24,7 +24,8 @@ public class VoxelMap : MonoBehaviour {
 
 	private VoxelStencil[] stencils = {
 		new VoxelStencil(),
-		new VoxelStencilCircle()
+		new VoxelStencilCircle(),
+        new VoxelStencilEmptyCircle()
 	};
 	
 	private void Awake () {
@@ -65,12 +66,17 @@ public class VoxelMap : MonoBehaviour {
     private void SetInitialCircle()
     {
         var circleStencil = stencils[1];
-        circleStencil.Initialize(0, 100f);
-        EditVoxels(new Vector2(20, 20), circleStencil);
-        circleStencil.Initialize(4, 18f);
-        EditVoxels(new Vector2(10, 10), circleStencil);
-        circleStencil.Initialize(3, 11f);
-        EditVoxels(new Vector2(10, 10), circleStencil);
+        var emptyCircleStencil= new VoxelStencilEmptyCircle();
+        circleStencil.Initialize(0, size);
+        var halfSize = 0.5f * size;
+        EditVoxels(new Vector2(halfSize, halfSize), circleStencil);
+
+        circleStencil.Initialize(4, halfSize);
+        EditVoxels(new Vector2(15, 15), circleStencil);
+        circleStencil.Initialize(2, 13f);
+        EditVoxels(new Vector2(15, 15), circleStencil);
+        circleStencil.Initialize(3, 8f);
+        EditVoxels(new Vector2(15, 15), circleStencil);
     }
 
     private void EditVoxels (Vector2 center) {

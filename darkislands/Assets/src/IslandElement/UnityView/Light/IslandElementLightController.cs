@@ -35,9 +35,9 @@ namespace DarkIslands
         {
             if (unitLight == null)
                 return;
-            this.unitLight.transform.localPosition = this.IslandElement.Position + new Vector3(0, 7, 0);
+            this.unitLight.transform.localPosition = this.IslandElement.Position + new Vector3(0, 12, 0);
             var light = this.unitLight.GetComponent<Light>();
-            light.intensity = 2f;
+            light.intensity = 3f;
             var cosFac = Mathf.Abs(Mathf.Cos(IslandElement.Position.x / 5));
             var sinFac = Mathf.Abs(Mathf.Sin(IslandElement.Position.z / 5));
             light.color = new Color(0.5f + cosFac/2, (4 - sinFac - cosFac) / 4, 0.5f + sinFac/2);

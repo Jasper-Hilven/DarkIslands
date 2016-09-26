@@ -16,7 +16,7 @@
 		};
 		
 		void vert (inout appdata_full v) {
-			v.normal = float3(0, 0, -1);
+			v.normal = float3(0, 1, 0);
 		}
 
 		void surf (Input IN, inout SurfaceOutput o) {

@@ -11,6 +11,7 @@ namespace DarkIslands
         private bool inventoryBuild = false;
         private DIInventoryDatabase database;
         private GameObjectManager gObjManager;
+        public bool disabled = true;
 
         public InventoryViewFacade(GameObjectManager gObjManager)
         {
@@ -43,6 +44,8 @@ namespace DarkIslands
 
         private void BuildInventory()
         {
+            if (disabled)
+                return;
             GameObject Canvas = null;
             GameObject inventory = new GameObject();
             inventory.name = "Inventories";
@@ -91,6 +94,8 @@ namespace DarkIslands
         
         public void UpdateInventoryFromGameLogicToUnity()
         {
+            if (disabled)
+                return;
             var Inventory = this.FocussedUnit.InventoryController.Inventory;
             if (unityInventory == null)
                 return;
@@ -100,6 +105,8 @@ namespace DarkIslands
 
         private void UpdateInventoryFromUnity()
         {
+            if (disabled)
+                return;
             if (FocussedUnit == null)
                 return;
             FocussedUnit.InventoryController.ReceiveView(UnityToGame(unityInventory.ItemsInInventory));
