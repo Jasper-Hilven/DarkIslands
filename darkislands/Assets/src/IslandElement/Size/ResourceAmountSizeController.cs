@@ -4,11 +4,11 @@ namespace DarkIslands
 {
     public class ResourceAmountSizeController:ISizeController
     {
-        private ResourceType type;
+        private InventoryType type;
 
-        public ResourceAmountSizeController(ResourceType resourceType)
+        public ResourceAmountSizeController(InventoryType InventoryType)
         {
-            this.type = resourceType;
+            this.type = InventoryType;
         }
         public float GetIslandElementSize(IslandElement islandElement)
         {

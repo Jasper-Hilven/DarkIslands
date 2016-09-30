@@ -5,7 +5,6 @@ namespace DarkIslands
   public partial class IslandElement
   {
   public List<IIslandElementFactoryChanged> ChangeFactoryListeners= new List<IIslandElementFactoryChanged>();
-  public List<IIslandElementInventoryChanged> ChangeInventoryListeners= new List<IIslandElementInventoryChanged>();
   public List<IIslandElementHasInventoryChanged> ChangeHasInventoryListeners= new List<IIslandElementHasInventoryChanged>();
   public List<IIslandElementInventoryControllerChanged> ChangeInventoryControllerListeners= new List<IIslandElementInventoryControllerChanged>();
   public List<IIslandElementIslandPositionChanged> ChangeIslandPositionListeners= new List<IIslandElementIslandPositionChanged>();
@@ -73,19 +72,6 @@ namespace DarkIslands
       }
     }
       private IslandElementFactory _Factory{get;set;}
-    public Inventory Inventory
-    {
-      get{
-        return _Inventory;
-      }
-      set
-      {
-        this._Inventory= value;
-        foreach( var vIslandElementInventoryChanged in ChangeInventoryListeners)
-          vIslandElementInventoryChanged.InventoryChanged();
-      }
-    }
-      private Inventory _Inventory{get;set;}
     public bool HasInventory
     {
       get{

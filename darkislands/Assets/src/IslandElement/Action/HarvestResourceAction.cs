@@ -13,7 +13,7 @@
             this.resource = resource;
             this.action = action;
         }
-
+        private const float harvestTimeCost= .5f;
         public bool Update(IslandElement unit, float deltaTime)
         {
             if (!unit.HarvestInfo.CanHarvest(action) || !resource.HarvestInfo.CanBeHarvested(action))
@@ -29,13 +29,13 @@
                 gotoResourceAction.Update(unit, deltaTime);
                 return false;
             }
-            if (harvestTime < 1f)
+            if (harvestTime < harvestTimeCost)
             {
                 harvestTime += deltaTime;
                 return false;
             }
 
-            harvestTime -= 1f;
+            harvestTime -= harvestTimeCost;
             unit.HarvestController.Harvest(1f,resource);
             return false;
         }

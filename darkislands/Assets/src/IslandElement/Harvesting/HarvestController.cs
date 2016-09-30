@@ -23,10 +23,10 @@ namespace DarkIslands
             this.IslandElement.HarvestInfo = info;
         }
 
-        public ResourceAmount GetHarvested(float effort)
+        public InventoryAmount GetHarvested(float effort)
         {
             if (harvestTactic == null)
-                return new ResourceAmount(new Dictionary<ResourceType, int>());
+                return new InventoryAmount(new Dictionary<InventoryType, int>());
             return harvestTactic.GetHarvested(effort);
         }
 

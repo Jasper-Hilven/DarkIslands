@@ -6,20 +6,20 @@ namespace DarkIslands
 {
     public class HarvestInfo
     {
-        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<ResourceType, int> resourcesToHarvest, Dictionary<ResourceType, int> initialResources, bool canChop, bool canMine, bool canBeHarvestAttacked, bool canHarvestAttack)
+        public HarvestInfo(bool canBeChopped, bool canBeMined, Dictionary<InventoryType, int> resourcesToHarvest, Dictionary<InventoryType, int> initialResources, bool canChop, bool canMine, bool canBeHarvestAttacked, bool canHarvestAttack)
         {
             CanBeChopped = canBeChopped;
             CanBeMined = canBeMined;
             CanHarvestAttack = canHarvestAttack;
-            ResourcesToHarvest = resourcesToHarvest ?? new Dictionary<ResourceType, int>();
+            ResourcesToHarvest = resourcesToHarvest ?? new Dictionary<InventoryType, int>();
             CanChop = canChop;
             CanMine = canMine;
             CanBeHarvestAttacked = canBeHarvestAttacked;
-            this.InitialResources = initialResources ?? new Dictionary<ResourceType, int>();
+            this.InitialResources = initialResources ?? new Dictionary<InventoryType, int>();
         }
 
 
-        public HarvestInfo ChangeResources(ResourceAmount changes, bool add = true)//TODO make simple clone
+        public HarvestInfo ChangeResources(InventoryAmount changes, bool add = true)//TODO make simple clone
         {
             var rToHarvest = ResourcesToHarvest.ToDictionary(entry => entry.Key,entry => entry.Value);
             var initialResources= InitialResources.ToDictionary(entry => entry.Key,entry => entry.Value);
@@ -54,8 +54,8 @@ namespace DarkIslands
                 return this.CanHarvestAttack;
             throw new NotImplementedException();
         }
-        public Dictionary<ResourceType, int> ResourcesToHarvest { get; private set; }
-        public Dictionary<ResourceType, int> InitialResources { get; private set; }
+        public Dictionary<InventoryType, int> ResourcesToHarvest { get; private set; }
+        public Dictionary<InventoryType, int> InitialResources { get; private set; }
 
         public bool CanChop { get; private set; }
         public bool CanMine { get; private set; }

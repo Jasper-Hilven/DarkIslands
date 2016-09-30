@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 
 namespace DarkIslands
 {
@@ -11,15 +12,15 @@ namespace DarkIslands
         }
 
         private IslandElement element;
-        public ResourceAmount GetHarvested(float harvestEffort)
+        public InventoryAmount GetHarvested(float harvestEffort)
         {
-                return new ResourceAmount(new Dictionary<ResourceType, int>());
+                return new InventoryAmount(new Dictionary<InventoryType, int>());
         }
 
         void IHarvestControllerTactic.Harvest(float harvestEffort, IslandElement harvested)
         {
             var resources = harvested.HarvestController.GetHarvested(harvestEffort);
-            if(!resources.Empty)
+            if(!resources.Empty())
                 element.InventoryController.AddResources(resources);
         }
     }

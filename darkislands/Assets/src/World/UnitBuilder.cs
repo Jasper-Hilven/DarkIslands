@@ -23,7 +23,7 @@ namespace DarkIslands
             var elementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
             wizard.ElementalController.SetInfo(elementalInfo, eType, true);
             wizard.HarvestController.SetHarvestSettings(new HumanHarvestControllerTactic(wizard), new HarvestInfo(false, false, null, null, true, true, true,true));
-            wizard.MaxSpeed = 2f;
+            wizard.MaxSpeed = 6f;
             wizard.LifeController.SetLifePoints(50, 50);
             wizard.MagicController.EnableMagic(70, 100);
             wizard.HydrationController.EnableDehydrating(6, 80, 80);
@@ -48,7 +48,7 @@ namespace DarkIslands
         public IslandElement GetSkeleton(Island visIsland, Vector3 pos, Team team)
         {
             var skeleton = GetDefaultUnit(visIsland, pos, team);
-            skeleton.MaxSpeed = 1f + 0.1f * r.Next(0, 5);
+            skeleton.MaxSpeed = 3f + 0.3f * r.Next(0, 5);
             skeleton.LifeController.SetLifePoints(5, 5);
             skeleton.FightingController.EnableAttack(2, 25);
             skeleton.FightingController.EnableCanBeAttacked(3);
@@ -67,7 +67,7 @@ namespace DarkIslands
             unit.ElementalController.SetInfo(new ElementalInfo(0, 0, 0, 0, 0));
             unit.HarvestInfo = new HarvestInfo(false, false, null, null, false, false, false,false);
             unit.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
-            unit.MaxSpeed = 1f;
+            unit.MaxSpeed = 4f;
             unit.LifeController.SetLifePoints(30, 30);
             unit.FightingController.EnableCanBeAttacked(1);
             unit.FightingController.DisableAttack();

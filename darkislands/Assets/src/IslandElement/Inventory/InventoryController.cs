@@ -22,7 +22,7 @@ namespace DarkIslands
                     Inventory = null;
             }
         }
-        private InventoryViewFacade view;
+        private IInventoryView view;
         public override void Init(IslandElement IslandElement, InventoryControllerFactory InventoryControllerFactory)
         {
             base.Init(IslandElement, InventoryControllerFactory);
@@ -31,7 +31,7 @@ namespace DarkIslands
             UpdateView();
         }
 
-        public void SetActiveToInventoryView(InventoryViewFacade view)
+        public void SetActiveToInventoryView(IInventoryView view)
         {
             this.view = view;
         }
@@ -106,23 +106,14 @@ namespace DarkIslands
        
 
 
-        public void AddResources(ResourceAmount resHarvested)
+        public void AddResources(InventoryAmount resHarvested)
         {
-            //Temporary wizzard logic
-            if (resHarvested.Amount.ContainsKey(ResourceType.Stone))
-                IslandElement.LifeController.Heal(resHarvested.Amount[ResourceType.Stone]*10);
-            if (resHarvested.Amount.ContainsKey(ResourceType.Wood))
-                IslandElement.HydrationController.Hydrate(resHarvested.Amount[ResourceType.Wood] * 10);
-            if (resHarvested.Amount.ContainsKey(ResourceType.BrownMushroom))
-                IslandElement.MagicController.AddMana(resHarvested.Amount[ResourceType.BrownMushroom] * 10);
-            //End temporary wizzard logic
-            return;
-            EnsureListSize();
-            if (resHarvested.Empty)
+          EnsureListSize();
+            if (resHarvested.Empty())
                 return;
             foreach (var resource in resHarvested.Amount)
             {
-                var invType = resource.Key.ToInventory();
+                var invType = resource.Key;
                 var amount = resource.Value;
                 if(amount > 0)
                     AddItem(new InventoryItem(invType, amount));

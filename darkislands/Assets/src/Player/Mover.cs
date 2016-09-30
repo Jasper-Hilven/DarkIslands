@@ -11,7 +11,7 @@ namespace DarkIslands
         public IslandElement unit;
         private ModelToEntity mToEntity;
         private EventSystem evSys;
-        public Mover(IslandElement unit, ModelToEntity mToEntity,EventSystem eventSystem)
+        public Mover(IslandElement unit, ModelToEntity mToEntity)
         {
             this.unit = unit;
             this.mToEntity = mToEntity;
@@ -60,8 +60,6 @@ namespace DarkIslands
 
         public void MoveUnitToMouseHit()
         {
-            if (HitCanvas())
-                return;
             Ray ray;
             RaycastHit hit;
             var camera = Camera.allCameras.First();
@@ -71,7 +69,8 @@ namespace DarkIslands
                 var hitPoint = hit.point;
 
                 var gameObject = hit.collider.gameObject;
-
+                if (!mToEntity.modelToEntity.ContainsKey(gameObject))
+                    return;
                 var obj = mToEntity.modelToEntity[gameObject];
                 var island = obj as Island;
                 if (island != null)
@@ -87,18 +86,6 @@ namespace DarkIslands
 
 
             }
-        }
-
-        private bool HitCanvas()
-        {
-            int count = 0;
-          
-            PointerEventData cursor = new PointerEventData(EventSystem.current);                            // This section prepares a list for all objects hit with the raycast
-            cursor.position = Input.mousePosition;
-            List<RaycastResult> objectsHit = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(cursor, objectsHit);
-            count = objectsHit.Count;
-            return count > 0;
         }
     }
 }

@@ -7,11 +7,14 @@ namespace DarkIslands.Player
     {
         private Camera camera;
         public IslandElement toFollow;
-        public FollowCamera(IslandElement unit)
+        public FollowCamera()
+        {
+        }
+
+        public void SetUnit(IslandElement unit)
         {
             this.toFollow = unit;
         }
-
         public void update()
         {
             if(camera == null)
@@ -19,6 +22,11 @@ namespace DarkIslands.Player
             camera.transform.rotation= Quaternion.Euler(50,0,0);
             camera.transform.position = this.toFollow.Position + new Vector3(0, 17, -17);
             
+        }
+
+        public Vector3 GetPosition()
+        {
+            return camera.transform.position;
         }
     }
 }

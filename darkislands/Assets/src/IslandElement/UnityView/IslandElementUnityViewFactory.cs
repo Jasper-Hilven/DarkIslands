@@ -82,7 +82,6 @@ namespace DarkIslands
         }
 
 
-
         public void Destroy(GameObject gObject)
         {
             this.ModelToEntity.modelToEntity.Remove(gObject);
