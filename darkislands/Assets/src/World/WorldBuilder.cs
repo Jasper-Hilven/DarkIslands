@@ -6,13 +6,19 @@ namespace DarkIslands
 {
     public class WorldBuilder
     {
+        private UnityViewFactory viewFac;
+        private InventoryDatabase inventoryDatabase;
+
         public UnitBuilder uBuilder { get; private set; }
         public BuildingBuilder bBuilder { get; private set; }
 
-        public WorldBuilder(UnitBuilder uBuilder, BuildingBuilder bBuilder)
+        public WorldBuilder(UnitBuilder uBuilder, BuildingBuilder bBuilder, UnityViewFactory viewFac, InventoryDatabase inventoryDatabase)
         {
             this.uBuilder = uBuilder;
+
             this.bBuilder = bBuilder;
+            this.viewFac = viewFac;
+            this.inventoryDatabase = inventoryDatabase;
         }
         public void BuildWorld(FactoryProvider provider)
         {
@@ -53,12 +59,12 @@ namespace DarkIslands
         public void SetATree(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
             var tree = GetBasicResource(provider, relPosition, island, rand);
-            tree.IslandElementViewSettings = new IslandElementViewSettings() { IsTree = true, Seed = rand.Next(0, 100), HasLifeStatVisualization = false };
+            tree.IslandElementViewSettings = new IslandElementViewSettings() {  GetGameObject= () => viewFac.GetTreeVisualization(rand.Next(0, 100)),HasLifeStatVisualization = false };
             var resourceCount = new Dictionary<InventoryType, int> { };
-            resourceCount[InventoryType.Wood] = 5;
+            resourceCount[inventoryDatabase.Wood] = 5;
             tree.HarvestController.SetHarvestSettings(
-                new SimpleHarvestedControllerTactic(tree, InventoryType: InventoryType.Wood), new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false,false));
-            tree.SizeController = new ResourceAmountSizeController(InventoryType.Wood);
+                new SimpleHarvestedControllerTactic(tree, InventoryType: inventoryDatabase.Wood), new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false,false));
+            tree.SizeController = new ResourceAmountSizeController(inventoryDatabase.Wood);
         }
 
         public void SetANatureElement(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
@@ -90,32 +96,37 @@ namespace DarkIslands
         public void SetARock(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
             var rock = GetBasicResource(provider, relPosition, island, rand);
-            rock.SizeController = new ResourceAmountSizeController(InventoryType.Stone);
-            rock.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(rock, InventoryType: InventoryType.Stone);
+            rock.SizeController = new ResourceAmountSizeController(inventoryDatabase.Stone);
+            rock.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(rock, InventoryType: inventoryDatabase.Stone);
             var resourceCount = new Dictionary<InventoryType, int>();
             var isBig = rand.Next(0, 2) > 0;
-            rock.IslandElementViewSettings = new IslandElementViewSettings() { IsRock = true, RockInfo = new RockInfo { Big = true }, Seed = rand.Next(0, 100), HasLifeStatVisualization = false };
-            resourceCount[InventoryType.Stone] = isBig ? 2 : 1;
+            rock.IslandElementViewSettings = new IslandElementViewSettings() { GetGameObject=()=> viewFac.GetRockVisualization(isBig,rand.Next()), HasLifeStatVisualization = false };
+            resourceCount[inventoryDatabase.Stone] = isBig ? 2 : 1;
             rock.HarvestInfo = new HarvestInfo(true, false, resourceCount, resourceCount, false, false, false,false);
         }
 
         public void SetAMushroom(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
             var mushroom = GetBasicResource(provider, relPosition, island, rand);
-            mushroom.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(mushroom, InventoryType: InventoryType.BrownMushroom);
+            mushroom.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(mushroom, InventoryType: inventoryDatabase.BrownMushroom);
             var resourceCount = new Dictionary<InventoryType, int>();
-            mushroom.IslandElementViewSettings = new IslandElementViewSettings() { IsBrownMushroom = true, Seed = rand.Next(0, 100), HasLifeStatVisualization = false };
-            resourceCount[InventoryType.BrownMushroom] = 1;
+            mushroom.IslandElementViewSettings = new IslandElementViewSettings() { GetGameObject=()=>viewFac.GetBrownMushroomVisualization( rand.Next()), HasLifeStatVisualization = false };
+            resourceCount[inventoryDatabase.BrownMushroom] = 1;
             mushroom.HarvestInfo = new HarvestInfo(false, false, resourceCount, resourceCount, false, false, true,false);
             mushroom.CircleElementProperties.OriginalRadius = 0.2f;
-            mushroom.Size = 3f;
+            mushroom.Size = 1f;
         }
 
         public void SetGrass(FactoryProvider provider, Vector3 relPosition, Island island, System.Random rand)
         {
             var grass = GetBasicResource(provider, relPosition, island, rand);
-            grass.IslandElementViewSettings = new IslandElementViewSettings() { IsGrass = true };
+            grass.IslandElementViewSettings = new IslandElementViewSettings() { GetGameObject = () => viewFac.GetGrassVisualization( rand.Next()) };
             grass.CircleElementProperties = new CircleElementProperties(0.5f, 0.5f);
+            grass.HarvestController.harvestTactic = new SimpleHarvestedControllerTactic(grass, InventoryType: inventoryDatabase.Grass);
+            var resourceCount = new Dictionary<InventoryType, int>();
+            resourceCount[inventoryDatabase.Grass] = 1;
+            grass.HarvestInfo = new HarvestInfo(false, false, resourceCount, resourceCount, false, false, true, false);
+            grass.Size = 1;
         }
 
     }

@@ -30,7 +30,7 @@ namespace DarkIslands
                 direction += (new Vector3(-1, 0, 0));
             if (Input.GetKey(KeyCode.RightArrow))
                 direction += (new Vector3(1, 0, 0));
-            direction *= 0.1f;
+            direction *= 0.2f;
             if (direction.sqrMagnitude > 0.00001f)
                 MoveUnitIntoDirection(direction);
             if (Input.GetKeyDown(KeyCode.S))

@@ -11,6 +11,7 @@ namespace DarkIslands
         private IslandElement focussedOn;
         private FollowCamera camera;
         private ModelToEntity mToEInventory;
+        private InventoryDatabase inventoryDatabase;
 
         public CoolInventoryView(GameObjectManager gameObjectManager,FollowCamera camera, ModelToEntity mToEInventory)
         {
@@ -25,9 +26,9 @@ namespace DarkIslands
                 view.transform.position = (camera.GetPosition()) + new Vector3(0,-4,1.4f);
         }
 
-        public void SetDatabase(DIInventoryDatabase inventoryDatabase)
+        public void SetDatabase(InventoryDatabase inventoryDatabase)
         {
-            //Lame deprecated interface part    
+            this.inventoryDatabase = inventoryDatabase;
         }
 
         public void UpdateInventoryFromGameLogicToUnity()
@@ -40,6 +41,12 @@ namespace DarkIslands
             if (focussedOn == null)
                 return;
             var inventory= focussedOn.InventoryController.Inventory;
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                var inventoryItem = inventory[i];
+                GameObject itemView = inventoryItem.InventoryType.GetViewObject();
+
+            }
             foreach (var inventoryItem in inventory)
             {
             }

@@ -29,8 +29,12 @@ public class UGame : MonoBehaviour
         rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
-        unitBuilder = new UnitBuilder(fP.IslandElementFactory, rand);
-        var worldBuilder = new WorldBuilder(unitBuilder, new BuildingBuilder());
+        var unityViewFactory = new UnityViewFactory();
+        fP.IslandElementUnityViewFactory.UnityViewFactory = unityViewFactory;
+        unitBuilder = new UnitBuilder(fP.IslandElementFactory, unityViewFactory);
+
+        InventoryDatabase inventoryDatabase = new InventoryDatabase(unityViewFactory);
+        var worldBuilder = new WorldBuilder(unitBuilder, new BuildingBuilder(), unityViewFactory, inventoryDatabase);
         worldBuilder.BuildWorld(fP);
         islands = fP.IslandFactory.elements;
         var elementTypes = new List<IElementalType> { new Magma(), new Lightning(), new Psychic(), new Toxic(), new Water() };
@@ -41,8 +45,7 @@ public class UGame : MonoBehaviour
             units.Add(unitBuilder.GetWizard(eType, onIsland, position, goodTeam));
         }
         cam = new FollowCamera();
-        inventoryView = new CoolInventoryView(new GameObjectManager(),cam,new ModelToEntity());
-        DIInventoryDatabase inventoryDatabase = new DIInventoryDatabase();
+        inventoryView = new CoolInventoryView(new GameObjectManager(), cam, new ModelToEntity());
         inventoryView.SetDatabase(inventoryDatabase);
         FocusOnUnit(units[0]);
     }
@@ -56,7 +59,7 @@ public class UGame : MonoBehaviour
             return;
         var ang = rand.Next(0, 360);
         var r = 30;
-        var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), undeadTeam);
+        var skeleton = unitBuilder.GetSkeleton(islands[0], new Vector3(r * Mathf.Cos(ang), 0, r * Mathf.Sin(ang)), undeadTeam,rand);
         skeleton.ActionHandler.SetNextCommand(new FollowAndProtectCommand(units[0]));
         nbSkeletonsSpawned++;
     }

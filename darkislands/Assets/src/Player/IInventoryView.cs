@@ -5,7 +5,7 @@
         void FocusOn(IslandElement islandElement);
         void Update(float deltaTime);
         void InitializeAfterScreenLoaded();
-        void SetDatabase(DIInventoryDatabase inventoryDatabase);
+        void SetDatabase(InventoryDatabase inventoryDatabase);
         void UpdateInventoryFromGameLogicToUnity();
     }
 }

@@ -6,19 +6,19 @@ namespace DarkIslands
 {
     public class UnitBuilder
     {
-        private IslandElementFactory fac;
-        private Random r;
+        private UnityViewFactory viewFac;
+        private IslandElementFactory elemFac;
 
-        public UnitBuilder(IslandElementFactory fac, System.Random r)
+        public UnitBuilder(IslandElementFactory elemFac,UnityViewFactory unityViewFactory)
         {
-            this.r = r;
-            this.fac = fac;
+            this.elemFac = elemFac;
+            this.viewFac = unityViewFactory;
         }
 
         public IslandElement GetWizard(IElementalType eType, Island visIsland, Vector3 pos, Team team)
         {
             var wizard = GetDefaultUnit(visIsland, pos, team);
-            wizard.IslandElementViewSettings = new IslandElementViewSettings() { IsWizard = true, HasLifeStatVisualization = true };
+            wizard.IslandElementViewSettings = new IslandElementViewSettings() {GetGameObject=()=>viewFac.GetWizardVisualization(), HasLifeStatVisualization = true };
             wizard.hasLight = true;
             var elementalInfo = eType.IsWater ? new ElementalInfo(13, 13, 16, 11, 13) : new ElementalInfo(eType, 2);
             wizard.ElementalController.SetInfo(elementalInfo, eType, true);
@@ -40,28 +40,28 @@ namespace DarkIslands
             var attackDamage = isArcher ? 1 : 2;
             fighter.FightingController.EnableAttack(attackDamage, attackRange);
             fighter.FightingController.EnableCanBeAttacked(3);
-            fighter.IslandElementViewSettings = new IslandElementViewSettings() { IsFighter = true, HasLifeStatVisualization = true };
+            fighter.IslandElementViewSettings = new IslandElementViewSettings() { GetGameObject = ()=>viewFac.GetFighterVisualization(), HasLifeStatVisualization = true };
             fighter.ActionHandler.SetNextCommand(new FollowAndProtectCommand(spawner));
             return fighter;
         }
 
-        public IslandElement GetSkeleton(Island visIsland, Vector3 pos, Team team)
+        public IslandElement GetSkeleton(Island visIsland, Vector3 pos, Team team, Random r)
         {
             var skeleton = GetDefaultUnit(visIsland, pos, team);
             skeleton.MaxSpeed = 3f + 0.3f * r.Next(0, 5);
             skeleton.LifeController.SetLifePoints(5, 5);
             skeleton.FightingController.EnableAttack(2, 25);
             skeleton.FightingController.EnableCanBeAttacked(3);
-            skeleton.IslandElementViewSettings = new IslandElementViewSettings() { IsSkeleton = true, HasLifeStatVisualization = true };
+            skeleton.IslandElementViewSettings = new IslandElementViewSettings() { GetGameObject =()=> viewFac.GetSkeletonVisualization(),HasLifeStatVisualization = true };
             return skeleton;
         }
 
         public IslandElement GetDefaultUnit(Island visIsland, Vector3 pos, Team team)
         {
-            var unit = fac.Create();
+            var unit = elemFac.Create();
             visIsland.ContainerControllerIsland.AddElement(unit);
             unit.RelativeToContainerPosition = pos;
-            unit.Factory = fac;
+            unit.Factory = elemFac;
             unit.IslandElementViewSettings = new IslandElementViewSettings() { HasLifeStatVisualization = true };
             unit.hasLight = false;
             unit.ElementalController.SetInfo(new ElementalInfo(0, 0, 0, 0, 0));

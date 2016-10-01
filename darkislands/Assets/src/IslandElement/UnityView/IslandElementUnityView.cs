@@ -22,7 +22,6 @@ namespace DarkIslands
         {
             if (UIUnit == null)
                 return;
-            
             UIUnit.transform.localScale = new Vector3(IslandElement.Size, IslandElement.Size, IslandElement.Size);
         }
 
@@ -36,52 +35,13 @@ namespace DarkIslands
         {
             if (UIUnit != null)
                 Destroy();
-            if (IslandElement.IslandElementViewSettings.IsTree)//TODO this dependent code out to specific interface
-            {
-                var seed = IslandElement.IslandElementViewSettings.Seed;
-                UIUnit= UnitUnityViewFactory.GetTreeVisualization(IslandElement,seed);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
+            if (IslandElement.IslandElementViewSettings == null || IslandElement.IslandElementViewSettings.GetGameObject == null)
                 return;
-            }
-            if (IslandElement.IslandElementViewSettings.IsRock)
-            {
-                UIUnit = UnitUnityViewFactory.GetRockVisualization(IslandElement,IslandElement.IslandElementViewSettings.RockInfo.Big);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
-                return;
-            }
-            if (IslandElement.IslandElementViewSettings.IsSkeleton)
-            {
-                UIUnit = UnitUnityViewFactory.GetSkeletonVisualization(IslandElement);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
-                return;
-            }
-            if (IslandElement.IslandElementViewSettings.IsFighter)
-            {
-                UIUnit = UnitUnityViewFactory.GetFighterVisualization(IslandElement);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
-                return;
-            }
-            if (IslandElement.IslandElementViewSettings.IsGrass)
-            {
-                UIUnit = UnitUnityViewFactory.GetGrassVisualization(IslandElement);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
-                return;
-            }
-            if (IslandElement.IslandElementViewSettings.IsBrownMushroom)
-            {
-                UIUnit = UnitUnityViewFactory.GetBrownMushroomVisualization(IslandElement);//TODO this dependent code out to specific interface
-                UpdateSize();
-                UpdatePosition();
-                return;
-            }
-            UIUnit = UnitUnityViewFactory.GetUnitVisualization(IslandElement);//TODO this dependent code out to specific interface
+            UIUnit = IslandElement.IslandElementViewSettings.GetGameObject();
+            this.UnitUnityViewFactory.AddToModelEntity(UIUnit, IslandElement);
             UpdateSize();
             UpdatePosition();
+            return;
         }
 
         public override void IsElementalColoredChanged()

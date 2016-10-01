@@ -7,7 +7,5 @@ using UnityEngine;
 
 namespace DarkIslands
 {
-    public class DIInventoryDatabase
-    {
-    }
+   
 }
