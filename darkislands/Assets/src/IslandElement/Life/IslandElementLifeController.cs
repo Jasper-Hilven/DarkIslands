@@ -31,7 +31,7 @@ namespace DarkIslands
         {
             elem.IsAlive = false;
             elem.LifePoints = 0;
-            elem.Factory.DestroyIslandElement(elem);
+            elem.Factory.DestroyIslandElementSafe(elem);
         }
 
         private void CheckDie()

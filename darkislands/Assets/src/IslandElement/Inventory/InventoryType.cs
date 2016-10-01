@@ -5,7 +5,8 @@ namespace DarkIslands
 {
     public class InventoryType
     {
-       
+        private Func<GameObject> getViewObjectMethod;
+
         public bool Usable { get; set; }
         public int maxStack { get; set; }
         public string Name { get; private set; }
@@ -16,11 +17,12 @@ namespace DarkIslands
             this.Name = name;
             maxStack = stackamount;
             Usable = usable;
+            this.getViewObjectMethod = viewMethod;
         }
 
         internal GameObject GetViewObject()
         {
-            throw new NotImplementedException();
+            return getViewObjectMethod();
         }
     }
     public class InventoryDatabase

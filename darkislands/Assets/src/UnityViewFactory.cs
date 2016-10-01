@@ -74,9 +74,9 @@ namespace DarkIslands
             gO.transform.Rotate(new Vector3(0, 1, 0), seed % 360);
             if (useSimpleObjects)
             {
-                gO.GetComponent<MeshRenderer>().material.color = Color.green;
+                var child = gO.transform.GetChild(0).gameObject;
+                child.GetComponent<MeshRenderer>().material.color = Color.green;
             }
-            gO.transform.localScale = new Vector3(2, 3, 2);
             return gO;
         }
 
@@ -101,14 +101,17 @@ namespace DarkIslands
         internal GameObject GetWoodVisualization()
         {
             var gO = gB.LoadViaResources("Wood");
-            var child = gO.transform.GetChild(1).gameObject;
+            var child = gO.transform.GetChild(0).gameObject;
             child.GetComponent<MeshRenderer>().material.color = brown;
             return gO;
          }
 
         internal GameObject GetStoneVisualization()
         {
-            throw new NotImplementedException();
+            var gO = gB.LoadViaResources("Stone");
+            var child = gO.transform.GetChild(0).gameObject;
+            child.GetComponent<MeshRenderer>().material.color = Color.gray;
+            return gO; ;
         }
         public void Destroy(GameObject gObject)
         {
