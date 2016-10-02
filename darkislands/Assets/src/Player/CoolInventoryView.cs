@@ -1,6 +1,7 @@
 ﻿using DarkIslands;
 using DarkIslands.Player;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DarkIslands
@@ -29,7 +30,10 @@ namespace DarkIslands
             {
                 view.transform.position = (camera.GetPosition()) + new Vector3(0, -6, 2.1f);
                 UpdateViewItemsLocation();
+                if (Input.GetKeyDown(KeyCode.Mouse1))
+                    UseItemIfClicked();
             }
+            
         }
 
         public void UpdateViewItemsLocation()
@@ -42,7 +46,7 @@ namespace DarkIslands
                 var item = inventoryItemViews[i];
                 if (item == null)
                     continue;
-                item.transform.position = basePos + new Vector3(i-3, 0, 0);
+                item.transform.position = basePos + new Vector3(i - 3, 0, 0);
             }
         }
 
@@ -112,8 +116,9 @@ namespace DarkIslands
             if (view != null)
             {
                 gameObjectManager.DestroyObj(view);
-            } view = null;
-           
+            }
+            view = null;
+
         }
 
         public void CreateViewForIslandElement(IslandElement element)
@@ -121,12 +126,28 @@ namespace DarkIslands
             if (element == null)
                 return;
             view = gameObjectManager.LoadViaResources("Inventory");
-            
-            updateContainingInventory();
-             }
 
-        public void InitializeAfterScreenLoaded()
+            updateContainingInventory();
+        }
+
+        
+        private void UseItemIfClicked()
         {
+            Ray ray;
+            RaycastHit hit;
+            var camera = Camera.allCameras.First();
+            ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(ray, out hit))
+                return;
+            var hitPoint = hit.point;
+            var gameObject = hit.collider.gameObject;
+            if (!inventoryItemViews.Contains(gameObject))
+                return;
+            var useIndex = inventoryItemViews.IndexOf(gameObject);
+            var itemToConsume = currentInventoryItems[useIndex];
+            if (itemToConsume == null)
+                return;
+            focussedOn.InventoryController.ConsumeItem(itemToConsume);
 
         }
     }

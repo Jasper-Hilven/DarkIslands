@@ -16,8 +16,10 @@ namespace DarkIslands
             }
             set
             {
-                if (value)
-                    this.Inventory = Inventory ?? new List<InventoryItem>() { null, null, null, null, null, null, null, null, null, null, null, null };
+                if (value) {
+                    Inventory = new List<InventoryItem>();
+                    EnsureListSize();
+                }
                 else
                     Inventory = null;
             }
@@ -48,10 +50,12 @@ namespace DarkIslands
         public void ReceiveView(List<InventoryItem> Inventory)
         {
             this.Inventory = Inventory;
-        }
+            EnsureListSize();
+                }
 
         public InventoryItem AddItem(InventoryItem item)
         {
+            EnsureListSize();
             var remainder = AddToExisting(item);
             if (remainder.Amount != 0)
                 remainder = AddToEmptySlot(remainder);
@@ -62,6 +66,8 @@ namespace DarkIslands
 
         private InventoryItem AddToExisting(InventoryItem item)
         {
+            if(!HasInventory)
+                return item;
             var remainder = item;
             for (int i = 0; i < Inventory.Count; i++)
             {
@@ -85,6 +91,8 @@ namespace DarkIslands
         }
         private InventoryItem AddToEmptySlot(InventoryItem item)
         {
+            if (!HasInventory)
+                return item;
             var remainder = item;
             for (int i = 0; i < Inventory.Count; i++)
             {
@@ -101,8 +109,12 @@ namespace DarkIslands
             return remainder;
         }
 
-        public void EnsureListSize()
+        private void EnsureListSize()
         {
+            if (Inventory == null)
+                return;
+            while (Inventory.Count < nbMaxStacksInInventory())
+                Inventory.Add(null);
             if (Inventory.Count > nbMaxStacksInInventory())
             {
                 Inventory = Inventory.Take(nbMaxStacksInInventory()).ToList();
@@ -139,6 +151,7 @@ namespace DarkIslands
             myItem.Amount--;
             if (myItem.Amount == 0)
                 Inventory.Remove(myItem);
+            EnsureListSize();
             UpdateView();
 
         }

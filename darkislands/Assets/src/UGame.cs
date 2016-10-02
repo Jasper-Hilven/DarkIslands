@@ -72,11 +72,7 @@ public class UGame : MonoBehaviour
         cam.toFollow = u;
         m.unit = u;
     }
-    private void afterScreenLoaded()
-    {
-        inventoryView.InitializeAfterScreenLoaded();
-    }
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -92,8 +88,6 @@ public class UGame : MonoBehaviour
         inventoryView.Update(deltaTime);
         nbFrames++;
         PutASkeleton(undeadTeam, rand);
-        if (nbFrames == 10)
-            afterScreenLoaded();
     }
 
     int nbFrames;
