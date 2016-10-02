@@ -38,11 +38,19 @@ namespace DarkIslands
         public void UseItem(IslandElement elem, InventoryItem item)
         {
             if (item.InventoryType == database.BrownMushroom)
-                elem.MagicController.AddMana(item.Amount * 5);
+            {
+                elem.HydrationController.DeHydrate(10);
+                elem.MagicController.AddMana(item.Amount * 20); }
             if (item.InventoryType == database.Stone)
-                elem.LifeController.Heal(item.Amount * 5);
+                elem.LifeController.Heal(item.Amount * 10);
             if (item.InventoryType == database.Wood)
+                elem.HydrationController.Hydrate(item.Amount * 10);
+            if (item.InventoryType == database.Grass)
+            {
+                elem.MagicController.AddMana(item.Amount * 5);
+                elem.LifeController.Heal(item.Amount * 5);
                 elem.HydrationController.Hydrate(item.Amount * 5);
+            }
         }
     }
 }

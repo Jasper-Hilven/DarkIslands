@@ -57,7 +57,7 @@ namespace DarkIslands
             if (useSimpleObjects)
             {
                 var child = gO.transform.GetChild(1).gameObject;
-                child.GetComponent<MeshRenderer>().material.color = brown;
+                child.GetComponent<MeshRenderer>().material.color = Color.Lerp(brown,Color.red,0.5f);
             }
             if (!useSimpleObjects)
             {

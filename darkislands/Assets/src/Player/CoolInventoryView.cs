@@ -1,6 +1,4 @@
-﻿using DarkIslands;
-using DarkIslands.Player;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -46,7 +44,7 @@ namespace DarkIslands
                 var item = inventoryItemViews[i];
                 if (item == null)
                     continue;
-                item.transform.position = basePos + new Vector3(i - 3, 0, 0);
+                item.transform.position = basePos + new Vector3(((float) i)/2 - 3, 0, 0);
             }
         }
 
@@ -85,10 +83,15 @@ namespace DarkIslands
             DestroyAtSpot(index);
             if (inventoryItem == null || inventoryItem.Amount == 0)
                 return;
-            inventoryItemViews[index] = inventoryItem.InventoryType.GetViewObject();
+            inventoryItemViews[index] = GetItemVisualization(inventoryItem);
             currentInventoryItems[index] = inventoryItem;
         }
-
+        private GameObject GetItemVisualization(InventoryItem inventoryItem)
+        {
+            var ret= inventoryItem.InventoryType.GetViewObject();
+            ret.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            return ret;
+        }
         private void DestroyAtSpot(int index)
         {
             var toDestroy = inventoryItemViews[index];

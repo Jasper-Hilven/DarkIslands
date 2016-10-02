@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.src.World;
 using DarkIslands;
-using DarkIslands.Player;
 
 public class UGame : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class UGame : MonoBehaviour
     private List<Island> islands = new List<Island>();
     private FactoryProvider fP;
     private FollowCamera cam;
+    private Minimap minimap;
     private Mover m;
     private List<IslandElement> units = new List<IslandElement>();
     private IInventoryView inventoryView;
@@ -29,6 +29,8 @@ public class UGame : MonoBehaviour
         rand = new System.Random(1);
         fP = new FactoryProvider();
         fP.Initialize();
+        var islandIndex = new TopDownCircleSpaceIndex(500);
+        fP.InterIslandCollisionFactory.TopdownIslandIndex = islandIndex;
         var unityViewFactory = new UnityViewFactory();
         fP.IslandElementUnityViewFactory.UnityViewFactory = unityViewFactory;
         InventoryDatabase inventoryDatabase = new InventoryDatabase(unityViewFactory);
@@ -44,6 +46,7 @@ public class UGame : MonoBehaviour
             units.Add(unitBuilder.GetWizard(eType, onIsland, position, goodTeam));
         }
         cam = new FollowCamera();
+        minimap = new Minimap(islandIndex,cam);
         inventoryView = new CoolInventoryView(new GameObjectManager(), cam, new ModelToEntity());
         inventoryView.SetDatabase(inventoryDatabase);
         FocusOnUnit(units[0]);
@@ -83,13 +86,12 @@ public class UGame : MonoBehaviour
         fP.IslandElementSpawnControllerFactory.Update(deltaTime);
         UpdateFocussedUnit();
         cam.update();
+        minimap.Update();
         m.Update();
         inventoryView.Update(deltaTime);
-        nbFrames++;
         PutASkeleton(undeadTeam, rand);
     }
 
-    int nbFrames;
 
     void UpdateFocussedUnit()
     {

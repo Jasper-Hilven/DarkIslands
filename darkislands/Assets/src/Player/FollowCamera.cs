@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace DarkIslands.Player
+namespace DarkIslands
 {
     public class FollowCamera
     {
@@ -20,10 +20,17 @@ namespace DarkIslands.Player
             if(camera == null)
                 camera = Camera.allCameras.First();
             camera.transform.rotation= Quaternion.Euler(50,0,0);
-            camera.transform.position = this.toFollow.Position + new Vector3(0, 17, -17);
-            
+            camera.transform.position = this.toFollow.Position + GetRelativePosition();
+        }
+        public Vector3 GetToFollowPosition()
+        {
+            return this.toFollow.Position;
         }
 
+        public Vector3 GetRelativePosition()
+        {
+            return new Vector3(0, 17, -17);
+        }
         public Vector3 GetPosition()
         {
             return camera.transform.position;

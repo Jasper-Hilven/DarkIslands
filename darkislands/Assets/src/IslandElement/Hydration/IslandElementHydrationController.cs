@@ -31,7 +31,7 @@ namespace DarkIslands
 
         public override void CanDehydrateChanged()
         {
-            if(elem.CanDehydrate && !fac.Dehydrators.Contains(this))
+            if (elem.CanDehydrate && !fac.Dehydrators.Contains(this))
                 fac.Dehydrators.Add(this);
             if (!elem.CanDehydrate)
                 fac.Dehydrators.Remove(this);
@@ -39,7 +39,7 @@ namespace DarkIslands
 
         public void Update(float deltaTime)
         {
-            var dehydrationLost = deltaTime*0.0166667f*elem.DehydrationRate;
+            var dehydrationLost = deltaTime * 0.0166667f * elem.DehydrationRate;
             totalHydrationLost += dehydrationLost;
             if (totalHydrationLost < 1)
                 return;
@@ -60,7 +60,16 @@ namespace DarkIslands
 
         public void Hydrate(int i)
         {
-            elem.HydrationPoints = Math.Max(elem.MaxHydrationPoints, elem.HydrationPoints + i);
+            elem.HydrationPoints = Math.Min(elem.MaxHydrationPoints, elem.HydrationPoints + i);
+        }
+        public void DeHydrate(int i)
+        {
+            var newHydration = Math.Max(0, elem.HydrationPoints - i);
+            var diff = elem.HydrationPoints - newHydration;
+            elem.HydrationPoints = newHydration;
+            var damage = i - diff;
+            if (damage > 0)
+                elem.LifeController.HurtDueToDeHydration(damage);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace DarkIslands
             wizard.MaxSpeed = 6f;
             wizard.LifeController.SetLifePoints(50, 50);
             wizard.MagicController.EnableMagic(70, 100);
-            wizard.HydrationController.EnableDehydrating(6, 80, 80);
+            wizard.HydrationController.EnableDehydrating(60, 80, 80);
             wizard.FightingController.EnableAttack(3, 6);
             wizard.InventoryController.HasInventory = true;
             wizard.ItemUsageController.usageTactic = new WizardItemUsageControllerTactic(inventoryDb);
