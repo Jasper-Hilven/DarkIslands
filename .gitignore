@@ -3,9 +3,7 @@ digen/.vs/DarkIslandsGener/v14/*.suo
 digen/Assets/*.meta
 digen/Assets/Island/*.meta
 digen/Assets/Island/IslandView/*.meta
-digen/*.sln
-digen/Temp
-digen/*.csproj
+
 
 
 darkislands/Library
