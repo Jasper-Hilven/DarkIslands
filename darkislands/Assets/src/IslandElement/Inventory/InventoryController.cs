@@ -17,7 +17,7 @@ namespace DarkIslands
             set
             {
                 if (value)
-                    this.Inventory = Inventory ?? new List<InventoryItem>() {null,null,null,null,null,null,null,null,null,null,null,null };
+                    this.Inventory = Inventory ?? new List<InventoryItem>() { null, null, null, null, null, null, null, null, null, null, null, null };
                 else
                     Inventory = null;
             }
@@ -29,6 +29,10 @@ namespace DarkIslands
             this.IslandElement = IslandElement;
             this.IslandElement.InventoryController = this;
             UpdateView();
+        }
+        public int nbMaxStacksInInventory()
+        {
+            return 12;
         }
 
         public void SetActiveToInventoryView(IInventoryView view)
@@ -46,13 +50,14 @@ namespace DarkIslands
             this.Inventory = Inventory;
         }
 
-        public void AddItem(InventoryItem item)
+        public InventoryItem AddItem(InventoryItem item)
         {
             var remainder = AddToExisting(item);
             if (remainder.Amount != 0)
                 remainder = AddToEmptySlot(remainder);
             EnsureListSize();
             UpdateView();
+            return remainder;
         }
 
         private InventoryItem AddToExisting(InventoryItem item)
@@ -98,27 +103,35 @@ namespace DarkIslands
 
         public void EnsureListSize()
         {
-            if(Inventory.Count > 12)
+            if (Inventory.Count > nbMaxStacksInInventory())
             {
-                Inventory = Inventory.Take(12).ToList();
+                Inventory = Inventory.Take(nbMaxStacksInInventory()).ToList();
             }
         }
-       
 
 
-        public void AddResources(InventoryAmount resHarvested)
+
+        public InventoryAmount AddResources(InventoryAmount resHarvested)
         {
-          EnsureListSize();
+            var remainder = new InventoryAmount();
+            EnsureListSize();
             if (resHarvested.Empty())
-                return;
+                return remainder;
             foreach (var resource in resHarvested.Amount)
             {
                 var invType = resource.Key;
                 var amount = resource.Value;
-                if(amount > 0)
-                    AddItem(new InventoryItem(invType, amount));
+                if (amount == 0)
+                    continue;
+                var localRemainder = AddItem(new InventoryItem(invType, amount));
+                if (localRemainder.Amount == 0)
+                    continue;
+                remainder.Amount[invType] = remainder.Amount.ContainsKey(invType) ? 
+                    remainder.Amount[invType] + localRemainder.Amount : 
+                    localRemainder.Amount;
             }
             UpdateView();
+            return remainder;
         }
 
         public void ConsumeItem(InventoryItem myItem)
