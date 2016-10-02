@@ -151,6 +151,7 @@ namespace DarkIslands
             myItem.Amount--;
             if (myItem.Amount == 0)
                 Inventory.Remove(myItem);
+            IslandElement.ItemUsageController.UseItem(new InventoryItem(myItem.InventoryType, 1));
             EnsureListSize();
             UpdateView();
 

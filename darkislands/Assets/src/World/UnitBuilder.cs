@@ -8,11 +8,13 @@ namespace DarkIslands
     {
         private UnityViewFactory viewFac;
         private IslandElementFactory elemFac;
+        private InventoryDatabase inventoryDb;
 
-        public UnitBuilder(IslandElementFactory elemFac,UnityViewFactory unityViewFactory)
+        public UnitBuilder(IslandElementFactory elemFac,UnityViewFactory unityViewFactory,InventoryDatabase inventoryDb)
         {
             this.elemFac = elemFac;
             this.viewFac = unityViewFactory;
+            this.inventoryDb = inventoryDb;
         }
 
         public IslandElement GetWizard(IElementalType eType, Island visIsland, Vector3 pos, Team team)
@@ -29,6 +31,7 @@ namespace DarkIslands
             wizard.HydrationController.EnableDehydrating(6, 80, 80);
             wizard.FightingController.EnableAttack(3, 6);
             wizard.InventoryController.HasInventory = true;
+            wizard.ItemUsageController.usageTactic = new WizardItemUsageControllerTactic(inventoryDb);
             return wizard;
         }
 

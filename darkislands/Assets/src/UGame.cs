@@ -31,9 +31,8 @@ public class UGame : MonoBehaviour
         fP.Initialize();
         var unityViewFactory = new UnityViewFactory();
         fP.IslandElementUnityViewFactory.UnityViewFactory = unityViewFactory;
-        unitBuilder = new UnitBuilder(fP.IslandElementFactory, unityViewFactory);
-
         InventoryDatabase inventoryDatabase = new InventoryDatabase(unityViewFactory);
+        unitBuilder = new UnitBuilder(fP.IslandElementFactory, unityViewFactory,inventoryDatabase);
         var worldBuilder = new WorldBuilder(unitBuilder, new BuildingBuilder(), unityViewFactory, inventoryDatabase);
         worldBuilder.BuildWorld(fP);
         islands = fP.IslandFactory.elements;

@@ -22,6 +22,9 @@ namespace DarkIslandGen
             properties.Add(new Property("HasInventory", "bool"));
             properties.Add(new Property("InventoryController", "InventoryController"));
             islandElementParts.Add(new ModelClass { Name = "InventoryController", ParentRelation = islandElement });
+            //ItemUsage
+            properties.Add(new Property("ItemUsageController", "ItemUsageController"));
+            islandElementParts.Add(new ModelClass { Name = "ItemUsageController", ParentRelation = islandElement });
 
             //PositionInfo
             var islandPosition = new Property("IslandPosition", "Vector3");
